@@ -1,6 +1,6 @@
 tasks:
-   - init: yarn install
-     command: yarn build
+   - init: cd app && yarn install
+     command: cd app && yarn build
 ports:
    - port: 8000
      onOpen: open-preview
