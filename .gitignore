@@ -1,3 +1,5 @@
 .idea
 *.iml
 venv
+build
+node_modules

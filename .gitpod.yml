@@ -1,6 +1,6 @@
 tasks:
    - init: cd app && yarn install
-     command: cd app && yarn build
+     command: cd app && yarn build && npm run electron main.js
 ports:
    - port: 8000
      onOpen: open-preview
