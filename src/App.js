@@ -16,7 +16,7 @@ class App extends Component {
 
 
 	componentDidMount () {
-		fetch('http://localhost:5000/cmd',{
+		fetch(window.location.origin+":"+5000+'/cmd',{
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

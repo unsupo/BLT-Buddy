@@ -1,9 +1,8 @@
 tasks:
    - init: yarn install && yarn build
-   - command: npm start
-   - command: node app.js
+     command: npm start & node app.js
 ports:
-   - port: 5001
+   - port: 3000
      onOpen: open-browser
    - port: 5000
      onOpen: ignore

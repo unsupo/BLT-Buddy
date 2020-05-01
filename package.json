@@ -19,7 +19,8 @@
     "electron": "electron main.js",
     "build": "react-app-rewired build --mode production",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject --env=jsdom"
+    "eject": "react-scripts eject --env=jsdom",
+    "web": "node main-web.js"
   },
   "eslintConfig": {
     "extends": "react-app"
