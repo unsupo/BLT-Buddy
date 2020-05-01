@@ -1,6 +1,9 @@
 tasks:
-   - init: yarn install build and npm run electron
-     command: yarn install && yarn build && npm run electron main.js
+   - init: yarn install && yarn build
+   - command: npm start
+   - command: node app.js
 ports:
-   - port: 8000
-     onOpen: open-preview
+   - port: 5001
+     onOpen: open-browser
+   - port: 5000
+     onOpen: ignore
