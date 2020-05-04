@@ -8,6 +8,7 @@
     "babel-loader": "8.0.5",
     "body-parser": "^1.19.0",
     "fs-jetpack": "^2.2.3",
+    "python-shell": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "2.1.8"
@@ -15,6 +16,7 @@
   "homepage": "./",
   "main": "main.js",
   "scripts": {
+    "dev": "cross-env START_HOT=1 npm start",
     "start": "react-app-rewired start",
     "electron": "electron main.js",
     "build": "react-app-rewired build --mode production",

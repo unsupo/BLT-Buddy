@@ -2,4 +2,5 @@
 *.iml
 venv
 build
+scripts/.venv/*
 node_modules
