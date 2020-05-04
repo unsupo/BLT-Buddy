@@ -1,10 +1,11 @@
 # TMP-Spring-20-Hackathon
 Electron app to aid in running blt project
-
+```bash
 yarn install && yarn build
- 
+``` 
+ ```bash
 npm start & node app.js
-
+```
 ```bash
 # start a livereaload server 
 npm start 
