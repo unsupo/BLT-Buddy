@@ -1,77 +1,96 @@
 'use strict';
 
-const {ipcMain, app,BrowserWindow, Tray, nativeImage, Notification} = require('electron');
+const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
 const jetpack = require('fs-jetpack');
-const cmd =  require('./cmd');
-
-const assetsDirectory = path.join(__dirname, 'assets','icons','png')
+const {fork} = require('child_process')
+const assetsDirectory = path.join(__dirname, 'assets', 'icons', 'png')
 
 app.allowRendererProcessReuse = true;
 let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
+let script = undefined;
 
-app.whenReady().then(createWindow).then(createTray).then(createTrayWindow).then(()=>{
+app.whenReady().then(createWindow).then(createTray).then(createTrayWindow).then(() => {
     // Now we can run a script and invoke a callback when complete, e.g.
     // run the server
-    cmd.runScript('./app.js', function (err) {
-        if (err) throw err;
-        console.log('finished running some-script.js');
-    });
+    // script = cmd.runScript('./app.js',  (err) => {
+    //     if (err) throw err;
+    //     console.log('finished running some-script.js');
+    // });
+    script = fork('./app.js')
+    script.on('message',args => args)
+    script.send({'cmd': 'ls'})
 }).catch(reason => console.log(reason));
+
+const getMainWindow = () =>{
+    if(win)
+        return win
+    return createWindow()
+}
 
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 700,
+        show: false,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            // Prevents renderer process code from not running when window is
+            // hidden
+            backgroundThrottling: false
         },
-        icon: path.join(assetsDirectory,'app64.png')
+        icon: path.join(assetsDirectory, 'app64.png')
     })
-    win.loadFile( __dirname+"/build/index.html");
+    win.loadFile(__dirname + "/build/index.html");
+
+    win.on('closed',()=>{
+        // console.log('closing')
+        win = undefined;
+    })
+    return win
 }
 
 function createTrayWindow() {
     tray_window = new BrowserWindow({
-        width: 300,
-        height: 450,
+        width: 220,
+        height: 320,
         show: false,
         frame: false,
         fullscreenable: false,
         resizable: false,
         transparent: true,
         webPreferences: {
+            nodeIntegration: true,
             // Prevents renderer process code from not running when window is
             // hidden
             backgroundThrottling: false
         }
     })
-    tray_window.loadFile( __dirname+"tray-window/build/index.html");
+    tray_window.loadFile(__dirname + "/tray-window/index.html");
 
     // Hide the window when it loses focus
-    window.on('blur', () => {
-        if (!window.webContents.isDevToolsOpened()) {
-            window.hide()
+    tray_window.on('blur', () => {
+        if (!tray_window.webContents.isDevToolsOpened()) {
+            tray_window.hide()
         }
     })
 }
 
-function notify() {
-    let myNotification = new Notification('Title', {
-        body: 'Lorem Ipsum Dolor Sit Amet'
+const sendNotification = (title,body,onclick) => {
+    let notification = new Notification(title, {
+        body: body
     })
 
-    myNotification.onclick = () => {
-        console.log('Notification clicked')
-    }
-    myNotification.show();
+    // Show window when notification is clicked
+    notification.onclick = onclick;
 }
-const createTray = ()=> {
-    const iconName = 'tray-icon.png';
-    const iconPath = path.join(assetsDirectory,iconName);
+
+function createTray() {
+    const iconName = 'tray-icon-stopped.png';
+    const iconPath = path.join(assetsDirectory, iconName);
     console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
     let nimage = nativeImage.createFromPath(iconPath);
     nimage = nimage.resize({'width': 16, 'height': 16})
@@ -81,17 +100,21 @@ const createTray = ()=> {
 
     tray.on('right-click', toggleWindow)
     tray.on('double-click', toggleWindow)
-    tray.on('click',(event => toggleWIndow()))
+    tray.on('click', (event => toggleWindow()))
 }
+
 const toggleWindow = () => {
     if (tray_window.isVisible()) {
         tray_window.hide()
     } else {
-        showWindow()
+        showTrayWindow()
     }
 }
-
-const showWindow = () => {
+const showMainWindow = () =>{
+    getMainWindow().show();
+    getMainWindow().focus();
+}
+const showTrayWindow = () => {
     const position = getWindowPosition()
     tray_window.setPosition(position.x, position.y, false)
     tray_window.show()
@@ -112,33 +135,64 @@ const getWindowPosition = () => {
 
 
 ipcMain.on('show-window', () => {
-    showWindow()
+    showTrayWindow()
 })
-ipcMain.on('app-update',(event, appStatus) => {
-    let iconv = undefined;
-    switch (appStatus.currenlty.icon) {
+ipcMain.on('open-window',(event, data) => {
+    switch(data['window']){
+        case 'tray': showTrayWindow(); break
+        case 'main': showMainWindow(); break
+    }
+});
+
+let icon_last;
+ipcMain.on('open-webpage',(event, data) => {
+    require("electron").shell.openExternal(data["link"]).then(value => console.log('webpage opened'))
+});
+
+ipcMain.on('app-update', (event, appStatus) => {
+    let iconv;
+    switch (appStatus['icon']) {
         case 'running':
             iconv = 'tray-icon-running.png';
-            break
-        case 'stopped':
-            iconv = 'tray-icon-stopped.png';
             break
         case 'working':
             iconv = 'tray-icon-working.png';
             break
-        default:
+        case 'error':
             iconv = 'tray-icon.png';
+            break
+        case 'stopped':
+        default:
+            iconv = 'tray-icon-stopped.png';
     }
-    tray.setImage(path.join(assetsDirectory,'tray-icon-.png'))
+    // console.log(iconv+","+appStatus['icon'])
+    if (icon_last && icon_last === iconv)
+        return;
+    sendNotification('BLT Status Update',appStatus['icon'],() => {
+        ipcRenderer.send('open-window',{'window': 'tray'}) // show window if notifaction is clicked
+    })
+    const iconPath = path.join(assetsDirectory, iconv);
+    // console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
+    let nimage = nativeImage.createFromPath(iconPath);
+    nimage = nimage.resize({'width': 16, 'height': 16})
+    tray.setImage(nimage);
+    tray.setToolTip(appStatus['icon']);
 });
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
+    console.log('quiting')
     if (process.platform !== 'darwin') {
         app.quit()
     }
+})
+
+app.on('quit',()=>{
+    console.log('quiting')
+    // process.kill(fork.pid,'SIGTERM')
+    script.kill('SIGINT'); // need to kill forked subprocess, node express webserver
 })
 
 app.on('activate', () => {

@@ -7,11 +7,14 @@
     "@salesforce/design-system-react": "^0.10.19",
     "babel-loader": "8.0.5",
     "body-parser": "^1.19.0",
+    "electron-fetch": "^1.4.0",
+    "electron-main-fetch": "^0.2.0",
     "fs-jetpack": "^2.2.3",
     "python-shell": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "shell": "^0.5.0"
   },
   "homepage": "./",
   "main": "main.js",
@@ -36,6 +39,7 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
     "react-app-rewired": "^2.1.5"
   }
 }

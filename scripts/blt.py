@@ -3,6 +3,7 @@
 
 import argparse
 import inspect
+import json
 import socket
 from pprint import pprint
 
@@ -71,7 +72,7 @@ class BLT:
                     if self.pretty:
                         pprint(res)
                     else:
-                        print(res)
+                        print(json.dumps(res))
                 except Exception as e:
                     print(e)
                 exit(0)

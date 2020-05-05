@@ -4,7 +4,7 @@ Electron app to aid in running blt project
 ## Build and install
 ```bash
 # installs dependencies
-yarn install && yarn build
+yarn install && yarn build && (cd scripts; pipenv install)
 # starts live reload server
 npm start
 # starts server
