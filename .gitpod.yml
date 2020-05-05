@@ -1,5 +1,5 @@
 tasks:
-   - init: yarn install && yarn build
+   - init: yarn install && yarn build && (cd scripts && pipenv install)
      command: npm start & node app.js
 ports:
    - port: 3000
