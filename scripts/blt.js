@@ -123,6 +123,11 @@ exports.disable_blt = () => {
         _command(working_dir_cmd + "blt --disable").then(value => resolve(value))
     )
 }
+exports.dummy = () => {
+    return new Promise(resolve =>
+        _command("sleep 1").then(value =>resolve(value))
+    )
+}
 exports.start_blt = () => {
     return new Promise(resolve => {
         const child = _cmd_detached(working_dir, path.join("/usr", "local", "bin", "blt"), ["--start-bg"]);
