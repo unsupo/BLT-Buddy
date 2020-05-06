@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - electron
+  pull_request:
+    branches:
+      # this will only run when pushed to the electron branch
+      - electron
+
+# each job happens in parallel
+jobs:
+  build_on_mac:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: electron
+      # github action to setup node on this job https://github.com/actions/setup-node
+      - uses: actions/setup-node@master
+        with:
+          node-version: 14.0.0
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - uses: dschep/install-pipenv-action@v1
+      - name: yarn install
+        run: |
+          yarn install
+      - name: yarn build static webpage
+        run: |
+          yarn build
+      - name: pipenv install
+        run: |
+          cd scripts && mkdir .venv && pipenv install
+      # done with setup process
+      - name: electron create app
+        run: |
+          npm run package-mac
+      - name: electron create dmg
+        run: |
+          npm run package-dmg
