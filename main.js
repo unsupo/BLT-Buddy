@@ -2,8 +2,6 @@
 
 const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
-const jetpack = require('fs-jetpack');
-const {fork} = require('child_process')
 const blt = require('./scripts/blt')
 
 
