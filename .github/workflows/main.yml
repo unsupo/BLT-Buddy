@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches: 
+      - electron
   pull_request:
     branches:
       # this will only run when pushed to the electron branch
