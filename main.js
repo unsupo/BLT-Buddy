@@ -2,16 +2,14 @@
 
 const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
-const jetpack = require('fs-jetpack');
-const {fork} = require('child_process')
 const blt = require('./scripts/blt')
-
 
 const assetsDirectory = path.join(__dirname, 'assets', 'icons', 'png')
 
 const appFolder = path.dirname(process.execPath)
 const updateExe = path.resolve(appFolder, '..', 'Update.exe')
 const exeName = path.basename(process.execPath)
+const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
 
@@ -31,15 +29,11 @@ fixPath();
 let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
-// let script = fork('./app.js')
-// script.on('message',args => args)
-// script.send({'cmd': 'ls'})
 
 app.whenReady()
     .then(createWindow)
     .then(createTray)
     .then(createTrayWindow)
-
 
 const getMainWindow = () =>{
     if(win)
@@ -97,13 +91,13 @@ function createTrayWindow() {
 }
 
 const sendNotification = (title,body,onclick) => {
-    let notification = new Notification(title, {
+    let notification = new Notification({
+        title: title,
         body: body
     })
-
-    // Show window when notification is clicked
-    notification.onclick = onclick;
-    notification.show();
+    notification.on('click', onclick)
+    return notification
+    // notification.show()
 }
 
 const getIcon = (relpath,size) =>{
@@ -113,12 +107,6 @@ const getIcon = (relpath,size) =>{
 }
 
 function createTray() {
-    // const iconName = 'tray-icon-stopped.png';
-    // const iconPath = path.join(assetsDirectory, iconName);
-    // console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
-    // let nimage = nativeImage.createFromPath(iconPath);
-    // nimage = nimage.resize({'width': 16, 'height': 16})
-    // console.log(nimage)
     tray = new Tray(getIcon('tray-icon-stopped.png',{'width': 16, 'height': 16}));
     // tray.on('click',(event => notify()))
 
@@ -189,6 +177,11 @@ ipcMain.on('app-update', (event, appStatus) => {
         case 'error':
             isUpdate=true;
             iconv = 'tray-icon.png';
+            blt.command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
+                sendNotification('BLT Issue Occurred',appStatus['error'],()=>{
+                    require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
+                }).show()
+            );
             break
         case 'stopped':
             isUpdate=true;
@@ -243,20 +236,26 @@ ipcMain.on('open-webpage-in-app',(event, data)=>{
         }
     })
 })
-ipcMain.on('sfm-needed',(event, args) => {
-    if(args==='true'){
-        sendNotification('BLT SFM Needed',
-            'Click here to log into TMP SFM or open a browser yourself and log in',
-            ()=>{
-                openPage('https://auth-crd.ops.sfdc.net/dana/home/index.cgi')
-            }
-        )
-    }
+
+// let notification;
+ipcMain.handle('sfm-needed',(event, args) => {
+    if(args)
+        return new Promise(resolve => {
+            sendNotification('BLT SFM Needed',
+                'Click here to log into TMP SFM or open a browser yourself and log in',
+                ()=>{
+                    console.log('click handled')
+                    openPage('https://auth-crd.ops.sfdc.net/dana/home/index.cgi')
+                }
+            ).show()
+            resolve('true')
+        })
+    return new Promise(resolve => resolve('false'))
 })
 
 ipcMain.handle('api', (event ,args)=> {
     let cmd;
-    switch (args) {
+    switch (args['cmd']) {
         case 'restart-blt': cmd = blt.restartBlt(); break
         case 'check-health': cmd = blt.checkHealth(); break
         case 'is-need-sfm': cmd = blt.isNeedSFM(); break
@@ -266,6 +265,7 @@ ipcMain.handle('api', (event ,args)=> {
         case 'sync-blt': cmd = blt.sync_blt(); break
         case 'enable-blt': cmd = blt.enable_blt(); break
         case 'disable-blt': cmd = blt.disable_blt(); break
+        case 'set-project': cmd = blt.set_project(args['args']['dir']); break
         default:
             // console.log(args)
             return

@@ -17,7 +17,8 @@ const func_killer = "\n" +
     "    ps -ef|grep $1|awk '{print $2}'|xargs kill -9\n" +
     "}"
 
-
+const proj = ' --project '
+let project = proj+"/app/main"
 
 const python_options = {
     pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
@@ -63,8 +64,8 @@ exports.cmd_detached = (cwd, cmd, argv0) => {
 exports.restartBlt = () => {
     return new Promise(resolve =>
         sfm().then(() => killblt().then(res3 => {
-            _command(working_dir_cmd + blt+" --db-stop").then(res2 => {
-                _command(working_dir_cmd + blt+" --db-start").then(res1 => {
+            _command(blt+project+" --db-stop").then(res2 => {
+                _command(blt+project+" --db-start").then(res1 => {
                     resolve(start_blt())
                 })
             })
@@ -94,38 +95,41 @@ exports.kill = (name) => {
 }
 exports.killblt = () => {
     return new Promise(resolve =>
-        _command(func_killer + "\n" + working_dir_cmd + "(timeout 20 blt --stop || killer bl[t])")
+        _command(func_killer + "\n" + "(timeout 20 blt "+project+" --stop || killer bl[t])")
             .then(value => resolve(value))
     )
 }
 exports.sfm = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --sfm").then(value => resolve(value))
+        _command(working_dir_cmd + " blt --sfm").then(value => resolve(value))
     )
 }
 exports.sync_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --sync").then(value => resolve(value))
+        _command(blt+project+" --sync").then(value => resolve(value))
     )
 }
 exports.build_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --build").then(value => resolve(value))
+        _command(blt+project+" --build").then(value =>resolve(value))
     )
 }
 exports.enable_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --enable").then(value => resolve(value))
+        _command(blt+project+" --enable").then(value => resolve(value))
     )
 }
 exports.disable_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --disable").then(value => resolve(value))
+        _command(blt+project+" --disable").then(value => resolve(value))
     )
+}
+exports.set_project = (dir) => {
+    project = dir;
 }
 exports.start_blt = () => {
     return new Promise(resolve => {
-        const child = _cmd_detached(working_dir, path.join("/usr", "local", "bin", "blt"), ["--start-bg"]);
+        const child = _cmd_detached(working_dir, blt, ["--start-bg"]);
         child.on('error', (err) => console.log(err))
         resolve({'pid': child.pid})
     })

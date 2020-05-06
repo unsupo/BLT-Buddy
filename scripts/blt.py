@@ -119,8 +119,11 @@ class BLT:
         pass
 
     def check_sfm(self):
-        child = pexpect.spawn('blt --sfm', timeout=10)
-        return not 'is not needed' in str(child.read())
+        try:
+            child = pexpect.spawn('blt --sfm', timeout=30)
+            return 'is not needed' not in str(child.read())
+        except Exception:
+            return True
 
 
 if __name__ == '__main__':
