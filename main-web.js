@@ -2,7 +2,7 @@ const express = require('express');
 const childProcess = require('child_process');
 const app = express();
 const port = 5001;
-const cmd = require('./cmd');
+const cmd = require('./scripts/cmd');
 
 // Setting up the public directory
 app.use(express.static(__dirname+"/build"));

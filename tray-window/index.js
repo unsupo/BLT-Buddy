@@ -1,70 +1,86 @@
 const {ipcRenderer, shell} = require('electron')
 
-let previousData = undefined
+let previousData = {}
 let isWorking = false;
+let lastCommand = undefined;
 
+
+/*
+All on click events handled here
+ */
+class_cmds = [
+    ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
+    ['js-kill-action','kill-blt'],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
+    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],
+]
 document.addEventListener('click', (event) => {
     if (event.target.href) {
-        // Open links in external browser
-        shell.openExternal(event.target.href).then(r => undefined);
-        event.preventDefault()
+        // open window links
+        const window_ref = 'window:'
+        if(event.target.href.startsWith(window_ref)){
+            const w = event.target.href.slice(window_ref.length)
+            ipcRenderer.send('open-window', {
+                'window': w
+            });
+        }else {
+            // Open links in external browser
+            shell.openExternal(event.target.href).then(r => undefined);
+            event.preventDefault()
+        }
     } else if (!isWorking && event.target.classList.contains('js-refresh-action')) {
         updateData()
-    } else if (event.target.classList.contains('js-quit-action')) {
-        // window.close()
-    } else if (event.target.classList.contains('js-start-action')) {
-        defaultPost('start-blt')
-    } else if (event.target.classList.contains('js-sync-action')) {
-        defaultPost('sync-blt')
-    } else if (event.target.classList.contains('js-stop-action')) {
-        defaultPost('stop-blt')
-    } else if (event.target.classList.contains('js-kill-action')) {
-        defaultPost('kill-blt')
-    } else if (event.target.classList.contains('open-webpage')) {
-        // window.open('http://localhost:6109');
-        ipcRenderer.send('open-webpage', {
-            'link': 'http://localhost:6109'
-        });
-    } else if (event.target.classList.contains('advanced-features')) {
-        ipcRenderer.send('open-window', {
-            'window': 'main'
-        });
     }
+    class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1]) : undefined)
 })
 
-const defaultPost = (path)=>{
-    postData(path).then((data)=>{
-        updateFunc()
-    }).catch((err)=>{
-        console.log(err)
-        isWorking=false
-        updateFunc()
-    });
+const setStatus = (status) => {
+    document.querySelector('.js-summary').textContent = 'STATUS: '+status
 }
 
 const getHealthData = () => {
     return getData('check-health');
 }
 
-const postData = (path, data, headers) =>{
+const getSFMData = () => {
+    return getData('is-need-sfm');
+}
+
+// use this for blt commands that require status change
+const runCommand = (cmd) =>{
     isWorking = true;
+    // setStatus('LOADING...')
+    const status = cmd.replace("-blt",'')+"ing...";
+    setStatus(status)
     stopUpdateFunc()
     ipcRenderer.send('app-update', {
-        'icon': 'working'
+        'icon': 'working', 'tool-tip': status
     });
-    return fetch('http://localhost'+":"+5000+'/'+path,{
-        method: 'POST',
-        headers: headers,
-        body: data ? JSON.stringify(data) : data
-    }).then((resp)=>{
-        return resp.json()
+    return defaultNodeCmd(cmd)
+}
+
+//basic get api command
+const defaultNodeCmd = (cmd) =>{
+    lastCommand = cmd
+    return new Promise(resolve => {
+        ipcRenderer.invoke('api', cmd).then(value => {
+            isWorking=false
+            updateFunc()
+            resolve(value)
+        })
     });
 }
 
-const getData = (path) =>{
-    return window.fetch('http://localhost:5000/'+path).then((response) => {
-        return response.json()
-    })
+// use this for background tasks like checking for status
+const getData = (cmd) =>{
+    // if(isWorking)
+    //     return undefined
+    isWorking = true;
+    // setStatus('LOADING...')
+    stopUpdateFunc()
+    // ipcRenderer.send('app-update', {
+    //     'icon': 'working'
+    // });
+    return defaultNodeCmd(cmd)
 }
 
 const updateView = (data) => {
@@ -85,26 +101,36 @@ const updateView = (data) => {
     document.querySelector('.js-health-check-ui').textContent = data['app']['ui_check']
 
 }
-`# example
-{
-  "err": null,
-  "res": [
-    "{'app': {'port_check': 'UP', 'ui_check': 'UP'}}"
-  ]
-}`
+let isGettingHealthData = false, isGettingSFMData = false;
 const updateData = () =>{
-    getHealthData().then(value => {
-        value = JSON.parse(value['res']);
-        // console.log(value);
-        updateView(value);
-        ipcRenderer.send('app-update', {
-            'icon': value['app']['ui_check']  === 'UP' ? 'running' : 'stopped'
-        });
-        previousData = value;
-    })
+    if(!isGettingHealthData) {
+        isGettingHealthData = true;
+        getHealthData().then(value => {
+            value = JSON.parse(value['res']);
+            // console.log(value);
+            updateView(value);
+            if(!isWorking)
+                ipcRenderer.send('app-update', {
+                    'icon': value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                });
+            previousData['health'] = value;
+            isGettingHealthData = false;
+        })
+    }
+    if(!isGettingSFMData) {
+        isGettingSFMData = true;
+        getSFMData().then(value => {
+            value = JSON.parse(value['res']);
+            // console.log(value);
+            // updateView(value);
+            if (value['sfm-needed'] === 'true')
+                ipcRenderer.send('sfm-needed', value['sfm-needed']);
+            previousData['sfm'] = value;
+            isGettingSFMData = false;
+        })
+    }
 };
 
-// Refresh weather every 10 minutes
 const oneSecond = 1000;
 const oneMinute = 60 * oneSecond;
 const tenMinutes = oneMinute*10;
@@ -113,7 +139,7 @@ let updateVar;
 updateFunc();
 
 function updateFunc() {
-    updateVar = setInterval(updateData, oneSecond);
+    updateVar = setInterval(updateData, oneSecond*10);
 }
 function stopUpdateFunc(){
     clearInterval(updateVar);
@@ -121,3 +147,53 @@ function stopUpdateFunc(){
 
 // Update initial weather when loaded
 document.addEventListener('DOMContentLoaded', updateData)
+
+
+
+/*
+// for post
+const defaultPost = (path)=>{
+    lastCommand = path
+    postData(path).then((data)=>{
+        updateFunc()
+    }).catch((err)=>{
+        console.log(err)
+        isWorking=false
+        updateFunc()
+    });
+}
+
+const postData = (path, data, headers) =>{
+    isWorking = true;
+    setStatus('LOADING...')
+    stopUpdateFunc()
+    ipcRenderer.send('app-update', {
+        'icon': 'working'
+    });
+    return fetch('http://localhost'+":"+5000+'/'+path,{
+        method: 'POST',
+        headers: headers,
+        body: data ? JSON.stringify(data) : data
+    }).then((resp)=>{
+        return resp.json()
+    });
+}
+        // this causes too many requests
+        // ipcRenderer.on('api-reply',(event, args) =>{
+        //     isWorking=false
+        //     updateFunc()
+        //     resolve(args)
+        // })
+
+    // return new Promise(resolve => {
+    //     ipcRenderer.invoke('api', cmd).then(value => {
+    //         isWorking = false
+    //         updateFunc()
+    //         // console.log(args)
+    //         resolve(args)
+    //     })
+    // })
+    // return window.fetch('http://localhost:5000/'+path).then((response) => {
+    //     return response.json()
+    // })
+ */
