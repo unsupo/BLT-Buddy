@@ -113,12 +113,6 @@ const getIcon = (relpath,size) =>{
 }
 
 function createTray() {
-    // const iconName = 'tray-icon-stopped.png';
-    // const iconPath = path.join(assetsDirectory, iconName);
-    // console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
-    // let nimage = nativeImage.createFromPath(iconPath);
-    // nimage = nimage.resize({'width': 16, 'height': 16})
-    // console.log(nimage)
     tray = new Tray(getIcon('tray-icon-stopped.png',{'width': 16, 'height': 16}));
     // tray.on('click',(event => notify()))
 
