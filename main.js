@@ -271,11 +271,6 @@ ipcMain.handle('api', (event ,args)=> {
             return
     }
     return cmd
-    // cmd.then(value =>event.sender.send('api-reply',value))
-    // cmd.then(value =>{
-    //     console.log(cmd+" "+args+" "+value)
-    //     return value
-    // })
 })
 
 // Quit when all windows are closed.
@@ -290,13 +285,6 @@ app.on('window-all-closed', () => {
 
 app.on('quit',()=>{
     console.log('quiting')
-    // process.kill(fork.pid,'SIGTERM')
-    try {
-        script.kill('SIGINT'); // need to kill forked subprocess, node express webserver
-    }catch (e) {
-        // script is not defined
-        // script doesn't exist anymore after change to use ipc
-    }
 })
 
 app.on('activate', () => {
