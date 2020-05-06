@@ -72,8 +72,8 @@ function createWindow() {
 
 function createTrayWindow() {
     tray_window = new BrowserWindow({
-        width: 220,
-        height: 400,
+        width: 800,
+        height: 600,
         show: false,
         frame: false,
         fullscreenable: false,
@@ -266,6 +266,9 @@ ipcMain.handle('api', (event ,args)=> {
         case 'sync-blt': cmd = blt.sync_blt(); break
         case 'enable-blt': cmd = blt.enable_blt(); break
         case 'disable-blt': cmd = blt.disable_blt(); break
+        case 'build-blt': cmd = blt.build_blt(); break
+        case 'dummy': cmd = blt.dummy(); break
+        case 'quit': cmd = app.quit(); break
         default:
             // console.log(args)
             return

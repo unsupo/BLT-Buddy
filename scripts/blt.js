@@ -74,6 +74,7 @@ exports.restartBlt = () => {
 exports.checkHealth = () =>{
     return new Promise(resolve =>
         _runPython(['--health_check'],(err, ress) => {
+            console.log(ress + " < > " + err);
             resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
         })
     )
@@ -125,7 +126,7 @@ exports.disable_blt = () => {
 }
 exports.dummy = () => {
     return new Promise(resolve =>
-        _command("sleep 1").then(value =>resolve(value))
+        _command("blt --butts").then(value =>resolve(value))
     )
 }
 exports.start_blt = () => {

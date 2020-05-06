@@ -11,7 +11,7 @@ All on click events handled here
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
     ['js-kill-action','kill-blt'],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
-    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],
+    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'], ['build-blt','build-blt'], ['dummy','dummy'], ['quit', 'quit'],
 ]
 document.addEventListener('click', (event) => {
     if (event.target.href) {
@@ -34,7 +34,7 @@ document.addEventListener('click', (event) => {
 })
 
 const setStatus = (status) => {
-    document.querySelector('.js-summary').textContent = 'STATUS: '+status
+    document.querySelector('.js-summary').textContent = status;
 }
 
 const getHealthData = () => {
@@ -49,7 +49,7 @@ const getSFMData = () => {
 const runCommand = (cmd) =>{
     isWorking = true;
     // setStatus('LOADING...')
-    const status = cmd.replace("-blt",'')+"ing...";
+    const status = cmd.replace("-blt",'').toUpperCase()+"ING...";
     setStatus(status)
     stopUpdateFunc()
     ipcRenderer.send('app-update', {
@@ -63,7 +63,22 @@ const defaultNodeCmd = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
         ipcRenderer.invoke('api', cmd).then(value => {
+            if(cmd == 'is-need-sfm'){
+                return;
+            }
             isWorking=false
+            if(value["err"]){
+                ipcRenderer.send('app-update', {
+                    'icon': 'error', 'tool-tip': status
+                    });
+                setStatus("ERROR");
+            }
+            if(cmd != 'start-blt' && !value["err"]){
+                ipcRenderer.send('app-update', {
+                    'icon': 'idle', 'tool-tip': status
+                    });
+                setStatus("SUCCESS");
+            }
             updateFunc()
             resolve(value)
         })
@@ -83,18 +98,21 @@ const getData = (cmd) =>{
     return defaultNodeCmd(cmd)
 }
 
+let status = 'STOPPED'
+
+
 const updateView = (data) => {
     // const currently = weather.currently
-    let status = 'STOPPED'
     // document.querySelector('.js-start-action').disabled='enabled'
     // document.querySelector('.js-stop-action').disabled='disabled'
-    if(data['app']['ui_check'] === 'UP') {
+    console.log(data);
+    if(data['app'] != null && data['app']['ui_check'] === 'UP') {
         status = "RUNNING"
         // document.querySelector('.js-start-action').disabled='disabled'
         // document.querySelector('.js-stop-action').disabled='enabled'
     }
 
-    document.querySelector('.js-summary').textContent = 'STATUS: '+status
+    document.querySelector('.js-summary').textContent = status
     // document.querySelector('.js-update-time').textContent = `at ${new Date(currently.time).toLocaleTimeString()}`
     //
     document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
@@ -106,12 +124,14 @@ const updateData = () =>{
     if(!isGettingHealthData) {
         isGettingHealthData = true;
         getHealthData().then(value => {
-            value = JSON.parse(value['res']);
-            // console.log(value);
+            if(value['res'] != null){
+                value = JSON.parse(value['res']);
+            }
+            console.log(value);
             updateView(value);
             if(!isWorking)
                 ipcRenderer.send('app-update', {
-                    'icon': value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                    'icon': value['app'] != null && value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
                 });
             previousData['health'] = value;
             isGettingHealthData = false;
@@ -120,7 +140,9 @@ const updateData = () =>{
     if(!isGettingSFMData) {
         isGettingSFMData = true;
         getSFMData().then(value => {
-            value = JSON.parse(value['res']);
+            if(value['res'] != null){
+                value = JSON.parse(value['res']);
+            }
             // console.log(value);
             // updateView(value);
             if (value['sfm-needed'] === 'true')
