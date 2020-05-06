@@ -1,15 +1,17 @@
 {
-  "name": "my-app",
+  "name": "blt-buddy",
   "version": "0.1.0",
   "private": true,
+  "productName": "BLT-Buddy",
   "dependencies": {
     "@salesforce-ux/design-system": "^2.11.9",
     "@salesforce/design-system-react": "^0.10.19",
     "babel-loader": "8.0.5",
     "body-parser": "^1.19.0",
-    "electron-fetch": "^1.4.0",
-    "electron-main-fetch": "^0.2.0",
+    "cors": "^2.8.5",
+    "fix-path": "^3.0.0",
     "fs-jetpack": "^2.2.3",
+    "node-fetch": "^2.6.0",
     "python-shell": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -25,7 +27,10 @@
     "build": "react-app-rewired build --mode production",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject --env=jsdom",
-    "web": "node main-web.js"
+    "web": "node main-web.js",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-dmg": "electron-installer-dmg ./release-builds/BLT-Buddy-darwin-x64/BLT-Buddy.app BLT-Buddy --icon=assets/icons/mac/icon.icns --title=BLT-Buddy --background=assets/icons/mac/mac-bkg.png --overwrite --out=./release-builds",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,9 +42,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "cors": "^2.8.5",
     "electron": "^8.2.5",
     "electron-builder": "^22.6.0",
+    "electron-installer-dmg": "^3.0.0",
+    "electron-packager": "^14.2.1",
     "react-app-rewired": "^2.1.5"
   }
 }

@@ -1,6 +1,8 @@
-
+const path = require('path');
 const childProcess = require('child_process');
+const fixPath = require('fix-path')
 
+fixPath();
 exports.runScript = (scriptPath, callback) => {
 
     // keep track of whether callback has been invoked to prevent multiple invocations
@@ -22,5 +24,12 @@ exports.runScript = (scriptPath, callback) => {
         const err = code === 0 ? null : new Error('exit code ' + code);
         callback(err);
     });
+}
 
+
+exports.resolveHome = (filepath) => {
+    if (filepath[0] === '~') {
+        return path.join(process.env.HOME, filepath.slice(1));
+    }
+    return filepath;
 }

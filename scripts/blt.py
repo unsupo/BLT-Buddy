@@ -5,6 +5,8 @@ import argparse
 import inspect
 import json
 import socket
+import subprocess
+import pexpect
 from pprint import pprint
 
 import requests
@@ -17,6 +19,17 @@ Run BLT Commands
 EXAMPLES = '''\
 ./blt.py --check-health
 '''
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36",
+    "Host": "auth-crd.ops.sfdc.net",
+    "Referer": "https://auth-crd.ops.sfdc.net/dana-na/auth/url_default/welcome.cgi?p=forced-off",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1"
+}
 
 
 class BLT:
@@ -105,8 +118,13 @@ class BLT:
     def start_blt(self):
         pass
 
+    def check_sfm(self):
+        child = pexpect.spawn('blt --sfm', timeout=10)
+        return not 'is not needed' in str(child.read())
+
 
 if __name__ == '__main__':
     # print('hi')
-    # BLT().command_line()
+    # r = BLT().check_sfm()
+    # print(r)
     BLT().command_line()

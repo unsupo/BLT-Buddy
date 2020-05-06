@@ -4,25 +4,42 @@ const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification
 const path = require('path');
 const jetpack = require('fs-jetpack');
 const {fork} = require('child_process')
+const blt = require('./scripts/blt')
+
+
 const assetsDirectory = path.join(__dirname, 'assets', 'icons', 'png')
 
+const appFolder = path.dirname(process.execPath)
+const updateExe = path.resolve(appFolder, '..', 'Update.exe')
+const exeName = path.basename(process.execPath)
+
+const fixPath = require('fix-path')
+
+app.setLoginItemSettings({
+    openAtLogin: true,
+    path: updateExe,
+    args: [
+        '--processStart', `"${exeName}"`,
+        '--process-start-args', `"--hidden"`
+    ]
+})
+
 app.allowRendererProcessReuse = true;
+
+fixPath();
+
 let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
-let script = undefined;
+// let script = fork('./app.js')
+// script.on('message',args => args)
+// script.send({'cmd': 'ls'})
 
-app.whenReady().then(createWindow).then(createTray).then(createTrayWindow).then(() => {
-    // Now we can run a script and invoke a callback when complete, e.g.
-    // run the server
-    // script = cmd.runScript('./app.js',  (err) => {
-    //     if (err) throw err;
-    //     console.log('finished running some-script.js');
-    // });
-    script = fork('./app.js')
-    script.on('message',args => args)
-    script.send({'cmd': 'ls'})
-}).catch(reason => console.log(reason));
+app.whenReady()
+    .then(createWindow)
+    .then(createTray)
+    .then(createTrayWindow)
+
 
 const getMainWindow = () =>{
     if(win)
@@ -42,7 +59,7 @@ function createWindow() {
             // hidden
             backgroundThrottling: false
         },
-        icon: path.join(assetsDirectory, 'app64.png')
+        icon: getIcon('apple-icon.png',{'width': 512, 'height': 512})
     })
     win.loadFile(__dirname + "/build/index.html");
 
@@ -56,11 +73,11 @@ function createWindow() {
 function createTrayWindow() {
     tray_window = new BrowserWindow({
         width: 220,
-        height: 320,
+        height: 400,
         show: false,
         frame: false,
         fullscreenable: false,
-        resizable: false,
+        // resizable: false,
         transparent: true,
         webPreferences: {
             nodeIntegration: true,
@@ -86,16 +103,23 @@ const sendNotification = (title,body,onclick) => {
 
     // Show window when notification is clicked
     notification.onclick = onclick;
+    notification.show();
+}
+
+const getIcon = (relpath,size) =>{
+    let nimage = nativeImage.createFromPath(path.join(assetsDirectory,relpath))
+    nimage = nimage.resize(size)
+    return nimage
 }
 
 function createTray() {
-    const iconName = 'tray-icon-stopped.png';
-    const iconPath = path.join(assetsDirectory, iconName);
-    console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
-    let nimage = nativeImage.createFromPath(iconPath);
-    nimage = nimage.resize({'width': 16, 'height': 16})
-    console.log(nimage)
-    tray = new Tray(nimage);
+    // const iconName = 'tray-icon-stopped.png';
+    // const iconPath = path.join(assetsDirectory, iconName);
+    // console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
+    // let nimage = nativeImage.createFromPath(iconPath);
+    // nimage = nimage.resize({'width': 16, 'height': 16})
+    // console.log(nimage)
+    tray = new Tray(getIcon('tray-icon-stopped.png',{'width': 16, 'height': 16}));
     // tray.on('click',(event => notify()))
 
     tray.on('right-click', toggleWindow)
@@ -143,41 +167,116 @@ ipcMain.on('open-window',(event, data) => {
         case 'main': showMainWindow(); break
     }
 });
-
-let icon_last;
+const openPage = (data)=>{
+    require("electron").shell.openExternal(data).then(value => console.log('webpage opened'))
+}
+let icon_last, lastUpdate;
 ipcMain.on('open-webpage',(event, data) => {
-    require("electron").shell.openExternal(data["link"]).then(value => console.log('webpage opened'))
+    openPage(data["link"])
 });
 
 ipcMain.on('app-update', (event, appStatus) => {
     let iconv;
+    let isUpdate = false;
     switch (appStatus['icon']) {
         case 'running':
             iconv = 'tray-icon-running.png';
+            isUpdate=true;
             break
         case 'working':
             iconv = 'tray-icon-working.png';
             break
         case 'error':
+            isUpdate=true;
             iconv = 'tray-icon.png';
             break
         case 'stopped':
+            isUpdate=true;
         default:
             iconv = 'tray-icon-stopped.png';
     }
     // console.log(iconv+","+appStatus['icon'])
     if (icon_last && icon_last === iconv)
         return;
-    sendNotification('BLT Status Update',appStatus['icon'],() => {
-        ipcRenderer.send('open-window',{'window': 'tray'}) // show window if notifaction is clicked
-    })
-    const iconPath = path.join(assetsDirectory, iconv);
-    // console.log(jetpack.exists(iconPath)); //should be "file", otherwise you are not pointing to your icon file
-    let nimage = nativeImage.createFromPath(iconPath);
-    nimage = nimage.resize({'width': 16, 'height': 16})
-    tray.setImage(nimage);
-    tray.setToolTip(appStatus['icon']);
+    // console.log(iconv+" "+icon_last)
+    // TODO fix notication when status changes from OFF to ON and vice versa
+    // if(lastUpdate && icon_last && isUpdate && icon_last !== lastUpdate) {
+    //     sendNotification('BLT Status Update', 'BLT Status Changed to ' + appStatus['icon'], () => {
+    //         ipcRenderer.send('open-window', {'window': 'tray'}) // show window if notifaction is clicked
+    //     })
+    //     lastUpdate = icon_last
+    // }
+    lastUpdate = icon_last
+    icon_last = iconv
+    tray.setImage(getIcon(iconv,{'width': 16, 'height': 16}));
+    tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
 });
+let browserWindow;
+ipcMain.on('open-webpage-in-app',(event, data)=>{
+     browserWindow = new BrowserWindow({
+        width: 500,
+        height: 500,
+        show: false,
+        frame: false,
+        fullscreenable: false,
+        resizable: false,
+        transparent: true,
+        webPreferences: {
+            nodeIntegration: true,
+            // Prevents renderer process code from not running when window is
+            // hidden
+            backgroundThrottling: false
+        }
+    })
+    browserWindow.loadURL(data['url']).then(value => console.log('webpage in app opened'))
+    const position = getWindowPosition()
+    browserWindow.setPosition(position.x, position.y, false)
+    browserWindow.show()
+    browserWindow.focus()
+    const sendCheckSFM = () => script.send({'message': 'checkSFM'})
+    const interval = setInterval(sendCheckSFM,1000)
+    script.on('message',args => {
+        if(args['sfm-needed'] === 'false') {
+            browserWindow.close()
+            clearInterval(interval);
+            console.log('closed')
+        }
+    })
+})
+ipcMain.on('sfm-needed',(event, args) => {
+    if(args==='true'){
+        sendNotification('BLT SFM Needed',
+            'Click here to log into TMP SFM or open a browser yourself and log in',
+            ()=>{
+                openPage('https://auth-crd.ops.sfdc.net/dana/home/index.cgi')
+            }
+        )
+    }
+})
+
+ipcMain.handle('api', (event ,args)=> {
+    let cmd;
+    switch (args) {
+        case 'restart-blt': cmd = blt.restartBlt(); break
+        case 'check-health': cmd = blt.checkHealth(); break
+        case 'is-need-sfm': cmd = blt.isNeedSFM(); break
+        case 'kill-blt': cmd = blt.killblt(); break
+        case 'start-blt': cmd = blt.start_blt(); break
+        case 'build-blt': cmd = blt.build_blt(); break
+        case 'sync-blt': cmd = blt.sync_blt(); break
+        case 'enable-blt': cmd = blt.enable_blt(); break
+        case 'disable-blt': cmd = blt.disable_blt(); break
+        default:
+            // console.log(args)
+            return
+    }
+    return cmd
+    // cmd.then(value =>event.sender.send('api-reply',value))
+    // cmd.then(value =>{
+    //     console.log(cmd+" "+args+" "+value)
+    //     return value
+    // })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -192,7 +291,12 @@ app.on('window-all-closed', () => {
 app.on('quit',()=>{
     console.log('quiting')
     // process.kill(fork.pid,'SIGTERM')
-    script.kill('SIGINT'); // need to kill forked subprocess, node express webserver
+    try {
+        script.kill('SIGINT'); // need to kill forked subprocess, node express webserver
+    }catch (e) {
+        // script is not defined
+        // script doesn't exist anymore after change to use ipc
+    }
 })
 
 app.on('activate', () => {

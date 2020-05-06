@@ -4,3 +4,5 @@ venv
 build
 scripts/.venv/*
 node_modules
+release-builds
+.DS_Store
