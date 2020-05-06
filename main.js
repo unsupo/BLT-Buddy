@@ -271,11 +271,6 @@ ipcMain.handle('api', (event ,args)=> {
             return
     }
     return cmd
-    // cmd.then(value =>event.sender.send('api-reply',value))
-    // cmd.then(value =>{
-    //     console.log(cmd+" "+args+" "+value)
-    //     return value
-    // })
 })
 
 // Quit when all windows are closed.
