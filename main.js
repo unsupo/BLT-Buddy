@@ -290,13 +290,6 @@ app.on('window-all-closed', () => {
 
 app.on('quit',()=>{
     console.log('quiting')
-    // process.kill(fork.pid,'SIGTERM')
-    try {
-        script.kill('SIGINT'); // need to kill forked subprocess, node express webserver
-    }catch (e) {
-        // script is not defined
-        // script doesn't exist anymore after change to use ipc
-    }
 })
 
 app.on('activate', () => {
