@@ -48,6 +48,9 @@ const getSFMData = () => {
 // use this for blt commands that require status change
 const runCommand = (cmd) =>{
     isWorking = true;
+    document.getElementsByClassName('js-start-action')[0].disabled = true;
+    document.getElementsByClassName('js-sync-action')[0].disabled = true;
+    document.getElementsByClassName('js-build-action')[0].disabled = true;
     // setStatus('LOADING...')
     const status = cmd.replace("-blt",'').toUpperCase()+"ING...";
     setStatus(status)
@@ -67,11 +70,14 @@ const defaultNodeCmd = (cmd) =>{
                 return;
             }
             isWorking=false
+            document.getElementsByClassName('js-start-action')[0].disabled = false;
+            document.getElementsByClassName('js-sync-action')[0].disabled = false;
+            document.getElementsByClassName('js-build-action')[0].disabled = false;
             if(value["err"]){
                 ipcRenderer.send('app-update', {
                     'icon': 'error', 'tool-tip': status
                     });
-                setStatus("ERROR");
+                setStatus(value["err"]);
             }
             if(cmd != 'start-blt' && !value["err"]){
                 ipcRenderer.send('app-update', {

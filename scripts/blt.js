@@ -74,7 +74,6 @@ exports.restartBlt = () => {
 exports.checkHealth = () =>{
     return new Promise(resolve =>
         _runPython(['--health_check'],(err, ress) => {
-            console.log(ress + " < > " + err);
             resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
         })
     )
@@ -106,7 +105,7 @@ exports.sfm = () => {
 }
 exports.sync_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + "blt --sync").then(value => resolve(value))
+        _command(working_dir_cmd + "blt --butts").then(value => resolve(value))
     )
 }
 exports.build_blt = () => {
