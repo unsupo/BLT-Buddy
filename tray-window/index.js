@@ -4,7 +4,6 @@ let previousData = {}
 let isWorking = false;
 let lastCommand = undefined;
 
-
 /*
 All on click events handled here
  */
@@ -38,11 +37,11 @@ const setStatus = (status) => {
 }
 
 const getHealthData = () => {
-    return getData('check-health');
+    return getData({cmd:'check-health'});
 }
 
 const getSFMData = () => {
-    return getData('is-need-sfm');
+    return getData({cmd:'is-need-sfm'});
 }
 
 // use this for blt commands that require status change
@@ -55,7 +54,25 @@ const runCommand = (cmd) =>{
     ipcRenderer.send('app-update', {
         'icon': 'working', 'tool-tip': status
     });
-    return defaultNodeCmd(cmd)
+    return _defaultNodeCmd({cmd:cmd})
+}
+let isError = false;
+
+const _defaultNodeCmd = (cmd) =>{
+    lastCommand = cmd
+    return new Promise(resolve => {
+        ipcRenderer.invoke('api', cmd).then(value => {
+            isWorking=false
+            if(value['err']) {
+                isError = true
+                ipcRenderer.send('app-update', {
+                    'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
+                });
+            }
+            updateFunc()
+            resolve(value)
+        })
+    });
 }
 
 //basic get api command
@@ -64,6 +81,12 @@ const defaultNodeCmd = (cmd) =>{
     return new Promise(resolve => {
         ipcRenderer.invoke('api', cmd).then(value => {
             isWorking=false
+            if(value['err']) {
+                isError = true
+                ipcRenderer.send('app-update', {
+                    'icon': 'error', 'tool-tip': value['err']
+                });
+            }
             updateFunc()
             resolve(value)
         })
@@ -102,6 +125,7 @@ const updateView = (data) => {
 
 }
 let isGettingHealthData = false, isGettingSFMData = false;
+let createdNotificationTime = Date.now()-1000;
 const updateData = () =>{
     if(!isGettingHealthData) {
         isGettingHealthData = true;
@@ -123,8 +147,9 @@ const updateData = () =>{
             value = JSON.parse(value['res']);
             // console.log(value);
             // updateView(value);
-            if (value['sfm-needed'] === 'true')
-                ipcRenderer.send('sfm-needed', value['sfm-needed']);
+            // don't spam notifications only do it every 10 minutes while sfm is needed
+            if (value && ((new Date) - createdNotificationTime > tenMinutes))
+                ipcRenderer.invoke('sfm-needed', value).then(value1 => createdNotificationTime=Date.now())
             previousData['sfm'] = value;
             isGettingSFMData = false;
         })
