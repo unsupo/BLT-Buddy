@@ -6,7 +6,7 @@ const {runPython, command, cmd_detached, resolveHome} = require("./cmd");
 
 fixPath();
 
-let working_dir = cmd.resolveHome(path.join("~", "blt", "app", "main"));
+let working_dir = resolveHome(path.join("~", "blt", "app", "main"));
 
 const proj = ' --project '
 let projectDir = "/app/main"
