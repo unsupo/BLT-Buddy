@@ -2,7 +2,7 @@ const {resolveHome} = require('./cmd')
 const path = require('path')
 
 
-class Constants {
+module.exports
     logdir = resolveHome(path.join("~","logs"))
     basedir = 'data'
     cmddir = path.join(this.basedir,"cmd")
