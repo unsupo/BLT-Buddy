@@ -48,10 +48,13 @@ const _run_cmd = (cmd) => {
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
         const c = `#!/usr/bin/env bash
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>${log} 2>&1
 function runCMD(){
     ${cmd}
 }
-runCMD 2>&1 ${log} & jobs -p > ${pid}`
+runCMD & jobs -p > ${pid}`
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
