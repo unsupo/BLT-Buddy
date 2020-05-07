@@ -41,8 +41,9 @@ const _run_cmd = (cmd) => {
         const log = path.join(cmdlogdir, hash + ".log")
         const pid = path.join(piddir, hash + ".pid")
         const script = path.join(scriptsdir, hash + ".sh")
-        fs.writeFileSync(script,cmd+" > "+log+" & echo $! > "+pid)
-        return _cmd_detached(cwd, cmd, argv0)
+        if(!fs.existsSync(script))
+            fs.writeFileSync(script,cmd+" > "+log+" & echo $! > "+pid)
+        resolve(_cmd_detached(scriptsdir, script, undefined))
     })
 }
 
