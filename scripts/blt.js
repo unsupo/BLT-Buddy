@@ -32,6 +32,8 @@ const process_checker = "function process_checker(){\n" +
     "\n" +
     "process_checker "
 
+// TODO save or find pid and kill be able to kill it if requested
+// TODO sync and others that have user prompt
 
 const python_options = {
     pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
