@@ -29,7 +29,7 @@ const _command = (cmd) =>{
 }
 
 const _run_cmd = (cmd) => {
-    
+    const hash = 
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
