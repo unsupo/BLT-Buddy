@@ -60,7 +60,7 @@ ${cmd}`
         }isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-            const p = _cmd_detached(constants.scriptsdir, script, undefined, out, err)
+            const p = _cmd_detached(constants.scriptsdir, script, undefined, out, err).pid
             fs.writeFileSync(pid,p)
             return resolve(p)
         })
