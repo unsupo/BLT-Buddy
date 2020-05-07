@@ -1,6 +1,6 @@
 'use strict';
 
-const {mkdir} = require("fs-extra");
+const {mkdirp} = require("fs-extra");
 
 const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
@@ -35,7 +35,8 @@ let win = undefined;
 
 // actions to do on application start up
 const startUp = () => {
-    mkdir(constants.piddir)
+    mkdirp(constants.piddir)
+    mkdirp(constants.logdir)
 }
 
 app.whenReady()
