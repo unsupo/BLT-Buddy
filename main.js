@@ -15,7 +15,6 @@ const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
 const {constants} = require('./scripts/constants')
-c = 
 
 app.setLoginItemSettings({
     openAtLogin: true,
@@ -36,8 +35,8 @@ let win = undefined;
 
 // actions to do on application start up
 const startUp = () => {
-    mkdirp(piddir)
-    mkdirp(logdir)
+    mkdirp(constants.piddir)
+    mkdirp(constants.logdir)
 }
 
 app.whenReady()
