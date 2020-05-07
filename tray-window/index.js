@@ -87,17 +87,16 @@ const runApiCommand = (cmd) =>{
             if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
                 isWorking = false // main returned a result so we aren't working anymore
                 disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
+                ipcRenderer.send('app-update', {
+                    'icon': 'working', 'tool-tip': status
+                });
+                setStatus("SUCCESS");
             }else if(!isWorking) { // if it's not working and it's a health check then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
                 setStatus(s);
                 ipcRenderer.send('app-update', {
                     'icon':s, 'tool-tip':s
                 });
-            } else{
-                ipcRenderer.send('app-update', {
-                    'icon': 'working', 'tool-tip': status
-                });
-                setStatus("SUCCESS");
             }
             updateFunc()
             resolve(value)
