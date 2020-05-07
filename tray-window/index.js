@@ -111,11 +111,16 @@ const updateView = (data) => {
     // const currently = weather.currently
     // document.querySelector('.js-start-action').disabled='enabled'
     // document.querySelector('.js-stop-action').disabled='disabled'
+    let openLink = document.getElementsByClassName('open-webpage')[0];
+
     console.log(data);
     if(data['app'] != null && data['app']['ui_check'] === 'UP') {
         status = "RUNNING"
+        openLink.style.visibility = "visible";
         // document.querySelector('.js-start-action').disabled='disabled'
         // document.querySelector('.js-stop-action').disabled='enabled'
+    }else{
+        openLink.style.visibility = "hidden";
     }
 
     document.querySelector('.js-summary').textContent = status

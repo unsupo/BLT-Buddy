@@ -260,7 +260,9 @@ ipcMain.handle('api', (event ,args)=> {
         case 'restart-blt': cmd = blt.restartBlt(); break
         case 'check-health': cmd = blt.checkHealth(); break
         case 'is-need-sfm': cmd = blt.isNeedSFM(); break
-        case 'kill-blt': cmd = blt.killblt(); break
+        case 'kill-blt': 
+        console.log("here i go killing again");
+        cmd = blt.killblt(); break
         case 'start-blt': cmd = blt.start_blt(); break
         case 'build-blt': cmd = blt.build_blt(); break
         case 'sync-blt': cmd = blt.sync_blt(); break
