@@ -9,7 +9,7 @@ const piddir = path.join(cmddir,'pids')
 const scriptsdir = path.join(cmddir,'scripts')
 const logfile = path.join(logdir,"blt-buddy.log")
 
-module.exports = Object.freeze({
+module.constants = Object.freeze({
     logdir: logdir,
     basedir: basedir,
     cmddir: cmddir,
