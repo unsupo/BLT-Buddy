@@ -46,20 +46,23 @@ const getSFMData = () => {
     return getData({cmd:'is-need-sfm'});
 }
 
-const disableButtons = (buttonClasses) =>{
-    if(typeof buttonClasses === 'string')
-        document.getElementsByClassName(buttonClasses)[0].disabled = true;
-    else
-        for()
+/*
+pass in one class or an array of classes
+pass in a state either true or false otherwise it will use the opposite of current state
+ */
+const disableEnableButtons = (buttonClasses,isDisabled) =>{
+    if(typeof buttonClasses === 'string') {
+        buttonClasses = [buttonClasses];
+    buttonClasses.forEach(buttonClass=>
+        document.getElementsByClassName(buttonClasses)[0].disabled =
+            isDisabled?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
 }
 
 // use this for blt commands that require status change
 const runCommand = (cmd) =>{
     isWorking = true;
     // setStatus('LOADING...')
-    document.getElementsByClassName('js-start-action')[0].disabled = true;
-    document.getElementsByClassName('js-sync-action')[0].disabled = true;
-    document.getElementsByClassName('js-build-action')[0].disabled = true;
+    disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],true)
     const status = (cmd.replace("-blt",'')+"ing...").toUpperCase();
     setStatus(status)
     stopUpdateFunc()
