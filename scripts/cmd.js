@@ -5,8 +5,13 @@ const cp = require('child_process')
 const {logdir} = require("./constants");
 const { exec } = require('child_process')
 const { PythonShell } = require('python-shell');
+const crypto = require('crypto')
 
 fixPath();
+
+const _hash = crypto.createHash('md5')
+
+const md5 = (str) => _hash.update(str).digest('hex')
 
 const python_options = {
     pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
@@ -29,7 +34,9 @@ const _command = (cmd) =>{
 }
 
 const _run_cmd = (cmd) => {
-    const hash = 
+    // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
+    const hash = md5(cmd)
+
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
