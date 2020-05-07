@@ -44,7 +44,9 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
         const hash = md5(cmd)
-        const log = path.join(constants.cmdlogdir, hash + ".log")
+        const log =  path.join(constants.cmdlogdir, hash + ".log")
+        const out = fs.openSync(log,'a')
+        const err = fs.openSync(log,'a')
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
         const c = `#!/usr/bin/env bash
@@ -52,22 +54,22 @@ ${cmd}`
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
-            return resolve(_cmd_detached(constants.scriptsdir, script, undefined))
+            return resolve(_cmd_detached(constants.scriptsdir, script, out, err))
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-            return resolve(_cmd_detached(constants.scriptsdir, script, undefined)) // pid isn't running so create a new command and return pid
+            return resolve(_cmd_detached(constants.scriptsdir, script, out, err)) // pid isn't running so create a new command and return pid
         })
     })
 }
 
-const _cmd_detached = (cwd, cmd, argv0) => {
+const _cmd_detached = (cwd, cmd, argv0, out, err) => {
     // const fs = require('fs');
     // const log = path.join(logdir,'blt-buddy-out.log');
     // const out = fs.openSync(log, 'a');
     // const err = fs.openSync(log, 'a');
 
-    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', 'ignore', 'ignore']});
+    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', out ? out : 'ignore', err ? err : 'ignore']});
     child.unref();
     return child
 }
