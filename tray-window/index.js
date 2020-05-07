@@ -54,7 +54,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
     if(typeof buttonClasses === 'string')
         buttonClasses = [buttonClasses];
     buttonClasses.forEach(buttonClass=>
-        document.getElementsByClassName(buttonClasses)[0].disabled =
+        document.getElementsByClassName(buttonClass)[0].disabled =
             isDisabled?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
 }
 
