@@ -37,7 +37,7 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     const hash = md5(cmd)
     const log = path.join(logdir,hash+".log")
-    const log = path.join(logdir,hash+".log")
+    const pid = path.join(logdir,hash+".pid")
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
