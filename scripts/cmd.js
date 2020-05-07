@@ -45,8 +45,3 @@ exports.resolveHome = (filepath) => {
         return path.join(process.env.HOME, filepath.slice(1));
     return filepath;
 }
-
-
-exports.mkdir = (dir) =>{
-    return _command('mkdir -p '+dir)
-}
