@@ -1,22 +1,21 @@
 'use strict';
-
 const {resolveHome} = require('./cmd')
 const path = require('path')
 
-const logdir = resolveHome(path.join("~","logs"))
+exports.logdir = resolveHome(path.join("~","logs"))
 const basedir = path.join(__dirname,'data')
 const cmddir = path.join(basedir,"cmd")
-const cmdlogdir = path.join(cmddir,"logs")
-const piddir = path.join(cmddir,'pids')
-const scriptsdir = path.join(cmddir,'scripts')
-const logfile = path.join(logdir,"blt-buddy.log")
+exports.cmdlogdir = path.join(cmddir,"logs")
+exports.piddir = path.join(cmddir,'pids')
+exports.scriptsdir = path.join(cmddir,'scripts')
+exports.logfile = path.join(logdir,"blt-buddy.log")
 
-exports.constants = Object.freeze({
-    logdir: logdir,
-    basedir: basedir,
-    cmddir: cmddir,
-    cmdlogdir: cmdlogdir,
-    piddir: piddir,
-    scriptsdir: scriptsdir,
-    logfile: logfile,
-})
+// exports.constants = Object.freeze({
+//     logdir: logdir,
+//     basedir: basedir,
+//     cmddir: cmddir,
+//     cmdlogdir: cmdlogdir,
+//     piddir: piddir,
+//     scriptsdir: scriptsdir,
+//     logfile: logfile,
+// })
