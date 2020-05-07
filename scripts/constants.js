@@ -5,7 +5,9 @@ const path = require('path')
 class Constants {
     logdir = resolveHome(path.join("~","logs"))
     basedir = 'data'
-    cmddir = 
+    cmddir = path.join(this.basedir,"cmd")
+    cmdlogdir = path.join(this.cmddir,"logs")
+
 }
 
 // exports.dbdir = path.join(basedir,'db')
