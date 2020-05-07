@@ -2,6 +2,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const fixPath = require('fix-path')
 const cp = require('child_process')
+const {logdir} = require("./constants");
 const { exec } = require('child_process')
 const { PythonShell } = require('python-shell');
 
@@ -27,9 +28,13 @@ const _command = (cmd) =>{
     })
 }
 
+const _run_cmd = (cmd) => {
+    
+}
+
 const _cmd_detached = (cwd, cmd, argv0) => {
     const fs = require('fs');
-    const log = cmd.resolveHome(path.join("~",'blt-buddy-out.log'));
+    const log = path.join(logdir,'blt-buddy-out.log');
     const out = fs.openSync(log, 'a');
     const err = fs.openSync(log, 'a');
 

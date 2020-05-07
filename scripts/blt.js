@@ -121,7 +121,3 @@ exports.start_blt = () => {
         resolve({'pid': child.pid})
     })
 }
-
-const check_if_process_running = (cmd) => {
-    return cmd.command("if ! ps aux | grep -v grep | grep \""+cmd+"\"; then echo yes; else echo no;")
-}
