@@ -17,7 +17,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "2.1.8",
-    "shell": "^0.5.0"
+    "shell": "^0.5.0",
+    "sqlite3": "^4.2.0"
   },
   "homepage": "./",
   "main": "main.js",
