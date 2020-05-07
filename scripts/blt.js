@@ -72,14 +72,14 @@ exports.isNeedSFM = () => {
 
 exports.kill = (name) => {
     return new Promise(resolve =>
-        command(func_killer + "\n" + "killer " + name).then(value => resolve(value))
+        command("ps -ef|grep "+name+"|awk '{print $2}'|xargs kill -9").then(value => resolve(value))
     )
 }
 exports.killblt = (timeout) => {
     if(timeout === undefined)
         timeout = 20
     return new Promise(resolve =>
-        command(func_killer + "\n" + "(timeout "+timeout+" blt "+project+" --stop || killer bl[t])")
+        command("timeout "+timeout+" blt "+project+" --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9")
             .then(value => resolve(value))
     )
 }
