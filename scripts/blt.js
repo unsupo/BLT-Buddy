@@ -32,6 +32,9 @@ const process_checker = "function process_checker(){\n" +
     "\n" +
     "process_checker "
 
+// run command out to log file then save pid
+// cmd > test.out & echo $! > test.pid
+
 // TODO save or find pid and kill be able to kill it if requested
 // TODO sync and others that have user prompt
 
