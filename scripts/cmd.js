@@ -6,7 +6,6 @@ const { exec } = require('child_process')
 const { PythonShell } = require('python-shell');
 const crypto = require('crypto')
 const fs = require('fs');
-require("./constants");
 
 fixPath();
 
