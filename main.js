@@ -185,11 +185,11 @@ ipcMain.on('app-update', (event, appStatus) => {
         case 'working': iconv = 'tray-icon-working.png'; break
         case 'error':
             iconv = 'tray-icon.png';
-            command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
-                sendNotification('BLT Issue Occurred',appStatus['stdout'],()=>{
-                    require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
-                }).show()
-            );
+            // command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
+            //     sendNotification('BLT Issue Occurred',appStatus['stdout'],()=>{
+            //         require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
+            //     }).show()
+            // );
             break
         case 'stopped':
         default:
