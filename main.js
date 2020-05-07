@@ -71,7 +71,7 @@ function createTrayWindow() {
         show: false,
         frame: false,
         fullscreenable: false,
-        // resizable: false,
+        resizable: false,
         transparent: true,
         webPreferences: {
             nodeIntegration: true,
