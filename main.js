@@ -38,6 +38,9 @@ let win = undefined;
 const startUp = () => {
     mkdirp(constants.piddir)
     mkdirp(constants.logdir)
+    mkdirp(constants.scriptsdir)
+    mkdirp(constants.cmdlogdir)
+    mkdirp(constants.cmddir)
 }
 
 app.whenReady()
