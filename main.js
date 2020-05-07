@@ -67,11 +67,11 @@ function createWindow() {
 function createTrayWindow() {
     tray_window = new BrowserWindow({
         width: 220,
-        height: 400,
+        height: 220,
         show: false,
         frame: false,
         fullscreenable: false,
-        // resizable: false,
+        resizable: false,
         transparent: true,
         webPreferences: {
             nodeIntegration: true,
@@ -165,45 +165,35 @@ ipcMain.on('open-webpage',(event, data) => {
 
 ipcMain.on('app-update', (event, appStatus) => {
     let iconv;
-    let isUpdate = false;
     switch (appStatus['icon']) {
-        case 'running':
-            iconv = 'tray-icon-running.png';
-            isUpdate=true;
-            break
-        case 'working':
-            iconv = 'tray-icon-working.png';
-            break
+        case 'running': iconv = 'tray-icon-running.png'; break
+        case 'working': iconv = 'tray-icon-working.png'; break
         case 'error':
-            isUpdate=true;
             iconv = 'tray-icon.png';
             blt.command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
-                sendNotification('BLT Issue Occurred',appStatus['error'],()=>{
+                sendNotification('BLT Issue Occurred',appStatus['stdout'],()=>{
                     require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
                 }).show()
             );
             break
         case 'stopped':
-            isUpdate=true;
         default:
             iconv = 'tray-icon-stopped.png';
     }
-    // console.log(iconv+","+appStatus['icon'])
     if (icon_last && icon_last === iconv)
         return;
-    // console.log(iconv+" "+icon_last)
-    // TODO fix notication when status changes from OFF to ON and vice versa
-    // if(lastUpdate && icon_last && isUpdate && icon_last !== lastUpdate) {
-    //     sendNotification('BLT Status Update', 'BLT Status Changed to ' + appStatus['icon'], () => {
-    //         ipcRenderer.send('open-window', {'window': 'tray'}) // show window if notifaction is clicked
-    //     })
-    //     lastUpdate = icon_last
-    // }
+    if(lastStatus === 'stopped' && appStatus['icon'] === 'running' ||
+        lastStatus === 'running' && appStatus['icon'] === 'stopped')
+        sendNotification('BLT Status Update', 'BLT Status Changed to ' + appStatus['icon'], () => {
+            ipcRenderer.send('open-window',
+                appStatus['icon'] === 'stopped' ? {'window': 'tray'} : openPage('http://localhost:6109'))
+        }).show()
     lastUpdate = icon_last
     icon_last = iconv
     tray.setImage(getIcon(iconv,{'width': 16, 'height': 16}));
     tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
 });
+let lastStatus;
 let browserWindow;
 ipcMain.on('open-webpage-in-app',(event, data)=>{
      browserWindow = new BrowserWindow({
@@ -252,7 +242,7 @@ ipcMain.handle('sfm-needed',(event, args) => {
         })
     return new Promise(resolve => resolve('false'))
 })
-
+let runningCmd;
 ipcMain.handle('api', (event ,args)=> {
     let cmd;
     switch (args['cmd']) {
@@ -266,10 +256,12 @@ ipcMain.handle('api', (event ,args)=> {
         case 'enable-blt': cmd = blt.enable_blt(); break
         case 'disable-blt': cmd = blt.disable_blt(); break
         case 'set-project': cmd = blt.set_project(args['args']['dir']); break
+        case 'quit': cmd = app.quit(); break
         default:
             // console.log(args)
             return
     }
+    runningCmd = args['cmd']
     return cmd
 })
 

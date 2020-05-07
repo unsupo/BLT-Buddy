@@ -11,44 +11,26 @@
 <div class="header-arrow"></div>
 <div class="window">
     <header class="toolbar toolbar-header">
-        <h1 class="title">BLT <span class="js-update-time"></span></h1>
+        <div>
+            <h1 class="title">BLT <span class="js-update-time"></span></h1>
+        </div>
     </header>
 
     <div class="window-content">
         <div class="pane">
 
             <div class="summary js-summary">Loading&hellip;</div>
-
             <div>
-                <div class="column">
-                    <div class="description">Port Check: </div>
-                    <div class="reading js-health-check-port">Loading&hellip;</div>
-                </div>
-                <div class="column">
-                    <div class="description">UI Check: </div>
-                    <div class="reading js-health-check-ui">Loading&hellip;</div>
-                </div>
-            </div>
-
-            <div>
-                <div class="column">
-                    <button class="btn btn-large btn-positive js-start-action">Start</button>
-                </div>
                 <div class="column">
                     <button class="btn btn-large btn-default js-sync-action">Sync</button>
                 </div>
-            </div>
-            <div>
                 <div class="column">
                     <button class="btn btn-large btn-default js-build-action">Build</button>
                 </div>
-                <div class="column">
-                    <button class="btn btn-large btn-negative js-enable-action">Enable</button>
-                </div>
             </div>
             <div>
                 <div class="column">
-                    <button class="btn btn-large btn-default js-restart-action">Restart</button>
+                    <button class="btn btn-large btn-positive js-start-action">Start</button>
                 </div>
                 <div class="column">
                     <button class="btn btn-large btn-negative js-kill-action">Stop</button>
@@ -56,31 +38,20 @@
             </div>
 
             <div class="row link"> <!--TODO disable this if the app is down-->
-                <a class="open-webpage" href="http://localhost:6109">Open Webpage</a>
-            </div>
-            <div class="row link">
-                <a href="window:main">Advanced Features</a>
+                <a class="open-webpage" href="http://localhost:6109" style="visibility: hidden">Launch Salesforce</a>
             </div>
         </div>
     </div>
 
     <footer class="toolbar toolbar-footer">
-        <div class="footer-link">
-            <a href="https://github.com/unsupo/TMP-Spring-20-Hackathon">TMP-Spring-20-Hackathon</a>
+        <div class="footer-link" >
+            <a href="https://github.com/unsupo/TMP-Spring-20-Hackathon" style="text-align: center">TMP-Spring-20-Hackathon</a>
         </div>
-
         <div class="toolbar-actions pull-right">
-            <div class="btn-group">
-                <button class="btn btn-default js-refresh-action">
-                    <span class="icon icon-arrows-ccw js-refresh-action" title="Refresh"></span>
-                </button>
-
-                <button class="btn btn-default js-quit-action">
-                    <span class="icon icon-cancel js-quit-action" title="Quit"></span>
-                </button>
-            </div>
+            <button class="btn btn-default quit">
+                <span class="icon icon-cancel quit" title="Quit"></span>
+            </button>
         </div>
-
     </footer>
 </div>
 </body>

@@ -8,17 +8,30 @@ const fixPath = require('fix-path')
 
 fixPath();
 
-const working_dir = cmd.resolveHome(path.join("~", "blt", "app", "main"));
+let working_dir = cmd.resolveHome(path.join("~", "blt", "app", "main"));
+
+const proj = ' --project '
+let projectDir = "/app/main"
+let project = proj+projectDir
 
 const blt = path.join('/usr', 'local', 'bin', 'blt')
-const working_dir_cmd = "cd " + working_dir + " && ";
+let working_dir_cmd = "cd " + working_dir + " && ";
+const logfile = cmd.resolveHome(path.join("~","blt-buddy.log"))
+const outToLog = " >> "+logfile;
 const func_killer = "\n" +
     "function killer(){\n" +
     "    ps -ef|grep $1|awk '{print $2}'|xargs kill -9\n" +
     "}"
 
-const proj = ' --project '
-let project = proj+"/app/main"
+const process_checker = "function process_checker(){\n" +
+    "    cmd=\"$1\"\n" +
+    "    if ! ps aux | grep -v grep | grep \"${cmd}\" > /dev/null; then\n" +
+    "        $(${cmd})\n" +
+    "    fi\n" +
+    "}\n" +
+    "\n" +
+    "process_checker "
+
 
 const python_options = {
     pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
@@ -49,11 +62,12 @@ exports.command = (cmd) => {
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
-    // const fs = require('fs');
-    // const out = fs.openSync('./out.log', 'a');
-    // const err = fs.openSync('./out.log', 'a');
+    const fs = require('fs');
+    const log = cmd.resolveHome(path.join("~",'blt-buddy-out.log'));
+    const out = fs.openSync(log, 'a');
+    const err = fs.openSync(log, 'a');
 
-    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', 'ignore', 'ignore']});
+    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', out, err]});
     child.unref();
     return child
 }
@@ -61,11 +75,18 @@ exports.cmd_detached = (cwd, cmd, argv0) => {
     return _cmd_detached(cwd,cmd,argv0)
 }
 
+exports.db_stop = () =>{
+    return _command(blt+project+" --db-stop"+outToLog)
+}
+exports.db_start = () =>{
+    return _command(blt+project+" --db-stop"+outToLog)
+}
+
 exports.restartBlt = () => {
     return new Promise(resolve =>
         sfm().then(() => killblt().then(res3 => {
-            _command(blt+project+" --db-stop").then(res2 => {
-                _command(blt+project+" --db-start").then(res1 => {
+            _command(blt+project+" --db-stop"+outToLog).then(res2 => {
+                _command(blt+project+" --db-start"+outToLog).then(res1 => {
                     resolve(start_blt())
                 })
             })
@@ -101,31 +122,34 @@ exports.killblt = () => {
 }
 exports.sfm = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + " blt --sfm").then(value => resolve(value))
+        _command(working_dir_cmd + " blt --sfm"+outToLog).then(value => resolve(value))
     )
 }
 exports.sync_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --sync").then(value => resolve(value))
+        _command(working_dir_cmd+blt+" --sync"+outToLog).then(value => resolve(value))
     )
 }
 exports.build_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --build").then(value =>resolve(value))
+        _command(blt+project+" --build"+outToLog).then(value =>resolve(value))
     )
 }
 exports.enable_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --enable").then(value => resolve(value))
+        _command(blt+project+" --enable"+outToLog).then(value => resolve(value))
     )
 }
 exports.disable_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --disable").then(value => resolve(value))
+        _command(blt+project+" --disable"+outToLog).then(value => resolve(value))
     )
 }
 exports.set_project = (dir) => {
-    project = dir;
+    working_dir = cmd.resolveHome(path.join("~", "blt", dir));
+    projectDir = dir
+    project = proj+projectDir
+    working_dir_cmd = "cd " + working_dir + " && ";
 }
 exports.start_blt = () => {
     return new Promise(resolve => {
@@ -133,4 +157,8 @@ exports.start_blt = () => {
         child.on('error', (err) => console.log(err))
         resolve({'pid': child.pid})
     })
+}
+
+const check_if_process_running = (cmd) => {
+    return _command("if ! ps aux | grep -v grep | grep \""+cmd+"\"; then echo yes; else echo no;")
 }

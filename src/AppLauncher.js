@@ -34,7 +34,7 @@ class MyAppLauncher extends React.Component {
                 assistiveText={{ label: 'Find an app' }}
             />
         );
-        const headerButton = <Button label="App Exchange" />;
+        const headerButton = <Button label="Header Button" />;
 
         return (
             <IconSettings iconPath="/assets/icons">
@@ -47,69 +47,27 @@ class MyAppLauncher extends React.Component {
                         >
                             <AppLauncherExpandableSection title="Tile Section">
                                 <AppLauncherTile
-                                    description="The primary internal Salesforce org. Used to run our online sales business and manage accounts."
-                                    iconText="SC"
-                                    search={this.state.search}
-                                    title="Sales Cloud"
-                                />
-                                <AppLauncherTile
-                                    description="Salesforce Marketing Cloud lets businesses of any size engage with their customers through multiple channels of messaging."
-                                    iconBackgroundColor="#e0cf76"
-                                    iconText="MC"
-                                    search={this.state.search}
-                                    title="Marketing Cloud"
-                                />
-                                <AppLauncherTile
-                                    description="Community for managing employee benefits and time off."
-                                    iconBackgroundColor="#6a8adc"
-                                    iconText="HR"
-                                    search={this.state.search}
-                                    title="HR Concierge"
-                                />
-                                <AppLauncherTile
-                                    description="Manage your finances across multiple financial platforms and make the most of your capital."
-                                    iconBackgroundColor="#73c07b"
-                                    iconText="MM"
-                                    search={this.state.search}
-                                    title="My Money"
-                                />
-                                <AppLauncherTile
-                                    description="The key to call center and contact center management is more simple than you think with this amazing application!"
+                                    description="Edit configs of blt"
                                     iconBackgroundColor="#b67e6a"
                                     iconText="CC"
                                     search={this.state.search}
-                                    title="Call Center"
+                                    title="Configs"
                                 />
                                 <AppLauncherTile
-                                    description="Areas of Focus are used to track customer support for your brand and ensure high quality support"
+                                    description="View and run blt docs"
                                     iconBackgroundColor="#69bad0"
                                     iconText="CS"
                                     search={this.state.search}
-                                    title="Customer Support Community"
+                                    title="Docs"
                                 />
                             </AppLauncherExpandableSection>
                             <hr />
                             <AppLauncherExpandableSection title="All Items">
                                 <AppLauncherLink search={this.state.search}>
-                                    Accounts
+                                    Docs
                                 </AppLauncherLink>
                                 <AppLauncherLink search={this.state.search}>
-                                    Announcements
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Approvals
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Campaigns
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Cases
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Coaching
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Contacts
+                                    Configs
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
                         </AppLauncher>

@@ -10,7 +10,7 @@ All on click events handled here
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
     ['js-kill-action','kill-blt'],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
-    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],
+    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit']
 ]
 document.addEventListener('click', (event) => {
     if (event.target.href) {
@@ -33,7 +33,7 @@ document.addEventListener('click', (event) => {
 })
 
 const setStatus = (status) => {
-    document.querySelector('.js-summary').textContent = 'STATUS: '+status
+    document.querySelector('.js-summary').textContent = status
 }
 
 const getHealthData = () => {
@@ -48,26 +48,42 @@ const getSFMData = () => {
 const runCommand = (cmd) =>{
     isWorking = true;
     // setStatus('LOADING...')
-    const status = cmd.replace("-blt",'')+"ing...";
+    document.getElementsByClassName('js-start-action')[0].disabled = true;
+    document.getElementsByClassName('js-sync-action')[0].disabled = true;
+    document.getElementsByClassName('js-build-action')[0].disabled = true;
+    const status = (cmd.replace("-blt",'')+"ing...").toUpperCase();
     setStatus(status)
     stopUpdateFunc()
     ipcRenderer.send('app-update', {
         'icon': 'working', 'tool-tip': status
     });
-    return _defaultNodeCmd({cmd:cmd})
+    return defaultNodeCmd({cmd:cmd})
 }
 let isError = false;
-
-const _defaultNodeCmd = (cmd) =>{
+let status = 'STOPPED'
+const defaultNodeCmd = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
         ipcRenderer.invoke('api', cmd).then(value => {
+            if(cmd['cmd'] === 'is-need-sfm'){
+                return;
+            }
             isWorking=false
-            if(value['err']) {
+            document.getElementsByClassName('js-start-action')[0].disabled = false;
+            document.getElementsByClassName('js-sync-action')[0].disabled = false;
+            document.getElementsByClassName('js-build-action')[0].disabled = false;
+            if(value["err"]){
                 isError = true
                 ipcRenderer.send('app-update', {
                     'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
                 });
+                setStatus(value["err"]);
+            }
+            if(cmd['cmd'] !== 'start-blt' && !value["err"]){
+                ipcRenderer.send('app-update', {
+                    'icon': 'idle', 'tool-tip': status
+                });
+                setStatus("SUCCESS");
             }
             updateFunc()
             resolve(value)
@@ -76,22 +92,22 @@ const _defaultNodeCmd = (cmd) =>{
 }
 
 //basic get api command
-const defaultNodeCmd = (cmd) =>{
-    lastCommand = cmd
-    return new Promise(resolve => {
-        ipcRenderer.invoke('api', cmd).then(value => {
-            isWorking=false
-            if(value['err']) {
-                isError = true
-                ipcRenderer.send('app-update', {
-                    'icon': 'error', 'tool-tip': value['err']
-                });
-            }
-            updateFunc()
-            resolve(value)
-        })
-    });
-}
+// const defaultNodeCmd = (cmd) =>{
+//     lastCommand = cmd
+//     return new Promise(resolve => {
+//         ipcRenderer.invoke('api', cmd).then(value => {
+//             isWorking=false
+//             if(value['err']) {
+//                 isError = true
+//                 ipcRenderer.send('app-update', {
+//                     'icon': 'error', 'tool-tip': value['err']
+//                 });
+//             }
+//             updateFunc()
+//             resolve(value)
+//         })
+//     });
+// }
 
 // use this for background tasks like checking for status
 const getData = (cmd) =>{
@@ -108,16 +124,20 @@ const getData = (cmd) =>{
 
 const updateView = (data) => {
     // const currently = weather.currently
-    let status = 'STOPPED'
+    // let status = 'STOPPED'
+    let openLink = document.getElementsByClassName('open-webpage')[0];
+
     // document.querySelector('.js-start-action').disabled='enabled'
     // document.querySelector('.js-stop-action').disabled='disabled'
     if(data['app']['ui_check'] === 'UP') {
         status = "RUNNING"
+        openLink.style.visibility = "visible";
         // document.querySelector('.js-start-action').disabled='disabled'
         // document.querySelector('.js-stop-action').disabled='enabled'
-    }
+    }else
+        openLink.style.visibility = "hidden";
 
-    document.querySelector('.js-summary').textContent = 'STATUS: '+status
+    document.querySelector('.js-summary').textContent = status
     // document.querySelector('.js-update-time').textContent = `at ${new Date(currently.time).toLocaleTimeString()}`
     //
     document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
