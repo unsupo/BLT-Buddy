@@ -6,3 +6,5 @@ scripts/.venv/*
 node_modules
 release-builds
 .DS_Store
+pids
+test.*
