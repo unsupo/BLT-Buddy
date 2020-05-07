@@ -54,7 +54,7 @@ exec 1>${log} 2>&1
 function runCMD(){
     ${cmd}
 }
-runCMD & jobs -p > ${pid}`
+runCMD >&3 & jobs -p > ${pid}`
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
