@@ -78,6 +78,11 @@ const defaultNodeCmd = (cmd) =>{
                     'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
                 });
                 setStatus(value["err"]);
+            }else{
+                ipcRenderer.send('app-update', {
+                    'icon': 'working', 'tool-tip': status
+                });
+                setStatus("SUCCESS");
             }
             if(cmd['cmd'] !== 'start-blt' && !value["err"]){
                 ipcRenderer.send('app-update', {
