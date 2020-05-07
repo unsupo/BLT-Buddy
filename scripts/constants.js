@@ -12,7 +12,6 @@ const logfile = path.join(logdir,"blt-buddy.log")
 
 global.constants = Object.freeze({
     logdir: logdir,
-    basedir: basedir,
     cmddir: cmddir,
     cmdlogdir: cmdlogdir,
     piddir: piddir,
