@@ -11,7 +11,7 @@ All on click events handled here
  */
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
-    ['js-kill-action','kill-blt',{'args':{'timeout':0}}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
+    ['js-kill-action','kill-blt',{'timeout':0}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
     ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit']
 ]
 document.addEventListener('click', (event) => {
@@ -68,8 +68,7 @@ const runCommand = (cmd, args) =>{
     ipcRenderer.send('app-update', {
         'icon': 'working', 'tool-tip': status
     });
-    let cmds = {cmd:cmd}
-    return runApiCommand(cmds)
+    return runApiCommand({cmd:cmd,args: args})
 }
 
 const runApiCommand = (cmd) =>{
