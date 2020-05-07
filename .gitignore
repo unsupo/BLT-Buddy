@@ -8,3 +8,4 @@ release-builds
 .DS_Store
 pids
 test.*
+data
