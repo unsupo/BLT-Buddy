@@ -1,3 +1,5 @@
+'use strict';
+
 const {resolveHome} = require('./cmd')
 const path = require('path')
 
