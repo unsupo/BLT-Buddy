@@ -2,13 +2,13 @@ const {resolveHome} = require('./cmd')
 const path = require('path')
 
 
-module.exports
-    logdir = resolveHome(path.join("~","logs"))
-    basedir = 'data'
-    cmddir = path.join(this.basedir,"cmd")
-    cmdlogdir = path.join(this.cmddir,"logs")
-
-}
+module.exports = Object.freeze({
+    logdir: resolveHome(path.join("~","logs")),
+    basedir: 'data',
+    cmddir: path.join(basedir,"cmd"),
+    cmdlogdir: path.join(cmddir,"logs")
+    
+})
 
 // exports.dbdir = path.join(basedir,'db')
 exports.cmddir = path.join(basedir,)
