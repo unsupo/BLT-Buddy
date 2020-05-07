@@ -14,7 +14,7 @@ const exeName = path.basename(process.execPath)
 const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
-const constants = require("./scripts/constants");
+const {constants} = require("./scripts/constants");
 
 app.setLoginItemSettings({
     openAtLogin: true,
