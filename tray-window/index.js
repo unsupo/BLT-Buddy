@@ -128,7 +128,7 @@ const runApiCommand = (cmd) =>{
 const getData = (cmd) =>{
     // if(isWorking)
     //     return undefined
-    isWorking = true;
+    // isWorking = true;
     // setStatus('LOADING...')
     stopUpdateFunc()
     // ipcRenderer.send('app-update', {
