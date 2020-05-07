@@ -1,11 +1,17 @@
-const cmd = require('./cmd')
+const {resolveHome} = require('./cmd')
 const path = require('path')
 
-const logdir = cmd.resolveHome(path.join("~","logs"))
-const basedir = 'data'
 
-exports.dbdir = path.join(basedir,'db')
+class Constants {
+    logdir = resolveHome(path.join("~","logs"))
+    basedir = 'data'
+    cmddir = 
+}
+
+// exports.dbdir = path.join(basedir,'db')
+exports.cmddir = path.join(basedir,)
 exports.piddir = path.join(basedir,'pids')
+exports.
 exports.logdir = logdir
 
 exports.logfile = path.join(logdir,"blt-buddy.log")
