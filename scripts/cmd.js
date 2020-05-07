@@ -47,7 +47,8 @@ const _run_cmd = (cmd) => {
         const c = `#!/usr/bin/env bash
 function runCMD(){
     ${cmd}
-}`
+}
+`
         const log = path.join(constants.cmdlogdir, hash + ".log")
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
