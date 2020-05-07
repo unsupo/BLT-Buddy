@@ -16,6 +16,7 @@ const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
 require('./scripts/constants')
+const {command} = require("./scripts/cmd");
 
 app.setLoginItemSettings({
     openAtLogin: true,
@@ -184,7 +185,7 @@ ipcMain.on('app-update', (event, appStatus) => {
         case 'working': iconv = 'tray-icon-working.png'; break
         case 'error':
             iconv = 'tray-icon.png';
-            blt.command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
+            command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
                 sendNotification('BLT Issue Occurred',appStatus['stdout'],()=>{
                     require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
                 }).show()
