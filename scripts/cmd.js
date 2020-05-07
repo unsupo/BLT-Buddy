@@ -5,8 +5,8 @@ const cp = require('child_process')
 const { exec } = require('child_process')
 const { PythonShell } = require('python-shell');
 const crypto = require('crypto')
-var fs = require('fs');
-const {piddir,cmdlogdir,scriptsdir} = require("./constants");
+const fs = require('fs');
+const constants = require("./constants");
 
 fixPath();
 
@@ -45,17 +45,17 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
         const hash = md5(cmd)
-        const log = path.join(cmdlogdir, hash + ".log")
-        const pid = path.join(piddir, hash + ".pid")
-        const script = path.join(scriptsdir, hash + ".sh")
+        const log = path.join(constants.cmdlogdir, hash + ".log")
+        const pid = path.join(constants.piddir, hash + ".pid")
+        const script = path.join(constants.scriptsdir, hash + ".sh")
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,cmd+" > "+log+" & echo $! > "+pid)
         if(!fs.existsSync(pid)) // if pid file doesn't exist
-            return resolve(_cmd_detached(scriptsdir, script, undefined))
+            return resolve(_cmd_detached(constants.scriptsdir, script, undefined))
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-            return resolve(_cmd_detached(scriptsdir, script, undefined)) // pid isn't running so create a new command and return pid
+            return resolve(_cmd_detached(constants.scriptsdir, script, undefined)) // pid isn't running so create a new command and return pid
         })
     })
 }
