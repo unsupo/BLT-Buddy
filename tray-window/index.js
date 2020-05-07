@@ -145,8 +145,10 @@ const updateView = (data) => {
     document.querySelector('.js-summary').textContent = status
     // document.querySelector('.js-update-time').textContent = `at ${new Date(currently.time).toLocaleTimeString()}`
     //
-    document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
-    document.querySelector('.js-health-check-ui').textContent = data['app']['ui_check']
+    if(document.querySelector('.js-health-check-port').textContent) {
+        document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
+        document.querySelector('.js-health-check-ui').textContent = data['app']['ui_check']
+    }
 
 }
 let isGettingHealthData = false, isGettingSFMData = false;
