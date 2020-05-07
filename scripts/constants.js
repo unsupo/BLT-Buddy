@@ -8,5 +8,6 @@ module.exports = Object.freeze({
     cmddir: path.join(basedir,"cmd"),
     cmdlogdir: path.join(cmddir,"logs"),
     piddir: path.join(cmddir,'pids'),
+    scriptsdir: path.join(cmddir,'scripts'),
     logfile: path.join(logdir,"blt-buddy.log")
 })

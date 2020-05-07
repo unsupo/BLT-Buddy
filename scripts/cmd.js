@@ -2,10 +2,10 @@ const path = require('path');
 const childProcess = require('child_process');
 const fixPath = require('fix-path')
 const cp = require('child_process')
-const {logdir} = require("./constants");
 const { exec } = require('child_process')
 const { PythonShell } = require('python-shell');
 const crypto = require('crypto')
+const {piddir,cmdlogdir,scriptsdir} = require("./constants");
 
 fixPath();
 
@@ -33,11 +33,12 @@ const _command = (cmd) =>{
     })
 }
 
-const _run_cmd = (cwd, cmd, argv0) => {
+const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     const hash = md5(cmd)
-    const log = path.join(logdir,hash+".log")
-    const pid = path.join(logdir,hash+".pid")
+    const log = path.join(cmdlogdir,hash+".log")
+    const pid = path.join(piddir,hash+".pid")
+    const script = path.join(scriptsdir,hash+".sh")
     return _cmd_detached(cwd, cmd, argv0)
 }
 
