@@ -78,17 +78,23 @@ const runApiCommand = (cmd) =>{
         ipcRenderer.invoke('api', cmd).then(value => {
             if(cmd['cmd'] === 'is-need-sfm')
                 return;
-            if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
-                isWorking = false // main returned a result so we aren't working anymore
-                disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
-            }
             if(value["err"]){
                 isError = true
+                setStatus(value["err"]);
                 ipcRenderer.send('app-update', {
                     'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
                 });
-                setStatus(value["err"]);
-            }else{
+            }
+            if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
+                isWorking = false // main returned a result so we aren't working anymore
+                disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
+            }else if(!isWorking) { // if it's not working and it's a health check then change status
+                setStatus("SUCCESS");
+                const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                ipcRenderer.send('app-update', {
+                    'icon':s, 'tool-tip':s
+                });
+            } else{
                 ipcRenderer.send('app-update', {
                     'icon': 'working', 'tool-tip': status
                 });
@@ -164,10 +170,12 @@ const updateData = () =>{
             value = JSON.parse(value['res']);
             // console.log(value);
             updateView(value);
-            if(!isWorking)
+            if(!isWorking) {
+                const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
                 ipcRenderer.send('app-update', {
-                    'icon': value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                    'icon':s, 'tool-tip':s
                 });
+            }
             previousData['health'] = value;
             isGettingHealthData = false;
         })
