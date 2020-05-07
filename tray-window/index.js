@@ -51,7 +51,7 @@ pass in one class or an array of classes
 pass in a state either true or false otherwise it will use the opposite of current state
  */
 const disableEnableButtons = (buttonClasses,isDisabled) =>{
-    if(typeof buttonClasses === 'string') {
+    if(typeof buttonClasses === 'string')
         buttonClasses = [buttonClasses];
     buttonClasses.forEach(buttonClass=>
         document.getElementsByClassName(buttonClasses)[0].disabled =
@@ -69,18 +69,17 @@ const runCommand = (cmd) =>{
     ipcRenderer.send('app-update', {
         'icon': 'working', 'tool-tip': status
     });
-    return defaultNodeCmd({cmd:cmd})
+    return runApiCommand({cmd:cmd})
 }
 
-const defaultNodeCmd = (cmd) =>{
+const runApiCommand = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
         ipcRenderer.invoke('api', cmd).then(value => {
-            if(cmd['cmd'] === 'is-need-sfm'){
+            if(cmd['cmd'] === 'is-need-sfm')
                 return;
-            }
-            isWorking=false
-            disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],false)
+            isWorking=false // main returned a result so we aren't working anymore
+            disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],false) //re-enable buttons
             if(value["err"]){
                 isError = true
                 ipcRenderer.send('app-update', {
@@ -133,7 +132,7 @@ const getData = (cmd) =>{
     // ipcRenderer.send('app-update', {
     //     'icon': 'working'
     // });
-    return defaultNodeCmd(cmd)
+    return runApiCommand(cmd)
 }
 
 const updateView = (data) => {
