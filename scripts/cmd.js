@@ -27,6 +27,13 @@ exports.runScript = (scriptPath, callback) => {
     });
 }
 
+exports.command = async (cmd) => {
+    return new Promise(resolve => {
+        exec(cmd,(err,stdout,stderr)=>{
+            resolve({'err':err,'stdout':stdout,'stderr':stderr})
+        })
+    })
+}
 
 exports.resolveHome = (filepath) => {
     if (filepath[0] === '~') {

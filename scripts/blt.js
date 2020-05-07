@@ -55,15 +55,9 @@ const _runPython = (args, callback) =>{
 exports.runPython = (args, callback) =>{
     _runPython(args,callback)
 }
-const _command = async (cmd) => {
-    return new Promise(resolve => {
-        exec(cmd,(err,stdout,stderr)=>{
-            resolve({'err':err,'stdout':stdout,'stderr':stderr})
-        })
-    })
-}
+
 exports.command = (cmd) => {
-    return _command(cmd)
+    return cmd.command(cmd)
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
@@ -81,17 +75,17 @@ exports.cmd_detached = (cwd, cmd, argv0) => {
 }
 
 exports.db_stop = () =>{
-    return _command(blt+project+" --db-stop"+outToLog)
+    return cmd.command(blt+project+" --db-stop"+outToLog)
 }
 exports.db_start = () =>{
-    return _command(blt+project+" --db-stop"+outToLog)
+    return cmd.command(blt+project+" --db-stop"+outToLog)
 }
 
 exports.restartBlt = () => {
     return new Promise(resolve =>
         sfm().then(() => killblt().then(res3 => {
-            _command(blt+project+" --db-stop"+outToLog).then(res2 => {
-                _command(blt+project+" --db-start"+outToLog).then(res1 => {
+            cmd.command(blt+project+" --db-stop"+outToLog).then(res2 => {
+                cmd.command(blt+project+" --db-start"+outToLog).then(res1 => {
                     resolve(start_blt())
                 })
             })
@@ -123,33 +117,33 @@ exports.killblt = (timeout) => {
     if(timeout === undefined)
         timeout = 20
     return new Promise(resolve =>
-        _command(func_killer + "\n" + "(timeout "+timeout+" blt "+project+" --stop || killer bl[t])")
+        cmd.command(func_killer + "\n" + "(timeout "+timeout+" blt "+project+" --stop || killer bl[t])")
             .then(value => resolve(value))
     )
 }
 exports.sfm = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd + " blt --sfm"+outToLog).then(value => resolve(value))
+        cmd.command(working_dir_cmd + " blt --sfm"+outToLog).then(value => resolve(value))
     )
 }
 exports.sync_blt = () => {
     return new Promise(resolve =>
-        _command(working_dir_cmd+blt+" --sync"+outToLog).then(value => resolve(value))
+        cmd.command(working_dir_cmd+blt+" --sync"+outToLog).then(value => resolve(value))
     )
 }
 exports.build_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --build"+outToLog).then(value =>resolve(value))
+        cmd.command(blt+project+" --build"+outToLog).then(value =>resolve(value))
     )
 }
 exports.enable_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --enable"+outToLog).then(value => resolve(value))
+        cmd.command(blt+project+" --enable"+outToLog).then(value => resolve(value))
     )
 }
 exports.disable_blt = () => {
     return new Promise(resolve =>
-        _command(blt+project+" --disable"+outToLog).then(value => resolve(value))
+        cmd.command(blt+project+" --disable"+outToLog).then(value => resolve(value))
     )
 }
 exports.set_project = (dir) => {
@@ -167,5 +161,5 @@ exports.start_blt = () => {
 }
 
 const check_if_process_running = (cmd) => {
-    return _command("if ! ps aux | grep -v grep | grep \""+cmd+"\"; then echo yes; else echo no;")
+    return cmd.command("if ! ps aux | grep -v grep | grep \""+cmd+"\"; then echo yes; else echo no;")
 }
