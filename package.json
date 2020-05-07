@@ -7,6 +7,7 @@
     "@salesforce-ux/design-system": "^2.11.9",
     "@salesforce/design-system-react": "^0.10.19",
     "babel-loader": "8.0.5",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "fix-path": "^3.0.0",
