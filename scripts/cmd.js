@@ -33,21 +33,21 @@ const _command = (cmd) =>{
     })
 }
 
-const _run_cmd = (cmd) => {
+const _run_cmd = (cwd, cmd, argv0) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     const hash = md5(cmd)
     const log = path.join(logdir,hash+".log")
     const pid = path.join(logdir,hash+".pid")
-    return _cmd_detached()
+    return _cmd_detached(cwd, cmd, argv0)
 }
 
 const _cmd_detached = (cwd, cmd, argv0) => {
-    const fs = require('fs');
-    const log = path.join(logdir,'blt-buddy-out.log');
-    const out = fs.openSync(log, 'a');
-    const err = fs.openSync(log, 'a');
+    // const fs = require('fs');
+    // const log = path.join(logdir,'blt-buddy-out.log');
+    // const out = fs.openSync(log, 'a');
+    // const err = fs.openSync(log, 'a');
 
-    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', out, err]});
+    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', 'ignore', 'ignore']});
     child.unref();
     return child
 }
