@@ -114,9 +114,11 @@ exports.kill = (name) => {
         _command(func_killer + "\n" + "killer " + name).then(value => resolve(value))
     )
 }
-exports.killblt = () => {
+exports.killblt = (timeout) => {
+    if(!timeout)
+        timeout = 20
     return new Promise(resolve =>
-        _command(func_killer + "\n" + "(timeout 20 blt "+project+" --stop || killer bl[t])")
+        _command(func_killer + "\n" + "(timeout "+timeout+" blt "+project+" --stop || killer bl[t])")
             .then(value => resolve(value))
     )
 }
