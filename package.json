@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.13",
     "@salesforce-ux/design-system": "^2.11.9",
     "@salesforce/design-system-react": "^0.10.19",
     "babel-loader": "8.0.5",
