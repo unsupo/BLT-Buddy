@@ -30,7 +30,12 @@ let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
 
+const startUp = () => {
+    mkdir()
+}
+
 app.whenReady()
+    .then(startUp)
     .then(createWindow)
     .then(createTray)
     .then(createTrayWindow)
