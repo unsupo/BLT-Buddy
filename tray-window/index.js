@@ -89,8 +89,8 @@ const runApiCommand = (cmd) =>{
                 isWorking = false // main returned a result so we aren't working anymore
                 disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
             }else if(!isWorking) { // if it's not working and it's a health check then change status
-                setStatus("SUCCESS");
                 const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                setStatus(s);
                 ipcRenderer.send('app-update', {
                     'icon':s, 'tool-tip':s
                 });
