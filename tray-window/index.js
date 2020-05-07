@@ -47,7 +47,10 @@ const getSFMData = () => {
 }
 
 const disableButtons = (buttonClasses) =>{
-    if(typeof buttonClasses === [])
+    if(typeof buttonClasses === 'string')
+        document.getElementsByClassName(buttonClasses)[0].disabled = true;
+    else
+        for()
 }
 
 // use this for blt commands that require status change
