@@ -6,14 +6,7 @@ module.exports = Object.freeze({
     logdir: resolveHome(path.join("~","logs")),
     basedir: 'data',
     cmddir: path.join(basedir,"cmd"),
-    cmdlogdir: path.join(cmddir,"logs")
-    
+    cmdlogdir: path.join(cmddir,"logs"),
+    piddir: path.join(cmddir,'pids'),
+    logfile: path.join(logdir,"blt-buddy.log")
 })
-
-// exports.dbdir = path.join(basedir,'db')
-exports.cmddir = path.join(basedir,)
-exports.piddir = path.join(basedir,'pids')
-exports.
-exports.logdir = logdir
-
-exports.logfile = path.join(logdir,"blt-buddy.log")
