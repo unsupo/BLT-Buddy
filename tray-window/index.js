@@ -46,6 +46,10 @@ const getSFMData = () => {
     return getData({cmd:'is-need-sfm'});
 }
 
+const disableButtons = (buttonClasses) =>{
+    if(typeof buttonClasses === [])
+}
+
 // use this for blt commands that require status change
 const runCommand = (cmd) =>{
     isWorking = true;
