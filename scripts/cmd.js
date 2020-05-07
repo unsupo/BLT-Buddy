@@ -45,6 +45,7 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
         const hash = md5(cmd)
+        console.log(cmdlogdir, hash , ".log")
         const log = path.join(cmdlogdir, hash + ".log")
         const pid = path.join(piddir, hash + ".pid")
         const script = path.join(scriptsdir, hash + ".sh")
