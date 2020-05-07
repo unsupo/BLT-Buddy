@@ -80,9 +80,7 @@ const defaultNodeCmd = (cmd) =>{
                 return;
             }
             isWorking=false
-            document.getElementsByClassName('js-start-action')[0].disabled = false;
-            document.getElementsByClassName('js-sync-action')[0].disabled = false;
-            document.getElementsByClassName('js-build-action')[0].disabled = false;
+            disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],false)
             if(value["err"]){
                 isError = true
                 ipcRenderer.send('app-update', {
