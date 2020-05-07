@@ -42,7 +42,7 @@ const isPidStillRunning = (pid) => {
 const waitForPid = (pid) => {
     return _command("wait "+pid)
 }
-
+// returns the detached pid of the command after executing it
 const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
@@ -50,13 +50,14 @@ const _run_cmd = (cmd) => {
         const log = path.join(cmdlogdir, hash + ".log")
         const pid = path.join(piddir, hash + ".pid")
         const script = path.join(scriptsdir, hash + ".sh")
-        if(!fs.existsSync(script))
+        if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,cmd+" > "+log+" & echo $! > "+pid)
+        if(!fs.existsSync(pid)) // if pid file doesn't exist
+            return resolve(_cmd_detached(scriptsdir, script, undefined))
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
-            if(value)
-                resolve(_cmd_detached(scriptsdir, script, undefined)) // either child object if pid still running
-            else
-                resolve(undefined) // or undefined if it's not
+            if(value) // return pid if it's still running
+                return resolve(pid) // pid still running
+            return resolve(_cmd_detached(scriptsdir, script, undefined)) // pid isn't running so create a new command and return pid
         })
     })
 }
@@ -101,7 +102,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    _run_cmd(cmd).then(value => )
+    return _run_cmd(cmd).then(value => waitForPid(value))
 }
 
 exports.resolveHome = (filepath) => {
