@@ -115,7 +115,7 @@ exports.kill = (name) => {
     )
 }
 exports.killblt = (timeout) => {
-    if(!timeout)
+    if(timeout === undefined)
         timeout = 20
     return new Promise(resolve =>
         _command(func_killer + "\n" + "(timeout "+timeout+" blt "+project+" --stop || killer bl[t])")
