@@ -30,7 +30,7 @@ document.addEventListener('click', (event) => {
         }
     } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
         updateData()
-    class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1]) : undefined)
+    class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1],e.length > 1 ? e[2] : undefined) : undefined)
 })
 
 const setStatus = (status) => {
@@ -58,7 +58,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 }
 
 // use this for blt commands that require status change
-const runCommand = (cmd) =>{
+const runCommand = (cmd, args) =>{
     isWorking = true;
     // setStatus('LOADING...')
     disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],true)
@@ -68,7 +68,8 @@ const runCommand = (cmd) =>{
     ipcRenderer.send('app-update', {
         'icon': 'working', 'tool-tip': status
     });
-    return runApiCommand({cmd:cmd})
+    let cmds = {cmd:cmd}
+    return runApiCommand(cmds)
 }
 
 const runApiCommand = (cmd) =>{
