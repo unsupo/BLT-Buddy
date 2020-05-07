@@ -43,6 +43,7 @@ const _run_cmd = (cmd) => {
         const script = path.join(scriptsdir, hash + ".sh")
         if(!fs.existsSync(script))
             fs.writeFileSync(script,cmd+" > "+log+" & echo $! > "+pid)
+
         resolve(_cmd_detached(scriptsdir, script, undefined))
     })
 }
