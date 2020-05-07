@@ -78,8 +78,10 @@ const runApiCommand = (cmd) =>{
         ipcRenderer.invoke('api', cmd).then(value => {
             if(cmd['cmd'] === 'is-need-sfm')
                 return;
-            isWorking=false // main returned a result so we aren't working anymore
-            disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],false) //re-enable buttons
+            if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
+                isWorking = false // main returned a result so we aren't working anymore
+                disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
+            }
             if(value["err"]){
                 isError = true
                 ipcRenderer.send('app-update', {
@@ -89,12 +91,6 @@ const runApiCommand = (cmd) =>{
             }else{
                 ipcRenderer.send('app-update', {
                     'icon': 'working', 'tool-tip': status
-                });
-                setStatus("SUCCESS");
-            }
-            if(cmd['cmd'] !== 'start-blt' && !value["err"]){
-                ipcRenderer.send('app-update', {
-                    'icon': 'idle', 'tool-tip': status
                 });
                 setStatus("SUCCESS");
             }
