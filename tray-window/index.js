@@ -3,6 +3,8 @@ const {ipcRenderer, shell} = require('electron')
 let previousData = {}
 let isWorking = false;
 let lastCommand = undefined;
+let isError = false;
+let status = 'STOPPED'
 
 /*
 All on click events handled here
@@ -59,8 +61,7 @@ const runCommand = (cmd) =>{
     });
     return defaultNodeCmd({cmd:cmd})
 }
-let isError = false;
-let status = 'STOPPED'
+
 const defaultNodeCmd = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
