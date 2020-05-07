@@ -20,8 +20,9 @@ audio:not([controls]) {
   display: none;
 }
 .btn:disabled{
-  color:gray;
   box-shadow: none;
+  background-color: #cccccc;
+  color: #666666;
 }
 a:active,
 a:hover {
