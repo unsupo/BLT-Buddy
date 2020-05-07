@@ -4,6 +4,7 @@ const {resolveHome} = require('./cmd')
 const path = require('path')
 
 const logdir = resolveHome(path.join("~","logs"))
+const basedir = path.join(process.cwd(),'data')
 const cmddir = path.join(basedir,"cmd")
 const cmdlogdir = path.join(cmddir,"logs")
 const piddir = path.join(cmddir,'pids')
@@ -12,6 +13,7 @@ const logfile = path.join(logdir,"blt-buddy.log")
 
 global.constants = Object.freeze({
     logdir: logdir,
+    basedir: basedir,
     cmddir: cmddir,
     cmdlogdir: cmdlogdir,
     piddir: piddir,

@@ -11,8 +11,6 @@ const assetsDirectory = path.join(__dirname, 'assets', 'icons', 'png')
 const appFolder = path.dirname(process.execPath)
 const updateExe = path.resolve(appFolder, '..', 'Update.exe')
 const exeName = path.basename(process.execPath)
-
-global.basedir = __dirname
 const cmd = require('./scripts/cmd')
 
 
