@@ -10,9 +10,7 @@ const {piddir,cmdlogdir,scriptsdir} = require("./constants");
 
 fixPath();
 
-const _hash = crypto.createHash('md5')
-
-const md5 = (str) => _hash.update(str).digest('hex')
+const md5 = (str) => crypto.createHash('md5').update(str).digest('hex')
 
 const python_options = {
     pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
