@@ -37,17 +37,17 @@ const process_checker = "function process_checker(){\n" +
 // TODO sync and others that have user prompt
 
 exports.db_stop = () =>{
-    return cmd.command(blt+project+" --db-stop"+outToLog)
+    return cmd.command(blt+project+" --db-stop")
 }
 exports.db_start = () =>{
-    return cmd.command(blt+project+" --db-stop"+outToLog)
+    return cmd.command(blt+project+" --db-stop")
 }
 
 exports.restartBlt = () => {
     return new Promise(resolve =>
         sfm().then(() => killblt().then(res3 => {
-            cmd.command(blt+project+" --db-stop"+outToLog).then(res2 => {
-                cmd.command(blt+project+" --db-start"+outToLog).then(res1 => {
+            cmd.command(blt+project+" --db-stop").then(res2 => {
+                cmd.command(blt+project+" --db-start").then(res1 => {
                     resolve(start_blt())
                 })
             })
@@ -85,27 +85,27 @@ exports.killblt = (timeout) => {
 }
 exports.sfm = () => {
     return new Promise(resolve =>
-        command(working_dir_cmd + " blt --sfm"+outToLog).then(value => resolve(value))
+        command(working_dir_cmd + " blt --sfm").then(value => resolve(value))
     )
 }
 exports.sync_blt = () => {
     return new Promise(resolve =>
-        command(working_dir_cmd+blt+" --sync"+outToLog).then(value => resolve(value))
+        command(working_dir_cmd+blt+" --sync").then(value => resolve(value))
     )
 }
 exports.build_blt = () => {
     return new Promise(resolve =>
-        command(blt+project+" --build"+outToLog).then(value =>resolve(value))
+        command(blt+project+" --build").then(value =>resolve(value))
     )
 }
 exports.enable_blt = () => {
     return new Promise(resolve =>
-        command(blt+project+" --enable"+outToLog).then(value => resolve(value))
+        command(blt+project+" --enable").then(value => resolve(value))
     )
 }
 exports.disable_blt = () => {
     return new Promise(resolve =>
-        command(blt+project+" --disable"+outToLog).then(value => resolve(value))
+        command(blt+project+" --disable").then(value => resolve(value))
     )
 }
 exports.set_project = (dir) => {
