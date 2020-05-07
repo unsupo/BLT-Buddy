@@ -10,3 +10,13 @@ exports.cmdlogdir = path.join(cmddir,"logs")
 exports.piddir = path.join(cmddir,'pids')
 exports.scriptsdir = path.join(cmddir,'scripts')
 exports.logfile = path.join(_logdir,"blt-buddy.log")
+
+// exports.constants = Object.freeze({
+//     logdir: logdir,
+//     basedir: basedir,
+//     cmddir: cmddir,
+//     cmdlogdir: cmdlogdir,
+//     piddir: piddir,
+//     scriptsdir: scriptsdir,
+//     logfile: logfile,
+// })
