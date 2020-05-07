@@ -11,7 +11,7 @@ All on click events handled here
  */
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
-    ['js-kill-action','kill-blt'],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
+    ['js-kill-action','kill-blt',{'args':{'timeout':0}}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
     ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit']
 ]
 document.addEventListener('click', (event) => {
@@ -28,9 +28,8 @@ document.addEventListener('click', (event) => {
             shell.openExternal(event.target.href).then(r => undefined);
             event.preventDefault()
         }
-    } else if (!isWorking && event.target.classList.contains('js-refresh-action')) {
+    } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
         updateData()
-    }
     class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1]) : undefined)
 })
 
