@@ -1,6 +1,7 @@
 const path = require('path');
 const childProcess = require('child_process');
 const fixPath = require('fix-path')
+const fs = require('fs');
 
 fixPath();
 exports.runScript = (scriptPath, callback) => {
@@ -36,5 +37,6 @@ exports.resolveHome = (filepath) => {
 
 
 exports.mkdir = (dir) =>{
-    
+    if (!fs.existsSync(dir))
+        fs.mkdirSync(dir)
 }
