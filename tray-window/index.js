@@ -177,13 +177,16 @@ function updateFunc() {
     getStatus().then(value => {
         const b = document.querySelector('.js-change-status-action')
         function changeStatus(status) {
+            status = status.toLowerCase();
             b.textContent = status.charAt(0).toUpperCase() + status.slice(1)
             // remove the enable action and add the disable action
-            b.classList.remove('js-enable-action')
-            b.classList.add('js-disable-action')
+            b.classList.remove(`js-${status === 'enable' ? 'disable': 'enable'}-action`)
+            b.classList.add(`js-${status}-action`)
         }
-        if(value === "0") { //then project is enabled so allow button to disable project
-        }
+        if(value === "0")  //then project is enabled so allow button to disable project
+            changeStatus('enable')
+        else
+            changeStatus('disable')
     })
     updateVar = setInterval(updateData, oneSecond*10);
 }
