@@ -103,11 +103,16 @@ class BLT:
             return 1
 
     def health_check_app(self):
+        hc2 = None; hc1 = self.health_check_1()
+        if hc1 == 1:
+            hc2 = 'DOWN'
+            hc1 = 'DOWN'
+        else:
+            hc1 = 'UP'
+            hc2 = self.health_check_2()
         return {
-            'port_check': self.health_check_consts['UP'] if self.health_check_1() == 0 else
-            self.health_check_consts['DOWN'],
-            'ui_check': self.health_check_consts['UP'] if self.health_check_2() == 0 else
-            self.health_check_consts['DOWN']
+            'port_check': hc1,
+            'ui_check': hc2
         }
 
     def health_check(self):

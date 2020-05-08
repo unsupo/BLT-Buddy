@@ -76,15 +76,5 @@ const run_python = (arg) => new Promise(resolve =>
         })
     )
 
-exports.checkHealth = () => {
-    return new Promise(resolve => {
-        run_python('--health_check_1').then(value =>
-            if(value === '0')
-                resolve(run_python('--health_check'))
-            else
-                resolve({})
-        )
-
-    })
-} // needed for beautiful soup
+exports.checkHealth = () => run_python('--health_check') // needed for beautiful soup
 exports.isNeedSFM = () => run_python('--check_sfm') // needed for pexpect
