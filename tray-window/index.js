@@ -185,9 +185,13 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         changeEDStatus('enable')
 })
 
+let projectPaths;
 const setProjectsPaths = () => {
     const select = document.querySelector('.projects')
-    select.addEventListener('change',evt => console.log(evt))
+    select.addEventListener('change',evt => {
+        const picked = parseInt(evt.target['value'])
+        console.log(projectPaths[picked])
+    })
     return runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
         value = value['stdout']
         let i = 0
@@ -199,6 +203,7 @@ const setProjectsPaths = () => {
                 node.setAttribute('selected','selected')
             node.appendChild(textnode);
             select.appendChild(node)
+            projectPaths.add(value1)
         })
     })
 }
