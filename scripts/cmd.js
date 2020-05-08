@@ -76,6 +76,7 @@ const _cmd_detached = (cwd, cmd, argv0, out, err) => {
 
     const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', out ? out : 'ignore', err ? err : 'ignore']});
     child.unref();
+    child.on('exit')
     return child
 }
 
