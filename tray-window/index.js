@@ -192,10 +192,9 @@ const setProjectsPaths = () => runBasicApiCommand({cmd:'get_project_dirs'}).then
     value.split('\n').forEach(value1 => {
         const node = document.createElement('option')
         const textnode = document.createTextNode(value1);
-        node.attributes.setNamedItem(document.createAttribute())
+        node.setAttribute('value',i++)
         node.appendChild(textnode);
         select.appendChild(node)
-        i++
     })
 })
 
