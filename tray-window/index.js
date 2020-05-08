@@ -185,9 +185,11 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         changeEDStatus('enable')
 })
 
-const setProjectsPaths = () => {
-
-}
+const setProjectsPaths = () => runBasicApiCommand('get_project_dirs').then(value => {
+    value = value['stdout']
+    const select = document.querySelector('projects')
+    select.appendChild()
+})
 
 const oneSecond = 1000;
 const oneMinute = 60 * oneSecond;
