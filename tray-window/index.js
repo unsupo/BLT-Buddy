@@ -174,6 +174,9 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         b.textContent = status.charAt(0).toUpperCase() + status.slice(1)
         // remove the enable action and add the disable action
         b.classList.remove(`js-${status === 'enable' ? 'disable': 'enable'}-action`)
+        const c = status === 'enable' ? 'positive' : 'negative'
+        b.classList.remove('btn-'+c)
+        b.classList.add('btn-'+c)
         b.classList.add(`js-${status}-action`)
     }
     if(value === "0")  //then project is enabled so allow button to disable project
