@@ -83,7 +83,7 @@ function createWindow() {
 function createTrayWindow() {
     tray_window = new BrowserWindow({
         width: 220,
-        height: 220,
+        height: 320,
         show: false,
         frame: false,
         fullscreenable: false,
