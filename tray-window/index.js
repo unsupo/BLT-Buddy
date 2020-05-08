@@ -58,7 +58,6 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 // use this for blt commands that require status change
 const runCommand = (cmd, args) =>{
     isWorking = true;
-    // setStatus('LOADING...')
     disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],true)
     const status = (cmd.replace("-blt",'')+"ing...").toUpperCase();
     setStatus(status)
@@ -115,8 +114,6 @@ const getData = (cmd) =>{
 }
 
 const updateView = (data) => {
-    // const currently = weather.currently
-    // let status = 'STOPPED'
     let openLink = document.getElementsByClassName('open-webpage')[0];
 
     if(data['app']['ui_check'] === 'UP') {
@@ -126,8 +123,7 @@ const updateView = (data) => {
         openLink.style.visibility = "hidden";
 
     document.querySelector('.js-summary').textContent = status
-    // document.querySelector('.js-update-time').textContent = `at ${new Date(currently.time).toLocaleTimeString()}`
-    //
+
     if(document.querySelector('.js-health-check-port')) {
         document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
         document.querySelector('.js-health-check-ui').textContent = data['app']['ui_check']
