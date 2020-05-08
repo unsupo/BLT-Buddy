@@ -36,14 +36,14 @@ const isPidStillRunning = (pid) => {
         .then(value => resolve(value['stdout'] === '0')))
 }
 
-const waitForPid = (pid, exitfile) => {
+const waitForPid = (pid, exitfile,logfile) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value => {
             // if exit code not 0 return false because non zero exit code means it failed
             const r = parseInt(fs.readFileSync(exitfile).toString())
             if(r !== 0)
-                value['err']=r
+                value['err']=logfile
             resolve(value)
         })
     );
@@ -53,13 +53,13 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
 
-        function detached(cwd,scr,args,o,e) {
+        function detached(cwd,scr,args,o,e,l) {
             const c = _cmd_detached(cwd,scr,args,o,e)
             const p = c.pid
             const exitfile = path.join(constants.cmdexitdir,hash+".exit")
             fs.writeFileSync(pid,p)
             c.on('exit',(code, signal) => fs.writeFileSync(exitfile,code))
-            return [p,exitfile]
+            return [p,exitfile,l]
         }
 
         const hash = md5(cmd)
@@ -72,11 +72,11 @@ const _run_cmd = (cmd) => {
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err,logfile))
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err,logfile))
         })
     })
 }

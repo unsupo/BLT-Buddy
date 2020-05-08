@@ -81,8 +81,11 @@ const runApiCommand = (cmd) =>{
                 isError = true
                 setStatus(value["err"]);
                 ipcRenderer.send('app-update', {
-                    'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
+                    'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr'],
+                    'notification': {'title': "BLT Buddy",'body': `ERROR Occurred with ${cmd['cmd']}`,
+                        'onclick': ()=>require('electron').shell.openItem(value['err'])}
                 });
+                setStatus("ERROR");
             }
             if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
                 isWorking = false // main returned a result so we aren't working anymore
