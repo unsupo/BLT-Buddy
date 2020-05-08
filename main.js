@@ -280,7 +280,7 @@ ipcMain.handle('api', (event ,args)=> {
         case 'enable-blt': cmdlocal = blt.enable_blt(); break
         case 'disable-blt': cmdlocal = blt.disable_blt(); break
         case 'set-project': cmdlocal = blt.set_project(args['args']['dir']); break
-        case 'kill-command': cmdlocal = cmd.killcmd(args['args']['cmd']); break
+        case 'kill-command': cmdlocal = cmd.killcmd(blt.getCommand(args['args']['cmd'])); break
         case 'quit': cmdlocal = app.quit(); break
         default:
             // console.log(args)

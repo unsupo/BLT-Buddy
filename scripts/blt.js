@@ -1,4 +1,3 @@
-
 const path = require('path');
 const fixPath = require('fix-path')
 const {logfile} = require("./constants");
@@ -35,6 +34,10 @@ const process_checker = "function process_checker(){\n" +
 
 // TODO save or find pid and kill be able to kill it if requested
 // TODO sync and others that have user prompt
+
+exports.getCommand = (argElement) => {
+    return undefined;
+}
 
 exports.db_stop = () =>{
     return cmd.command(blt+project+" --db-stop")
