@@ -42,6 +42,7 @@ const startUp = () => {
     mkdirp(constants.scriptsdir)
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
+    mkdirp(constants.cmdexitdir)
 }
 
 app.whenReady()
