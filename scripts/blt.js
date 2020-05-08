@@ -95,7 +95,8 @@ exports.sync_blt = () => {
 }
 exports.build_blt = () => {
     return new Promise(resolve =>
-        command(blt+project+" --build").then(value =>resolve(value))
+        // command(blt+project+" --build").then(value =>resolve(value))
+        command("sleep 20").then(value =>resolve(value))
     )
 }
 exports.enable_blt = () => {
