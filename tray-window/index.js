@@ -185,7 +185,7 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         changeEDStatus('enable')
 })
 
-let projectPaths;
+let projectPaths = [];
 const setProjectsPaths = () => {
     const select = document.querySelector('.projects')
     select.addEventListener('change',evt => {
@@ -203,7 +203,7 @@ const setProjectsPaths = () => {
                 node.setAttribute('selected','selected')
             node.appendChild(textnode);
             select.appendChild(node)
-            projectPaths.add(value1)
+            projectPaths.concat(value1)
         })
     })
 }
