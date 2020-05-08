@@ -195,7 +195,7 @@ ipcMain.on('app-update', (event, appStatus) => {
         let click;
         if(appStatus['notification']['onclick'] && appStatus['notification']['onclick']['key'])
             switch (appStatus['notification']['onclick']['key']) {
-                case 'open-file': click = ()=>require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
+                case 'open-file': click = ()=> require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
             }
         sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
     }
