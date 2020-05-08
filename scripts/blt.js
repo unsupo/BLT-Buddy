@@ -43,6 +43,8 @@ exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
 
+// TODO get all project directories.  find ~/blt/app -d
+
 exports.set_project = (dir) => {
     working_dir = resolveHome(path.join("~", "blt", dir));
     projectDir = dir
