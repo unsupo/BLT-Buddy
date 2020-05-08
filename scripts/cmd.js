@@ -36,13 +36,12 @@ const isPidStillRunning = (pid) => {
         .then(value => resolve(value['stdout'] === '0')))
 }
 
-const waitForPid = (pid) => {
+const waitForPid = (pid, exitfile) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
-        _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value => {
-            pid.slice(0,-".pid".length)+''
-            fs.readFileSync()
-        })
+        _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value =>
+            resolve(fs.readFileSync(exitfile))
+        )
     );
 }
 // returns the detached pid of the command after executing it
@@ -53,9 +52,10 @@ const _run_cmd = (cmd) => {
         function detached(cwd,scr,args,o,e) {
             const c = _cmd_detached(cwd,scr,args,o,e)
             const p = c.pid
+            const exitfile = path.join(constants.cmdexitdir,hash+".exit")
             fs.writeFileSync(pid,p)
-            c.on('exit',(code, signal) => fs.writeFileSync(path.join(constants.cmdexitdir,hash+".exit"),code))
-            return p
+            c.on('exit',(code, signal) => fs.writeFileSync(exitfile,code))
+            return [p,exitfile]
         }
 
         const hash = md5(cmd)
@@ -117,7 +117,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    return _run_cmd(cmd).then(value => waitForPid(value))
+    return _run_cmd(cmd).then(value => waitForPid(value[0],value[1]))
 }
 
 exports.resolveHome = (filepath) => {
