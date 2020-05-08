@@ -35,7 +35,7 @@ ${blt} ${replace_project} --start-bg
 `,
 }
 const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project)
-const run_cmd = (cmd_key) => cmd.command(cmd_replacer(cmd_key))
+const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
