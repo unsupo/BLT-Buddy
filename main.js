@@ -111,7 +111,8 @@ const sendNotification = (title,body,onclick) => {
         title: title,
         body: body
     })
-    notification.on('click', onclick)
+    if(onclick)
+        notification.on('click', onclick)
     return notification
     // notification.show()
 }
