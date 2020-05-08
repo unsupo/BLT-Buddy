@@ -20,6 +20,7 @@ const _runPython = (args, callback) =>{
         args: args
     }
     options = Object.assign({}, options, python_options);
+    console.log(options)
     PythonShell.run(path.join(__dirname,'blt.py'), options, callback);
 }
 
