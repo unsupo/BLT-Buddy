@@ -72,5 +72,5 @@ const run_python = (arg) => {
     )
 }
 
-exports.checkHealth = () => runPython('--check_health') // needed for beautiful soup
-exports.isNeedSFM = () => runPython('--check_sfm') // needed for pexpect
+exports.checkHealth = () => run_python('--check_health') // needed for beautiful soup
+exports.isNeedSFM = () => run_python('--check_sfm') // needed for pexpect
