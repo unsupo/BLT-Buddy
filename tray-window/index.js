@@ -188,6 +188,8 @@ const setEnableDisableStatus = () => getStatus().then(value => {
 const setProjectsPaths = () => runBasicApiCommand('get_project_dirs').then(value => {
     value = value['stdout']
     const select = document.querySelector('projects')
+    const node = document.createElement('option')
+    node.set
     select.appendChild()
 })
 
