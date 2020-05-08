@@ -75,7 +75,7 @@ const _run_cmd = (cmd) => {
         const err = fs.openSync(log,'a')
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
-        const c = '#!/usr/bin/env bash\n${cmd}'
+        const c = `#!/usr/bin/env bash\n${cmd}`
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
