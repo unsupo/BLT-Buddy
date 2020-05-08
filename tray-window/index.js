@@ -163,8 +163,6 @@ const updateData = () =>{
         isGettingSFMData = true;
         getSFMData().then(value => {
             value = JSON.parse(value['res']);
-            // console.log(value);
-            // updateView(value);
             // don't spam notifications only do it every 10 minutes while sfm is needed
             if (value && ((new Date) - createdNotificationTime > tenMinutes))
                 ipcRenderer.invoke('sfm-needed', value).then(value1 => createdNotificationTime=Date.now())
