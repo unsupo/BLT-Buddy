@@ -40,11 +40,12 @@ const getHealthData = () => {
     return getData({cmd:'check-health'});
 }
 
+// use runBasicApiCommand for these because they don't update UI
 const getSFMData = () => {
-    return getData({cmd:'is-need-sfm'});
+    return runBasicApiCommand({cmd:'is-need-sfm'});
 }
 const getStatus = () => {
-    return getData({cmd:'get_project_dir_status'});
+    return runBasicApiCommand({cmd:'get_project_dir_status'});
 }
 
 /*
@@ -71,13 +72,12 @@ const runCommand = (cmd, args) =>{
     });
     return runApiCommand({cmd:cmd,args: args})
 }
+const runBasicApiCommand = (cmd) => ipcRenderer.invoke('api', cmd)
 
 const runApiCommand = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
-        ipcRenderer.invoke('api', cmd).then(value => {
-            if(cmd['cmd'] === 'is-need-sfm')
-                return;
+        runApiCommand(cmd).then(value => {
             if(value["err"]){
                 isError = true
                 setStatus(value["err"]);
