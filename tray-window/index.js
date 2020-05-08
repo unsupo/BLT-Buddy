@@ -77,7 +77,7 @@ const runBasicApiCommand = (cmd) => ipcRenderer.invoke('api', cmd)
 const runApiCommand = (cmd) =>{
     lastCommand = cmd
     return new Promise(resolve => {
-        runApiCommand(cmd).then(value => {
+        runBasicApiCommand(cmd).then(value => {
             if(value["err"]){
                 isError = true
                 setStatus(value["err"]);
