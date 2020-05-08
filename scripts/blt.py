@@ -104,7 +104,7 @@ class BLT:
 
     def health_check_app(self):
         hc2 = None; hc1 = self.health_check_1()
-        if hc1 == 1:
+        if hc1 != 0:
             hc2 = 'DOWN'
             hc1 = 'DOWN'
         else:
