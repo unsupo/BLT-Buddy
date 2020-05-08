@@ -72,11 +72,11 @@ const _run_cmd = (cmd) => {
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err,logfile))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err,logfile))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
         })
     })
 }
