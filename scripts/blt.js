@@ -83,6 +83,8 @@ exports.killblt = (timeout) => {
             .then(value => resolve(value))
     )
 }
+exports.killpid = (pid) => command(`kill -9 ${pid}`)
+
 exports.sfm = () => {
     return new Promise(resolve =>
         command(working_dir_cmd + " blt --sfm").then(value => resolve(value))

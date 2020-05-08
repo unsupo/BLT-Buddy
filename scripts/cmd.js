@@ -100,6 +100,8 @@ const _cmd_detached = (cwd, cmd, argv0, out, err) => {
     return child
 }
 
+exports.getPidForCommand = (cmd) => new Promise(resolve => resolve(fs.readFileSync(path.join(constants.piddir, md5(cmd) + ".pid"))))
+
 exports.runScript = (scriptPath, callback) => {
 
     // keep track of whether callback has been invoked to prevent multiple invocations
