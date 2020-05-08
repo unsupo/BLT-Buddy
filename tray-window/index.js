@@ -203,7 +203,7 @@ const setProjectsPaths = () => {
                 node.setAttribute('selected','selected')
             node.appendChild(textnode);
             select.appendChild(node)
-            projectPaths.concat(value1)
+            projectPaths.push(value1)
         })
     })
 }
