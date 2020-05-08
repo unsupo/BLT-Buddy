@@ -203,6 +203,7 @@ const tenMinutes = oneMinute*10;
 let updateVar;
 // do this once and then again whenever project changes
 setEnableDisableStatus()
+setProjectsPaths()
 updateFunc();
 
 function updateFunc() {
