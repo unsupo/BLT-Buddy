@@ -50,7 +50,7 @@ exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
 exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
-exports.get_project_dir_status = () =>{ console.log(cmd_replacer(commands.get_project_dir_status)); return _cmd(commands.get_project_dir_status);}
+exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
 
 exports.set_project = (dir) => {
     working_dir = resolveHome(path.join("~", "blt", dir));
