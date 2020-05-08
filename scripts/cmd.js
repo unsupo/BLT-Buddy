@@ -40,7 +40,7 @@ const waitForPid = (pid, exitfile,logfile) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         isPidStillRunning(pid).then(value => {
-            function returnFile(){
+            function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
@@ -49,9 +49,9 @@ const waitForPid = (pid, exitfile,logfile) => {
             }
             if(value)
                 _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value =>
-                    resolve(returnFile()))
+                    resolve(returnFile(value)))
             else
-                resolve(returnFile())
+                resolve(returnFile({'err':'','stdout':'','stderr':''}))
         })
     );
 }
