@@ -27,7 +27,7 @@ const commands = {
     disable_blt: `${blt} ${replace_project} --enable`,
     start_blt: `${blt} ${replace_project} --start-bg`,
     get_project_dirs: `find ${blt_app_dir} -type d -maxdepth 1`,
-    get_project_dir_status: `[[ -f ${working_dir}/enabled.blt &&  $(egrep '^enabled\s+=\s+true' ${working_dir}/enabled.blt) ]] && echo 0 || echo 1`,
+    get_project_dir_status: `[[ -f ${working_dir}/enabled.blt &&  $(egrep '^enabled\s+=\s+true' ${working_dir}/enabled.blt) ]] && exit 0 || exit 1`,
     restart_blt: `timeout 10 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
 ${blt} ${replace_project} --db-stop
 ${blt} ${replace_project} --db-start
