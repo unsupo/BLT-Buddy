@@ -211,6 +211,6 @@ function updateFunc() {
 function stopUpdateFunc(){
     clearInterval(updateVar);
 }
-
+// TODO set interval seperately for health check and sfm and other recurring api calls
 // Update initial weather when loaded
 document.addEventListener('DOMContentLoaded', updateData)
