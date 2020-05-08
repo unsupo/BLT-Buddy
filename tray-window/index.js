@@ -185,6 +185,10 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         changeEDStatus('enable')
 })
 
+const setProjectsPaths = () => {
+
+}
+
 const oneSecond = 1000;
 const oneMinute = 60 * oneSecond;
 const tenMinutes = oneMinute*10;

@@ -49,6 +49,7 @@ exports.build_blt = () => run_cmd(commands.sync_blt)
 exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
+// fast running commands use _cmd
 exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
 exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
 
