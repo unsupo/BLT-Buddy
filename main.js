@@ -197,7 +197,7 @@ ipcMain.on('app-update', (event, appStatus) => {
             switch (appStatus['notification']['onclick']['key']) {
                 case 'open-file': click = ()=>require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
             }
-        sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click)
+        sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
     }
     if (icon_last && icon_last === iconv)
         return;

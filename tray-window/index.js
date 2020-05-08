@@ -81,7 +81,7 @@ const runApiCommand = (cmd) =>{
                 isError = true
                 setStatus(value["err"]);
                 ipcRenderer.send('app-update', {
-                    'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr'],
+                    'icon': 'error', 'tool-tip': 'ERROR', 'error': value['stderr'],
                     'notification': {
                         'title': "BLT Buddy",'body': `ERROR Occurred with ${cmd['cmd']}`,
                         'onclick': {'key': 'open-file', 'value': value['err']}
