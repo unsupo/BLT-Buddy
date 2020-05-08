@@ -64,11 +64,13 @@ exports.killblt = (timeout) => {
 }
 
 // Python script stuff
-const run_python = (arg) => new Promise(resolve =>
-    runPython([arg],(err, ress) => {
-        resolve({'err': (err?err:'').toString(), 'res': (ress?ress:'').toString()})
-    })
-)
+const run_python = (arg) => {
+    return new Promise(resolve =>
+        runPython([arg], (err, ress) => {
+            resolve({'err': (err ? err : '').toString(), 'res': (ress ? ress : '').toString()})
+        })
+    )
+}
 
 exports.checkHealth = () => runPython('--check_health') // needed for beautiful soup
 exports.isNeedSFM = () => runPython('--check_sfm') // needed for pexpect
