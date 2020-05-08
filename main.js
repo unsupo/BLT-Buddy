@@ -192,10 +192,10 @@ ipcMain.on('app-update', (event, appStatus) => {
     }
     if (appStatus['notification']) {
         let click;
-        switch (appStatus['notification']['onclick']['key']) {
-            case 'open-file': click = ()=>require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
-        }
-
+        if(appStatus['notification']['onclick'] && appStatus['notification']['onclick']['key'])
+            switch (appStatus['notification']['onclick']['key']) {
+                case 'open-file': click = ()=>require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
+            }
         sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click)
     }
     if (icon_last && icon_last === iconv)
