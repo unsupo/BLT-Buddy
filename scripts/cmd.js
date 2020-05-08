@@ -38,7 +38,12 @@ const isPidStillRunning = (pid) => {
 
 const waitForPid = (pid) => {
     // return _command("wait "+pid)
-    return _command("lsof -p "+pid+" +r 1 &>/dev/null")
+    return new Promise(resolve =>
+        _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value => {
+            pid.slice('x')
+            fs.readFileSync()
+        })
+    );
 }
 // returns the detached pid of the command after executing it
 const _run_cmd = (cmd) => {
@@ -59,8 +64,7 @@ const _run_cmd = (cmd) => {
         const err = fs.openSync(log,'a')
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
-        const c = `#!/usr/bin/env bash
-${cmd}`
+        const c = '#!/usr/bin/env bash\n${cmd}'
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) // if pid file doesn't exist
