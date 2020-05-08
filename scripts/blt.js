@@ -14,7 +14,7 @@ let projectDir = "/app/main"
 let project = proj+projectDir
 
 const blt = path.join('/usr', 'local', 'bin', 'blt')
-let working_dir_cmd = "cd " + working_dir + " && "; // might not be neede because of project flag
+let working_dir_cmd = `cd ${working_dir} && `; // might not be neede because of project flag
 
 // TODO sync and others that have user prompt
 const replace_project = "[project]"
