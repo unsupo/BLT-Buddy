@@ -20,9 +20,7 @@ document.addEventListener('click', (event) => {
         const window_ref = 'window:'
         if(event.target.href.startsWith(window_ref)){
             const w = event.target.href.slice(window_ref.length)
-            ipcRenderer.send('open-window', {
-                'window': w
-            });
+            ipcRenderer.send('open-window', {'window': w});
         }else {
             // Open links in external browser
             shell.openExternal(event.target.href).then(r => undefined);
@@ -121,13 +119,9 @@ const updateView = (data) => {
     // let status = 'STOPPED'
     let openLink = document.getElementsByClassName('open-webpage')[0];
 
-    // document.querySelector('.js-start-action').disabled='enabled'
-    // document.querySelector('.js-stop-action').disabled='disabled'
     if(data['app']['ui_check'] === 'UP') {
         status = "RUNNING"
         openLink.style.visibility = "visible";
-        // document.querySelector('.js-start-action').disabled='disabled'
-        // document.querySelector('.js-stop-action').disabled='enabled'
     }else
         openLink.style.visibility = "hidden";
 
