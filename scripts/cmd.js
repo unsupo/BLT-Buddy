@@ -38,7 +38,7 @@ const isPidStillRunning = (pid) => {
 
 const waitForPid = (pid) => {
     // return _command("wait "+pid)
-    return _command("tail --pid="+pid+" -f /dev/null")
+    return _command("lsof -p "+pid+" +r 1 &>/dev/null")
 }
 // returns the detached pid of the command after executing it
 const _run_cmd = (cmd) => {
