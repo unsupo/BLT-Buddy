@@ -5,6 +5,8 @@ const {runPython, command, resolveHome} = require("./cmd");
 
 fixPath();
 
+const blt_dir = resolveHome(path.join("~","blt"))
+const blt_app_dir = path.join(blt_dir,"app")
 let working_dir = resolveHome(path.join("~", "blt", "app", "main"));
 
 const proj = ' --project '
@@ -24,7 +26,7 @@ const commands = {
     enable_blt: `${blt} ${replace_project} --enable`,
     disable_blt: `${blt} ${replace_project} --enable`,
     start_blt: `${blt} ${replace_project} --start-bg`,
-    get_project_dirs: `find ${resolveHome(path.join("~", "blt", "app"))} -type d -maxdepth 1`,
+    get_project_dirs: `find ${blt_app_dir} -type d -maxdepth 1`,
     restart_blt: `timeout 10 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
 ${blt} ${replace_project} --db-stop
 ${blt} ${replace_project} --db-start
@@ -43,7 +45,6 @@ exports.build_blt = () => run_cmd(commands.sync_blt)
 exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
-// TODO get all project directories.  find ~/blt/app -d
 exports.get_project_dirs = () => run_cmd(commands.get_project_dirs)
 
 exports.set_project = (dir) => {
