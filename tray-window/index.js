@@ -189,8 +189,11 @@ const setProjectsPaths = () => runBasicApiCommand('get_project_dirs').then(value
     value = value['stdout']
     const select = document.querySelector('projects')
     const node = document.createElement('option')
-    node.set
-    select.appendChild()
+    value.split('\n').forEach(value1 => {
+        const textnode = document.createTextNode(value1);
+        node.appendChild(textnode);
+        select.appendChild(node)
+    })
 })
 
 const oneSecond = 1000;
