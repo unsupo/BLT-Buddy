@@ -83,7 +83,6 @@ const runApiCommand = (cmd) =>{
                 ipcRenderer.send('app-update', {
                     'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr']
                 });
-                return;
             }
             if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
                 isWorking = false // main returned a result so we aren't working anymore
