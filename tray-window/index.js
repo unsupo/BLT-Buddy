@@ -166,7 +166,7 @@ const updateData = () =>{
     }
 };
 
-const setStatus = () => getStatus().then(value => {
+const setEnableDisableStatus = () => getStatus().then(value => {
     const b = document.querySelector('.js-change-status-action')
     function changeStatus(status) {
         status = status.toLowerCase();
@@ -189,7 +189,7 @@ let updateVar;
 updateFunc();
 
 function updateFunc() {
-    setStatus()
+    setEnableDisableStatus()
     updateVar = setInterval(updateData, oneSecond*10);
 }
 function stopUpdateFunc(){
