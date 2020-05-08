@@ -109,7 +109,7 @@ class BLT:
             hc1 = 'DOWN'
         else:
             hc1 = 'UP'
-            hc2 = self.health_check_2()
+            hc2 = 'UP' if self.health_check_2() == 0 else 'DOWN'
         return {
             'port_check': hc1,
             'ui_check': hc2
