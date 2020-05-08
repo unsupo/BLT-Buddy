@@ -109,34 +109,10 @@ const runApiCommand = (cmd) =>{
     });
 }
 
-//basic get api command
-// const defaultNodeCmd = (cmd) =>{
-//     lastCommand = cmd
-//     return new Promise(resolve => {
-//         ipcRenderer.invoke('api', cmd).then(value => {
-//             isWorking=false
-//             if(value['err']) {
-//                 isError = true
-//                 ipcRenderer.send('app-update', {
-//                     'icon': 'error', 'tool-tip': value['err']
-//                 });
-//             }
-//             updateFunc()
-//             resolve(value)
-//         })
-//     });
-// }
 
 // use this for background tasks like checking for status
 const getData = (cmd) =>{
-    // if(isWorking)
-    //     return undefined
-    // isWorking = true;
-    // setStatus('LOADING...')
     stopUpdateFunc()
-    // ipcRenderer.send('app-update', {
-    //     'icon': 'working'
-    // });
     return runApiCommand(cmd)
 }
 
