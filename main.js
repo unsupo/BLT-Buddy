@@ -185,9 +185,7 @@ ipcMain.on('app-update', (event, appStatus) => {
     switch (appStatus['icon']) {
         case 'running': iconv = 'tray-icon-running.png'; break
         case 'working': iconv = 'tray-icon-working.png'; break
-        case 'error':
-            iconv = 'tray-icon.png';
-            break
+        case 'error': iconv = 'tray-icon.png'; break
         case 'stopped':
         default:
             iconv = 'tray-icon-stopped.png';
