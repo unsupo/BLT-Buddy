@@ -225,6 +225,7 @@ function onDOMLoaded() {
     // do this once and then again whenever project changes
     setEnableDisableStatus()
     setProjectsPaths()
+    updateData()
     updateFunc();
 }
 
