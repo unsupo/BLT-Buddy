@@ -34,16 +34,27 @@ const process_checker = "function process_checker(){\n" +
 
 // TODO save or find pid and kill be able to kill it if requested
 // TODO sync and others that have user prompt
+const replace_project = "[project]"
+
+const commands = {
+    db_stop: `${blt} ${replace_project} --db-stop`,
+    db_start: `${blt} ${replace_project} --db-start`,
+    restart_blt: `
+`,
+}
 
 exports.getCommand = (argElement) => {
     return undefined;
 }
+const run_cmd = (cmd_key) => {
+    return cmd.command(cmd_key.replace(replace_project,project))
+}
 
 exports.db_stop = () =>{
-    return cmd.command(blt+project+" --db-stop")
+    return run_cmd(commands.db_stop)
 }
 exports.db_start = () =>{
-    return cmd.command(blt+project+" --db-stop")
+    return run_cmd(commands.db_start)
 }
 
 exports.restartBlt = () => {
