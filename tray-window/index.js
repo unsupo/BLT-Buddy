@@ -187,8 +187,8 @@ const setEnableDisableStatus = () => getStatus().then(value => {
 
 const setProjectsPaths = () => runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
     value = value['stdout']
-    const select = document.querySelector('projects')
     value.split('\n').forEach(value1 => {
+        const select = document.querySelector('projects')
         const node = document.createElement('option')
         const textnode = document.createTextNode(value1);
         node.appendChild(textnode);
