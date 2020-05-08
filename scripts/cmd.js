@@ -40,7 +40,7 @@ const waitForPid = (pid) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value => {
-            pid.slice()
+            pid.slice(0,-".pid".length)+''
             fs.readFileSync()
         })
     );
