@@ -167,6 +167,7 @@ const updateData = () =>{
 };
 
 const setEnableDisableStatus = () => getStatus().then(value => {
+    value = value['stdout']
     const b = document.querySelector('.js-change-status-action')
     function changeEDStatus(status) {
         status = status.toLowerCase();
