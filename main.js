@@ -268,25 +268,26 @@ ipcMain.handle('sfm-needed',(event, args) => {
 })
 let runningCmd;
 ipcMain.handle('api', (event ,args)=> {
-    let cmd;
+    let cmdlocal;
     switch (args['cmd']) {
-        case 'restart-blt': cmd = blt.restartBlt(); break
-        case 'check-health': cmd = blt.checkHealth(); break
-        case 'is-need-sfm': cmd = blt.isNeedSFM(); break
-        case 'kill-blt': cmd = blt.killblt(args['args']['timeout']); break
-        case 'start-blt': cmd = blt.start_blt(); break
-        case 'build-blt': cmd = blt.build_blt(); break
-        case 'sync-blt': cmd = blt.sync_blt(); break
-        case 'enable-blt': cmd = blt.enable_blt(); break
-        case 'disable-blt': cmd = blt.disable_blt(); break
-        case 'set-project': cmd = blt.set_project(args['args']['dir']); break
-        case 'quit': cmd = app.quit(); break
+        case 'restart-blt': cmdlocal = blt.restartBlt(); break
+        case 'check-health': cmdlocal = blt.checkHealth(); break
+        case 'is-need-sfm': cmdlocal = blt.isNeedSFM(); break
+        case 'kill-blt': cmdlocal = blt.killblt(args['args']['timeout']); break
+        case 'start-blt': cmdlocal = blt.start_blt(); break
+        case 'build-blt': cmdlocal = blt.build_blt(); break
+        case 'sync-blt': cmdlocal = blt.sync_blt(); break
+        case 'enable-blt': cmdlocal = blt.enable_blt(); break
+        case 'disable-blt': cmdlocal = blt.disable_blt(); break
+        case 'set-project': cmdlocal = blt.set_project(args['args']['dir']); break
+        case 'kill-command': cmdlocal = cmd.killcmd(args['args']['cmd']); break
+        case 'quit': cmdlocal = app.quit(); break
         default:
             // console.log(args)
             return
     }
     runningCmd = args['cmd']
-    return cmd
+    return cmdlocal
 })
 
 // Quit when all windows are closed.

@@ -83,7 +83,6 @@ exports.killblt = (timeout) => {
             .then(value => resolve(value))
     )
 }
-exports.killpid = (pid) => command(`kill -9 ${pid}`)
 
 exports.sfm = () => {
     return new Promise(resolve =>
