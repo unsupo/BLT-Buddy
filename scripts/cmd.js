@@ -121,7 +121,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    return _run_cmd(cmd).then(value => waitForPid(value[0],value[1]))
+    return _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2]))
 }
 
 exports.resolveHome = (filepath) => {
