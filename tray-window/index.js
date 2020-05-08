@@ -185,20 +185,23 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         changeEDStatus('enable')
 })
 
-const setProjectsPaths = () => runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
-    value = value['stdout']
+const setProjectsPaths = () => {
     const select = document.querySelector('.projects')
-    let i = 0
-    value.split('\n').forEach(value1 => {
-        const node = document.createElement('option')
-        const textnode = document.createTextNode(value1);
-        node.setAttribute('value',''+i++)
-        if(value1 === 'app/main')
-            node.setAttribute('selected','selected')
-        node.appendChild(textnode);
-        select.appendChild(node)
+    select.addEventListener('change',evt => console.log(evt))
+    return runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
+        value = value['stdout']
+        let i = 0
+        value.split('\n').forEach(value1 => {
+            const node = document.createElement('option')
+            const textnode = document.createTextNode(value1);
+            node.setAttribute('value',''+i++)
+            if(value1 === 'app/main')
+                node.setAttribute('selected','selected')
+            node.appendChild(textnode);
+            select.appendChild(node)
+        })
     })
-})
+}
 
 const oneSecond = 1000;
 const oneMinute = 60 * oneSecond;
