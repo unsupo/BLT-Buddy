@@ -187,10 +187,11 @@ const oneMinute = 60 * oneSecond;
 const tenMinutes = oneMinute*10;
 
 let updateVar;
+// do this once and then again whenever project changes
+setEnableDisableStatus()
 updateFunc();
 
 function updateFunc() {
-    setEnableDisableStatus()
     updateVar = setInterval(updateData, oneSecond*10);
 }
 function stopUpdateFunc(){
