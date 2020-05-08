@@ -35,7 +35,10 @@ ${blt} ${replace_project} --start-bg
 `,
 }
 const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project)
+// use this for long running commands where you don't necessarily care about the output
 const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
+// use this for quick commands where output is critical
+const _cmd = (cmd) => cmd(cmd_replacer(cmd))
 
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
@@ -46,8 +49,8 @@ exports.build_blt = () => run_cmd(commands.sync_blt)
 exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
-exports.get_project_dirs = () => cmd(commands.get_project_dirs)
-exports.get_project_dir_status = () => cmd(commands.get_project_dir_status)
+exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
+exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status))
 
 exports.set_project = (dir) => {
     working_dir = resolveHome(path.join("~", "blt", dir));
