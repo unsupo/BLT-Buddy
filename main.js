@@ -195,6 +195,8 @@ ipcMain.on('app-update', (event, appStatus) => {
         default:
             iconv = 'tray-icon-stopped.png';
     }
+    if (appStatus['notification'])
+        sendNotification(appStatus['notification']['title'],appStatus['notification']['body'],appStatus['onclick'])
     if (icon_last && icon_last === iconv)
         return;
     if(lastStatus === 'stopped' && appStatus['icon'] === 'running' ||
