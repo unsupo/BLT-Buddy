@@ -191,6 +191,7 @@ ipcMain.on('app-update', (event, appStatus) => {
             iconv = 'tray-icon-stopped.png';
     }
     if (appStatus['notification']) {
+        console.log(appStatus)
         let click;
         if(appStatus['notification']['onclick'] && appStatus['notification']['onclick']['key'])
             switch (appStatus['notification']['onclick']['key']) {
