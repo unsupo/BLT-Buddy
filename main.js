@@ -199,8 +199,8 @@ ipcMain.on('app-update', (event, appStatus) => {
                     case 'open-file':
                         click = () => require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
                 }
-            }catch(TypeError e){
-                console.log(e)
+            }catch(err){
+                console.log(err)
             }
         sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
     }
