@@ -45,10 +45,10 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
 
-        function detached() {
-            const c = _cmd_detached(constants.scriptsdir, script, undefined, out, err)
-            fs.writeFileSync(pid,p)
+        function detached(cwd,scr,args,o,e) {
+            const c = _cmd_detached(cwd,scr,args,o,e)
             const p = c.pid
+            fs.writeFileSync(pid,p)
             c.on('exit',(code, signal) => fs.writeFileSync(path.join(constants.cmdexitdir,hash+".exit"),code))
             return p
         }
@@ -63,18 +63,12 @@ const _run_cmd = (cmd) => {
 ${cmd}`
         if(!fs.existsSync(script)) // if file doesn't exist
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
-        if(!fs.existsSync(pid)) { // if pid file doesn't exist
-            const c = _cmd_detached(constants.scriptsdir, script, undefined, out, err)
-            fs.writeFileSync(pid,p)
-            const p = c.pid
-            c.on('exit',(code, signal) => fs.writeFileSync(path.join(constants.cmdexitdir,hash+".exit"),code))
-            return resolve(p)
-        }isPidStillRunning(fs.readFileSync(pid)).then(value => {
+        if(!fs.existsSync(pid)) // if pid file doesn't exist
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err))
+        isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // return pid if it's still running
                 return resolve(pid) // pid still running
-
-
-            return resolve(detached())
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err))
         })
     })
 }
