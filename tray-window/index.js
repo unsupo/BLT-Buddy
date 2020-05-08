@@ -177,9 +177,9 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         b.classList.add(`js-${status}-action`)
     }
     if(value === "0")  //then project is enabled so allow button to disable project
-        changeEDStatus('enable')
-    else
         changeEDStatus('disable')
+    else
+        changeEDStatus('enable')
 })
 
 const oneSecond = 1000;
