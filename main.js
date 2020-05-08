@@ -191,7 +191,6 @@ ipcMain.on('app-update', (event, appStatus) => {
             iconv = 'tray-icon-stopped.png';
     }
     if (appStatus['notification']) {
-        console.log(appStatus)
         let click;
         if(appStatus['notification']['onclick'] && appStatus['notification']['onclick']['key'])
             try {
@@ -200,6 +199,7 @@ ipcMain.on('app-update', (event, appStatus) => {
                         click = () => require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
                 }
             }catch(err){
+                console.log(appStatus)
                 console.log(err)
             }
         sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
