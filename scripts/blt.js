@@ -39,86 +39,23 @@ const replace_project = "[project]"
 const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
-    restart_blt: `
+    sync_blt: `${blt} ${replace_project} --sync`,
+    sy_blt: `${blt} ${replace_project} --sync`,
+    restart_blt: `timeout 10 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
+${blt} ${replace_project} --db-stop
+${blt} ${replace_project} --db-start
+${blt} ${replace_project} --start-bg
 `,
 }
 
-exports.getCommand = (argElement) => {
-    return undefined;
-}
-const run_cmd = (cmd_key) => {
-    return cmd.command(cmd_key.replace(replace_project,project))
-}
-
-exports.db_stop = () =>{
-    return run_cmd(commands.db_stop)
-}
-exports.db_start = () =>{
-    return run_cmd(commands.db_start)
-}
-
-exports.restartBlt = () => {
-    return new Promise(resolve =>
-        sfm().then(() => killblt().then(res3 => {
-            cmd.command(blt+project+" --db-stop").then(res2 => {
-                cmd.command(blt+project+" --db-start").then(res1 => {
-                    resolve(start_blt())
-                })
-            })
-        }))
-    );
-}
-exports.checkHealth = () =>{
-    return new Promise(resolve =>
-        runPython(['--health_check'],(err, ress) => {
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        })
-    )
-}
-
-exports.isNeedSFM = () => {
-    return new Promise(resolve =>
-        runPython(['--check_sfm'],(err, ress) =>
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        )
-    );
-}
-
-exports.kill = (name) => {
-    return new Promise(resolve =>
-        command("ps -ef|grep "+name+"|awk '{print $2}'|xargs kill -9").then(value => resolve(value))
-    )
-}
-exports.killblt = (timeout) => {
-    if(timeout === undefined)
-        timeout = 20
-    return new Promise(resolve =>
-        command("timeout "+timeout+" blt "+project+" --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9")
-            .then(value => resolve(value))
-    )
-}
-
-exports.sfm = () => {
-    return new Promise(resolve =>
-        command(working_dir_cmd + " blt --sfm").then(value => resolve(value))
-    )
-}
-exports.sync_blt = () => {
-    return new Promise(resolve =>
-        command(working_dir_cmd+blt+" --sync").then(value => resolve(value))
-    )
-}
-exports.build_blt = () => {
-    return new Promise(resolve =>
-        command(blt+project+" --build").then(value =>resolve(value))
-        // command("sleep 1; exit 1").then(value =>resolve(value))
-    )
-}
-exports.enable_blt = () => {
-    return new Promise(resolve =>
-        command(blt+project+" --enable").then(value => resolve(value))
-    )
-}
+exports.getCommand = (cmd_key) => commands[cmd_key];
+const run_cmd = (cmd_key) => cmd.command(cmd_key.replace(replace_project,project))
+exports.db_stop = () => run_cmd(commands.db_stop)
+exports.db_start = () => run_cmd(commands.db_start)
+exports.restartBlt = () => run_cmd(commands.restart_blt)
+exports.sync_blt = () => run_cmd(commands.sync_blt)
+exports.build_blt = () => run_cmd(commands.sync_blt)
+exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => {
     return new Promise(resolve =>
         command(blt+project+" --disable").then(value => resolve(value))
@@ -136,4 +73,28 @@ exports.start_blt = () => {
         child.on('error', (err) => console.log(err))
         resolve({'pid': child.pid})
     })
+}
+exports.killblt = (timeout) => {
+    if(timeout === undefined)
+        timeout = 20
+    return new Promise(resolve =>
+        command("timeout "+timeout+" blt "+project+" --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9")
+            .then(value => resolve(value))
+    )
+}
+
+// Python script stuff
+exports.checkHealth = () =>{
+    return new Promise(resolve =>
+        runPython(['--health_check'],(err, ress) => {
+            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
+        })
+    )
+}
+exports.isNeedSFM = () => {
+    return new Promise(resolve =>
+        runPython(['--check_sfm'],(err, ress) =>
+            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
+        )
+    );
 }
