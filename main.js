@@ -43,7 +43,6 @@ const startUp = () => {
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
-    blt.checkHealth().then(value => console.log(value))
 }
 
 app.whenReady()
