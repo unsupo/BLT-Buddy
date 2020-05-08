@@ -168,7 +168,7 @@ const updateData = () =>{
 
 const setEnableDisableStatus = () => getStatus().then(value => {
     const b = document.querySelector('.js-change-status-action')
-    function changeStatus(status) {
+    function changeEDStatus(status) {
         status = status.toLowerCase();
         b.textContent = status.charAt(0).toUpperCase() + status.slice(1)
         // remove the enable action and add the disable action
@@ -176,9 +176,9 @@ const setEnableDisableStatus = () => getStatus().then(value => {
         b.classList.add(`js-${status}-action`)
     }
     if(value === "0")  //then project is enabled so allow button to disable project
-        changeStatus('enable')
+        changeEDStatus('enable')
     else
-        changeStatus('disable')
+        changeEDStatus('disable')
 })
 
 const oneSecond = 1000;
