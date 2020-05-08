@@ -189,6 +189,7 @@ let updateVar;
 updateFunc();
 
 function updateFunc() {
+    setStatus()
     updateVar = setInterval(updateData, oneSecond*10);
 }
 function stopUpdateFunc(){
