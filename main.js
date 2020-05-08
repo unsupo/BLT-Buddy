@@ -187,18 +187,19 @@ ipcMain.on('app-update', (event, appStatus) => {
         case 'working': iconv = 'tray-icon-working.png'; break
         case 'error':
             iconv = 'tray-icon.png';
-            // command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
-            //     sendNotification('BLT Issue Occurred',appStatus['stdout'],()=>{
-            //         require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
-            //     }).show()
-            // );
             break
         case 'stopped':
         default:
             iconv = 'tray-icon-stopped.png';
     }
-    if (appStatus['notification'])
-        sendNotification(appStatus['notification']['title'],appStatus['notification']['body'],appStatus['onclick'])
+    if (appStatus['notification']) {
+        let click;
+        switch (appStatus['notification']['onclick']['key']) {
+            case 'open-file': click = ()=>require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
+        }
+
+        sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click)
+    }
     if (icon_last && icon_last === iconv)
         return;
     if(lastStatus === 'stopped' && appStatus['icon'] === 'running' ||

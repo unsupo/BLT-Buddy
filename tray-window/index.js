@@ -83,7 +83,7 @@ const runApiCommand = (cmd) =>{
                 ipcRenderer.send('app-update', {
                     'icon': 'error', 'tool-tip': value['stderr'], 'error': value['stderr'],
                     'notification': {'title': "BLT Buddy",'body': `ERROR Occurred with ${cmd['cmd']}`,
-                        'onclick': ()=>require('electron').shell.openItem(value['err'])}
+                        'onclick': {'key': 'open-file', 'value': value['err']}}
                 });
                 setStatus("ERROR");
             }
