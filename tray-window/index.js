@@ -12,7 +12,8 @@ All on click events handled here
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
     ['js-kill-action','kill-blt',{'timeout':0}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
-    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit']
+    ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit'],
+    ['js-change-status-action']
 ]
 document.addEventListener('click', (event) => {
     if (event.target.href) {
