@@ -42,15 +42,16 @@ const waitForPid = (pid, exitfile,logfile) => {
         isPidStillRunning(pid).then(value => {
             function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
+                while (!fs.existsSync(exitfile));
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
                     value['err']=logfile
                 return value
             }
-            if(value)
+            if(value) // if it is still running then wait for it
                 _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value =>
                     resolve(returnFile(value)))
-            else
+            else // otherwise just return the exit code
                 resolve(returnFile({'err':'','stdout':'','stderr':''}))
         })
     );
