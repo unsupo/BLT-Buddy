@@ -1,7 +1,7 @@
 const path = require('path');
 const fixPath = require('fix-path')
 const {logfile} = require("./constants");
-const {runPython, command, cmd_detached, resolveHome} = require("./cmd");
+const {runPython, command, resolveHome} = require("./cmd");
 
 fixPath();
 
@@ -12,27 +12,8 @@ let projectDir = "/app/main"
 let project = proj+projectDir
 
 const blt = path.join('/usr', 'local', 'bin', 'blt')
-let working_dir_cmd = "cd " + working_dir + " && ";
-const outToLog = " >> "+logfile;
+let working_dir_cmd = "cd " + working_dir + " && "; // might not be neede because of project flag
 
-const func_killer = "\n" +
-    "function killer(){\n" +
-    "    ps -ef|grep $1|awk '{print $2}'|xargs kill -9\n" +
-    "}"
-
-const process_checker = "function process_checker(){\n" +
-    "    cmd=\"$1\"\n" +
-    "    if ! ps aux | grep -v grep | grep \"${cmd}\" > /dev/null; then\n" +
-    "        $(${cmd})\n" +
-    "    fi\n" +
-    "}\n" +
-    "\n" +
-    "process_checker "
-
-// run command out to log file then save pid
-// cmd > test.out & echo $! > test.pid
-
-// TODO save or find pid and kill be able to kill it if requested
 // TODO sync and others that have user prompt
 const replace_project = "[project]"
 
@@ -51,7 +32,6 @@ ${blt} ${replace_project} --start-bg
 }
 const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project)
 const run_cmd = (cmd_key) => cmd.command(cmd_replacer(cmd_key))
-
 
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
@@ -80,17 +60,11 @@ exports.killblt = (timeout) => {
 }
 
 // Python script stuff
-exports.checkHealth = () =>{
-    return new Promise(resolve =>
-        runPython(['--health_check'],(err, ress) => {
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        })
-    )
-}
-exports.isNeedSFM = () => {
-    return new Promise(resolve =>
-        runPython(['--check_sfm'],(err, ress) =>
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        )
-    );
-}
+const run_python = (arg) => new Promise(resolve =>
+    runPython([arg],(err, ress) => {
+        resolve({'err': (err?err:'').toString(), 'res': (ress?ress:'').toString()})
+    })
+)
+
+exports.checkHealth = () => runPython('--check_health') // needed for beautiful soup
+exports.isNeedSFM = () => runPython('--check_sfm') // needed for pexpect
