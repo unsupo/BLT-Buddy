@@ -208,10 +208,6 @@ const oneMinute = 60 * oneSecond;
 const tenMinutes = oneMinute*10;
 
 let updateVar;
-// do this once and then again whenever project changes
-setEnableDisableStatus()
-setProjectsPaths()
-updateFunc();
 
 function updateFunc() {
     updateVar = setInterval(updateData, oneSecond*10);
@@ -220,5 +216,12 @@ function stopUpdateFunc(){
     clearInterval(updateVar);
 }
 // TODO set interval seperately for health check and sfm and other recurring api calls
+function onDOMLoaded() {
+    // do this once and then again whenever project changes
+    setEnableDisableStatus()
+    setProjectsPaths()
+    updateFunc();
+}
+
 // Update initial weather when loaded
-document.addEventListener('DOMContentLoaded', updateData)
+document.addEventListener('DOMContentLoaded', onDOMLoaded)
