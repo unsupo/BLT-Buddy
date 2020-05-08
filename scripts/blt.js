@@ -40,40 +40,36 @@ const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
     sync_blt: `${blt} ${replace_project} --sync`,
-    sy_blt: `${blt} ${replace_project} --sync`,
+    enable_blt: `${blt} ${replace_project} --enable`,
+    disable_blt: `${blt} ${replace_project} --enable`,
+    start_blt: `${blt} ${replace_project} --start-bg`,
     restart_blt: `timeout 10 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
 ${blt} ${replace_project} --db-stop
 ${blt} ${replace_project} --db-start
 ${blt} ${replace_project} --start-bg
 `,
 }
+const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project)
+const run_cmd = (cmd_key) => cmd.command(cmd_replacer(cmd_key))
 
-exports.getCommand = (cmd_key) => commands[cmd_key];
-const run_cmd = (cmd_key) => cmd.command(cmd_key.replace(replace_project,project))
+
+exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
 exports.db_start = () => run_cmd(commands.db_start)
 exports.restartBlt = () => run_cmd(commands.restart_blt)
 exports.sync_blt = () => run_cmd(commands.sync_blt)
 exports.build_blt = () => run_cmd(commands.sync_blt)
 exports.enable_blt = () => run_cmd(commands.enable_blt)
-exports.disable_blt = () => {
-    return new Promise(resolve =>
-        command(blt+project+" --disable").then(value => resolve(value))
-    )
-}
+exports.disable_blt = () => run_cmd(commands.disable_blt)
+exports.start_blt = () => run_cmd(commands.start_blt)
+
 exports.set_project = (dir) => {
     working_dir = resolveHome(path.join("~", "blt", dir));
     projectDir = dir
     project = proj+projectDir
     working_dir_cmd = "cd " + working_dir + " && ";
 }
-exports.start_blt = () => {
-    return new Promise(resolve => {
-        const child = cmd_detached(working_dir, blt, ["--start-bg"]);
-        child.on('error', (err) => console.log(err))
-        resolve({'pid': child.pid})
-    })
-}
+
 exports.killblt = (timeout) => {
     if(timeout === undefined)
         timeout = 20
