@@ -177,7 +177,7 @@ function updateFunc() {
     getStatus().then(value => {
         const b = document.querySelector('.js-change-status-action')
         function changeStatus(status) {
-            b.textContent = status
+            b.textContent = status.charAt(0).toUpperCase() + status.slice(1)
             // remove the enable action and add the disable action
             b.classList.remove('js-enable-action')
             b.classList.add('js-disable-action')
