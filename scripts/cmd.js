@@ -138,6 +138,7 @@ exports.command = async (cmd) => {
     // return _command(cmd)
     return _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2]))
 }
+exports.cmd = async (cmd) => _command(cmd)
 
 exports.resolveHome = (filepath) => {
     if (filepath[0] === '~')
