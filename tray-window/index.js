@@ -43,6 +43,9 @@ const getHealthData = () => {
 const getSFMData = () => {
     return getData({cmd:'is-need-sfm'});
 }
+const getStatus = () => {
+    return getData({cmd:'get_project_dir_status'});
+}
 
 /*
 pass in one class or an array of classes
@@ -171,6 +174,14 @@ let updateVar;
 updateFunc();
 
 function updateFunc() {
+    getStatus().then(value => {
+        const b = document.querySelector('.js-change-status-action')
+        if(value === "0") { //then project is enabled so allow button to disable project
+            b.textContent = 'Disable'
+            b.removeAttribute('js-enable-action')
+            b.
+        }
+    })
     updateVar = setInterval(updateData, oneSecond*10);
 }
 function stopUpdateFunc(){
