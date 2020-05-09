@@ -59,9 +59,7 @@ exports.set_project = (dir) => new Promise(resolve => {
     projectDir = dir
     project = proj+projectDir
     working_dir_cmd = "cd " + working_dir + " && ";
-    // TODO save working dir to disk and pick it up on startup
     fs.writeFileSync(constants.projectFile,dir)
-    console.log(working_dir+" "+project)
     resolve(working_dir)
 })
 
