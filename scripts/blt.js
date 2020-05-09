@@ -58,6 +58,7 @@ exports.set_project = (dir) => {
     projectDir = dir
     project = proj+projectDir
     working_dir_cmd = "cd " + working_dir + " && ";
+    // TODO save working dir to disk and pick it up on startup
     return working_dir
 }
 
