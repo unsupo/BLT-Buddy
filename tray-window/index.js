@@ -189,7 +189,7 @@ let projectPaths = [];
 const setProjectsPaths = () => {
     const select = document.querySelector('.projects')
     select.addEventListener('change',evt => {
-        const picked = projectPaths[ ]parseInt(evt.target['value'])]
+        const picked = projectPaths[parseInt(evt.target['value'])]
         runBasicApiCommand({'cmd':'set-project','args':{'dir':picked}}).then(value =>
             setEnableDisableStatus().then(value1 => console.log(value))
         )
