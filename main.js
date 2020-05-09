@@ -47,7 +47,8 @@ const startUp = () => {
     if(fs.existsSync(constants.projectFile)) {
         const dir = fs.readFileSync(constants.projectFile).toString()
         blt.set_project(dir)
-    }
+    }else
+        blt.set_project('app/main')
 }
 
 app.whenReady()
@@ -287,6 +288,7 @@ ipcMain.handle('api', (event ,args)=> {
         case 'set-project': cmdlocal = blt.set_project(args['args']['dir']); break
         case 'kill-command': cmdlocal = cmd.killcmd(blt.getCommand(args['args']['cmd'])); break
         case 'get_project_dirs': cmdlocal = blt.get_project_dirs(); break
+        case 'get_project': cmdlocal = blt.get_project(); break
         case 'get_project_dir_status': cmdlocal = blt.get_project_dir_status(); break
         case 'quit': cmdlocal = app.quit(); break
         default:

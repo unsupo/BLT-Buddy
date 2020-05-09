@@ -53,6 +53,7 @@ exports.start_blt = () => run_cmd(commands.start_blt)
 // fast running commands use _cmd
 exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
 exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
+exports.get_project = () => new Promise(resolve => resolve(projectDir))
 
 exports.set_project = (dir) => new Promise(resolve => {
     working_dir = resolveHome(path.join("~", "blt", dir));
