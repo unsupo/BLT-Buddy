@@ -225,7 +225,7 @@ function stopUpdateFunc(){
     clearInterval(updateVar);
 }
 // TODO set interval seperately for health check and sfm and other recurring api calls
-// TODO add password prompt, save it in
+// TODO add password prompt, save it in config.blt as p4.password
 function onDOMLoaded() {
     // do this once and then again whenever project changes
     setEnableDisableStatus()
