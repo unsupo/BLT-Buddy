@@ -58,6 +58,7 @@ exports.set_project = (dir) => {
     projectDir = dir
     project = proj+projectDir
     working_dir_cmd = "cd " + working_dir + " && ";
+    return working_dir
 }
 
 exports.killblt = (timeout) => {

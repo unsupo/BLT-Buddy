@@ -190,7 +190,9 @@ const setProjectsPaths = () => {
     const select = document.querySelector('.projects')
     select.addEventListener('change',evt => {
         const picked = parseInt(evt.target['value'])
-        console.log(projectPaths[picked])
+        runBasicApiCommand({'cmd':'set-project','args':{'dir':picked}}).then(value =>
+            console.log(value)
+        )
     })
     return runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
         value = value['stdout']
