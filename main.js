@@ -44,8 +44,10 @@ const startUp = () => {
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
-    const dir = fs.readFileSync(projectFile).toString()
-    blt.set_project(dir)
+    if(fs.existsSync(projectFile)) {
+        const dir = fs.readFileSync(projectFile).toString()
+        blt.set_project(dir)
+    }
 }
 
 app.whenReady()
