@@ -12,8 +12,8 @@ const proj = ' --project '
 
 let working_dir = path.join(blt_app_dir, "main");
 
-let projectDir = "/app/main"
-let project = proj+projectDir
+let projectDir
+let project;
 
 let working_dir_cmd = `cd ${working_dir} && `; // might not be neede because of project flag
 
