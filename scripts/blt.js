@@ -1,7 +1,7 @@
 const path = require('path');
 const fixPath = require('fix-path')
-const {logfile} = require("./constants");
 const {runPython, command, resolveHome, cmd} = require("./cmd");
+const fs = require('fs')
 
 fixPath();
 
@@ -53,14 +53,15 @@ exports.start_blt = () => run_cmd(commands.start_blt)
 exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
 exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
 
-exports.set_project = (dir) => {
+exports.set_project = (dir) => new Promise(resolve => {
     working_dir = resolveHome(path.join("~", "blt", dir));
     projectDir = dir
     project = proj+projectDir
     working_dir_cmd = "cd " + working_dir + " && ";
     // TODO save working dir to disk and pick it up on startup
-    return working_dir
-}
+    fs.writeFileSync(projectFile,dir)
+    resolve(working_dir)
+})
 
 exports.killblt = (timeout) => {
     if(timeout === undefined)

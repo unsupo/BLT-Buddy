@@ -1,6 +1,7 @@
 'use strict';
 
 const {mkdirp} = require("fs-extra");
+const fs = require('fs')
 
 const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
@@ -43,6 +44,8 @@ const startUp = () => {
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
+    const dir = fs.readFileSync(projectFile).toString()
+    blt.set_project(dir)
 }
 
 app.whenReady()

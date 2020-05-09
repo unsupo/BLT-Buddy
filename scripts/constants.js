@@ -11,6 +11,7 @@ const cmdexitdir = path.join(cmddir,"exit")
 const piddir = path.join(cmddir,'pids')
 const scriptsdir = path.join(cmddir,'scripts')
 const logfile = path.join(logdir,"blt-buddy.log")
+const projectFile = path.join(basedir,'project-path.txt')
 
 global.constants = Object.freeze({
     logdir: logdir,
@@ -20,5 +21,6 @@ global.constants = Object.freeze({
     piddir: piddir,
     scriptsdir: scriptsdir,
     logfile: logfile,
-    cmdexitdir: cmdexitdir
+    cmdexitdir: cmdexitdir,
+    projectFile: projectFile
 })
