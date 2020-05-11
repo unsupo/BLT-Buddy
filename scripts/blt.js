@@ -14,7 +14,7 @@ let working_dir; // = path.join(blt_app_dir, "main");
 let projectDir
 let project;
 
-let working_dir_cmd; // = `cd ${working_dir} && `; // might not be neede because of project flag
+let working_dir_cmd; // = `cd ${working_dir} && `; // might not be needed because of project flag
 
 // TODO sync and others that have user prompt
 const replace_project = "[project]", working_dir_replace = '[working_dir]'
