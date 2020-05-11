@@ -20,7 +20,7 @@ class MyAppLauncher extends React.Component {
     componentDidMount() {
         if (isElectron()) {
             console.log(window.ipcRenderer);
-            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.state.checkhealth = value)
+            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({checkhealth: value}))
         }
     }
 
@@ -56,16 +56,16 @@ class MyAppLauncher extends React.Component {
                         >
                             <AppLauncherExpandableSection title="Tile Section">
                                 <AppLauncherTile
-                                    description="Edit configs of blt"
+                                    description={this.state.checkhealth}
                                     iconBackgroundColor="#b67e6a"
-                                    iconText="CC"
+                                    iconText="CF"
                                     search={this.state.search}
                                     title="Configs"
                                 />
                                 <AppLauncherTile
                                     description="View and run blt docs"
                                     iconBackgroundColor="#69bad0"
-                                    iconText="CS"
+                                    iconText="DC"
                                     search={this.state.search}
                                     title="Docs"
                                 />
@@ -76,7 +76,7 @@ class MyAppLauncher extends React.Component {
                                     Docs
                                 </AppLauncherLink>
                                 <AppLauncherLink search={this.state.search}>
-                                    Configs {this.state.checkhealth}
+                                    Configs
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
                         </AppLauncher>
