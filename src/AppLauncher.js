@@ -20,7 +20,7 @@ class MyAppLauncher extends React.Component {
     componentDidMount() {
         if (isElectron()) {
             console.log(window.ipcRenderer);
-            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({checkhealth: value}))
+            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.state.checkhealth = value)
         }
     }
 
