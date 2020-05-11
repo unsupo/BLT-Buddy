@@ -19,7 +19,7 @@ class MyAppLauncher extends React.Component {
     componentDidMount() {
         if (isElectron()) {
             console.log(window.ipcRenderer);
-            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => console.log(value))
+            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({'health':JSON.parse(value['res'])['app']['ui_check']}))
         }
     }
 
@@ -75,7 +75,7 @@ class MyAppLauncher extends React.Component {
                                     Docs
                                 </AppLauncherLink>
                                 <AppLauncherLink search={this.state.search}>
-                                    Configs {this.state.health}
+                                    Configs
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
                         </AppLauncher>
