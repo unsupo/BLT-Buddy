@@ -38,6 +38,7 @@ let win = undefined;
 
 // actions to do on application start up
 const startUp = () => {
+    mkdirp(constants.basedir)
     mkdirp(constants.piddir)
     mkdirp(constants.logdir)
     mkdirp(constants.scriptsdir)
