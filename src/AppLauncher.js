@@ -20,7 +20,7 @@ class MyAppLauncher extends React.Component {
     componentDidMount() {
         if (isElectron()) {
             console.log(window.ipcRenderer);
-            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({checkhealth: value}))
+            window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({health: value['app']['ui_check']}))
         }
     }
 
@@ -56,16 +56,16 @@ class MyAppLauncher extends React.Component {
                         >
                             <AppLauncherExpandableSection title="Tile Section">
                                 <AppLauncherTile
-                                    description={this.state.checkhealth}
+                                    description="Edit configs of blt"
                                     iconBackgroundColor="#b67e6a"
-                                    iconText="CF"
+                                    iconText="CO"
                                     search={this.state.search}
                                     title="Configs"
                                 />
                                 <AppLauncherTile
                                     description="View and run blt docs"
                                     iconBackgroundColor="#69bad0"
-                                    iconText="DC"
+                                    iconText="DO"
                                     search={this.state.search}
                                     title="Docs"
                                 />
@@ -76,7 +76,7 @@ class MyAppLauncher extends React.Component {
                                     Docs
                                 </AppLauncherLink>
                                 <AppLauncherLink search={this.state.search}>
-                                    Configs
+                                    Configs {this.state.health}
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
                         </AppLauncher>
