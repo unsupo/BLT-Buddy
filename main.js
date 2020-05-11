@@ -79,8 +79,8 @@ function createWindow() {
         },
         icon: getIcon('apple-icon.png',{'width': 512, 'height': 512})
     })
-    win.loadFile(__dirname + "/build/index.html");
-
+    // win.loadFile(__dirname + "/build/index.html");
+    win.loadURL('http://localhost:3000')
     win.on('closed',()=>{
         // console.log('closing')
         win = undefined;
