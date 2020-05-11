@@ -1,5 +1,4 @@
 import React from 'react';
-// const {ipcRenderer, shell} = require('electron')
 
 import AppLauncher from '@salesforce/design-system-react/components/app-launcher';
 import AppLauncherLink from '@salesforce/design-system-react/components/app-launcher/link';
