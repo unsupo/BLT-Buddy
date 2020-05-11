@@ -49,7 +49,7 @@ const startUp = () => {
         const dir = fs.readFileSync(constants.projectFile).toString()
         blt.set_project(dir)
     }else
-        blt.set_project('app/main')
+        blt.set_project('app/main').then(dir=>console.log(dir))
 }
 
 app.whenReady()
@@ -74,7 +74,8 @@ function createWindow() {
             nodeIntegration: true,
             // Prevents renderer process code from not running when window is
             // hidden
-            backgroundThrottling: false
+            backgroundThrottling: false,
+            preload: __dirname + '/preload.js'
         },
         icon: getIcon('apple-icon.png',{'width': 512, 'height': 512})
     })

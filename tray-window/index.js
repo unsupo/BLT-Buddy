@@ -197,17 +197,17 @@ const setProjectsPaths = () => {
     return runBasicApiCommand({cmd:'get_project_dirs'}).then(value => {
         value = value['stdout']
         let i = 0
-        let project;
-        runBasicApiCommand({'cmd':'get_project'}).then(value1 => project = value1)
-        value.split('\n').forEach(value1 => {
-            const node = document.createElement('option')
-            const textnode = document.createTextNode(value1);
-            node.setAttribute('value',''+i++)
-            if(value1 === project)
-                node.setAttribute('selected','selected')
-            node.appendChild(textnode);
-            select.appendChild(node)
-            projectPaths.push(value1)
+        runBasicApiCommand({'cmd':'get_project'}).then(project => {
+            value.split('\n').forEach(value1 => {
+                const node = document.createElement('option')
+                const textnode = document.createTextNode(value1);
+                node.setAttribute('value', '' + i++)
+                if (value1 === project)
+                    node.setAttribute('selected', 'selected')
+                node.appendChild(textnode);
+                select.appendChild(node)
+                projectPaths.push(value1)
+            })
         })
     })
 }

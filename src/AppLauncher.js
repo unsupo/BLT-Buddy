@@ -1,5 +1,7 @@
 import React from 'react';
+// const {ipcRenderer, shell} = require('electron')
 
+import ipcRenderer from 'electron'
 import AppLauncher from '@salesforce/design-system-react/components/app-launcher';
 import AppLauncherLink from '@salesforce/design-system-react/components/app-launcher/link';
 import AppLauncherTile from '@salesforce/design-system-react/components/app-launcher/tile';
@@ -14,6 +16,12 @@ import IconSettings from '@salesforce/design-system-react/components/icon-settin
 
 class MyAppLauncher extends React.Component {
     static displayName = 'BLT Buddy';
+
+
+    constructor(props, context) {
+        super(props, context);
+        ipcRenderer.invoke('api', 'check-health').then(value => this.state.test = value)
+    }
 
     state = {
         search: '',
@@ -67,7 +75,7 @@ class MyAppLauncher extends React.Component {
                                     Docs
                                 </AppLauncherLink>
                                 <AppLauncherLink search={this.state.search}>
-                                    Configs
+                                    Configs {this.state.test}
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
                         </AppLauncher>

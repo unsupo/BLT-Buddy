@@ -27,7 +27,7 @@
     "dev": "cross-env START_HOT=1 npm start",
     "start": "react-app-rewired start",
     "electron": "electron main.js",
-    "electron-dev": "NODE_ENV=dev nodemon --watch",
+    "watch": "NODE_ENV=dev nodemon --watch scripts --watch tray-window --exec 'npm run electron'",
     "build": "react-app-rewired build --mode production",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject --env=jsdom",
