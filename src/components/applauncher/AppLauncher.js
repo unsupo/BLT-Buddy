@@ -61,8 +61,7 @@ class MyAppLauncher extends React.Component {
                         <AppLauncher
                             triggerName={MyAppLauncher.displayName}
                             search={search}
-                            modalHeaderButton={headerButton}
-                        >
+                            modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
                                 { this.createTiles() }
                             </AppLauncherExpandableSection>
