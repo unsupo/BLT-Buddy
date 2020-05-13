@@ -15,7 +15,8 @@ class Docs extends React.Component {
                 <br/>
                 <div className="slds-box slds-theme_default">
                     {/*<h3 className="slds-truncate">Docs</h3>*/}
-                    <iframe src="https://google.com"></iframe>
+                    {/*<iframe src="https://google.com"></iframe>*/}
+                    <div dangerouslySetInnerHTML={template} />
                 </div>
             </BrandBand>
         );
