@@ -13,7 +13,7 @@ const piddir = path.join(cmddir,'pids')
 const scriptsdir = path.join(cmddir,'scripts')
 const logfile = path.join(logdir,"blt-buddy.log")
 const projectFile = path.join(basedir,'project-path.txt')
-const docdir = path.join(basedir,'docs')
+const docdir = path.join(process.cwd(),'src','docs')
 
 global.constants = Object.freeze({
     logdir: logdir,
