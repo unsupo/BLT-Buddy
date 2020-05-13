@@ -59,6 +59,7 @@ class MyAppLauncher extends React.Component {
                 <GlobalNavigationBar>
                     <GlobalNavigationBarRegion region="primary">
                         <AppLauncher
+                            triggerOnClick={this.setState({isOpen: !this.state.isOpen})}
                             triggerName={MyAppLauncher.displayName}
                             search={search}
                             isOpen={this.state.isOpen}
