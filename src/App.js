@@ -30,7 +30,10 @@ class App extends Component {
     onSearch = (event) => {
         this.setState({search: event.target.value});
     };
-
+    getData(val){
+        // do not forget to bind getData in constructor
+        console.log(val);
+    }
     render() {
         return (
             <IconSettings iconPath="/assets/icons">
