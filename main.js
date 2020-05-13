@@ -84,9 +84,8 @@ function createWindow() {
     win.on('close',(event)=>{
         event.preventDefault()
         win.hide()
-        console.log('cloe')
-        event.
     })
+    win.on('closed',()=>win=null)
     return win
 }
 
