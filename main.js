@@ -89,7 +89,7 @@ function createWindow() {
         return false
     })
     win.on('closed', () => {
-        win = null
+        win = null 
     })
     // win.on('closed',()=>win=null)
     return win
