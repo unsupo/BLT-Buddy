@@ -31,6 +31,11 @@ class MyAppLauncher extends React.Component {
         this.setState({ search: event.target.value });
     };
 
+    getInitialState() {
+        let sample = localStorage.getItem("sample") || 0;
+        return {sample};
+    },
+
     render() {
         const search = (
             <Search
