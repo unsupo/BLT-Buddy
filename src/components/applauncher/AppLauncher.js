@@ -30,7 +30,7 @@ class MyAppLauncher extends React.Component {
 
     state = {
         search: '',
-        isOpenV: true
+        isOpenV: false
     };
 
     onSearch = (event) => {
@@ -62,7 +62,7 @@ class MyAppLauncher extends React.Component {
                         <AppLauncher
                             triggerName={MyAppLauncher.displayName}
                             search={search}
-                            ariaHideApp={this.state.isOpenV}
+                            isOpen={this.state.isOpenV}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
                                 { this.createTiles() }
@@ -78,8 +78,9 @@ class MyAppLauncher extends React.Component {
         );
     }
     onClickEvent(e,t){
-        this.setState({isOpenV: true});
+        this.setState({isOpenV: false});
         this.props.sendData(e, t)
+        this.setState({isOpenV: true});
     }
 
     createTiles() {
