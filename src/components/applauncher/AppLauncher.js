@@ -54,8 +54,7 @@ class MyAppLauncher extends React.Component {
         );
         const headerButton = <Button label="Header Button" />;
 
-        return (){
-            return (
+        return (
             <IconSettings iconPath="/assets/icons">
                 <GlobalNavigationBar>
                     <GlobalNavigationBarRegion region="primary">
@@ -65,20 +64,7 @@ class MyAppLauncher extends React.Component {
                             modalHeaderButton={headerButton}
                         >
                             <AppLauncherExpandableSection title="Tile Section">
-                                <AppLauncherTile
-                                    description="Edit configs of blt"
-                                    iconBackgroundColor="#b67e6a"
-                                    iconText="CO"
-                                    search={this.state.search}
-                                    title="Configs"
-                                />
-                                <AppLauncherTile
-                                    description="View and run blt docs"
-                                    iconBackgroundColor="#69bad0"
-                                    iconText="DO"
-                                    search={this.state.search}
-                                    title="Docs"
-                                />
+                                { this.createTiles() }
                             </AppLauncherExpandableSection>
                             <hr />
                             <AppLauncherExpandableSection title="All Items">
@@ -92,7 +78,26 @@ class MyAppLauncher extends React.Component {
                         </AppLauncher>
                     </GlobalNavigationBarRegion>
                 </GlobalNavigationBar>
-            </IconSettings>)
+            </IconSettings>
+        );
+    }
+
+    createTiles() {
+        for(App a in this.apps)
+        <AppLauncherTile
+            description="Edit configs of blt"
+            iconBackgroundColor="#b67e6a"
+            iconText="CO"
+            search={this.state.search}
+            title="Configs"
+        />
+        <AppLauncherTile
+            description="View and run blt docs"
+            iconBackgroundColor="#69bad0"
+            iconText="DO"
+            search={this.state.search}
+            title="Docs"
+        />
     }
 }
 
