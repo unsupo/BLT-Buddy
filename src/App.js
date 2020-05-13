@@ -6,6 +6,10 @@ import IconSettings from "@salesforce/design-system-react/components/icon-settin
 
 class App extends Component {
     static displayName = 'AppLauncherExample';
+    constructor() {
+        super();
+        
+    }
 
     state = {
         search: '',
