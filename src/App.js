@@ -36,7 +36,7 @@ class App extends Component {
     onSearch = (event) => {
         this.setState({search: event.target.value});
     };
-    setApp(e,val){
+    setData(e,val){
         // do not forget to bind getData in constructor
         // console.log(val);
         this.state.app = val
@@ -44,7 +44,7 @@ class App extends Component {
     render() {
         return (
             <IconSettings iconPath="/assets/icons">
-                <MyAppLauncher sendData={this.setApp} apps={
+                <MyAppLauncher sendData={this.getData} apps={
                     [
                         {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation', 'color': '#b67e6a'},
                         {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76'}
