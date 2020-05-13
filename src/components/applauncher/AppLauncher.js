@@ -67,12 +67,7 @@ class MyAppLauncher extends React.Component {
                             </AppLauncherExpandableSection>
                             <hr />
                             <AppLauncherExpandableSection title="All Items">
-                                <AppLauncherLink search={this.state.search}>
-                                    Docs
-                                </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search}>
-                                    Configs
-                                </AppLauncherLink>
+                                { this.createLinks() }
                             </AppLauncherExpandableSection>
                         </AppLauncher>
                     </GlobalNavigationBarRegion>
@@ -92,6 +87,16 @@ class MyAppLauncher extends React.Component {
                 title={v.title}
             />))
         return tiles
+    }
+
+    createLinks() {
+        let links = []
+        Array.prototype.forEach.call(this.props.apps,v=>
+            links.push(
+                <AppLauncherLink search={this.state.search}>
+                    {v.title}
+                </AppLauncherLink>))
+        return links
     }
 }
 
