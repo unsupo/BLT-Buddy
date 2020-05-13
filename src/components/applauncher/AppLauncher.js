@@ -74,7 +74,7 @@ class MyAppLauncher extends React.Component {
                                 <AppLauncherLink search={this.state.search}>
                                     Docs
                                 </AppLauncherLink>
-                                <AppLauncherLink search={this.state.search} onClick={this.setState({app: 'configs'})}>
+                                <AppLauncherLink search={this.state.search}>
                                     Configs
                                 </AppLauncherLink>
                             </AppLauncherExpandableSection>
