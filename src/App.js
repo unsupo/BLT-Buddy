@@ -3,7 +3,6 @@ import './App.css';
 import Docs from './components/docs/Docs'
 import MyAppLauncher from './components/applauncher/AppLauncher';
 import IconSettings from "@salesforce/design-system-react/components/icon-settings";
-import Configs from "./components/configs/Configs";
 
 class App extends Component {
     static displayName = 'AppLauncherExample';
@@ -36,7 +35,7 @@ class App extends Component {
     onSearch = (event) => {
         this.setState({search: event.target.value});
     };
-    setData(e,val){
+    getData(e,val){
         // do not forget to bind getData in constructor
         // console.log(val);
         this.state.app = val
