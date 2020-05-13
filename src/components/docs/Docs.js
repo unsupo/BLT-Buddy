@@ -1,6 +1,6 @@
 import React from 'react';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
-var __html = require('docs/doc/toc.html');
+var __html = require('../../docs/doc/toc.html');
 var template = { __html: __html };
 
 class Docs extends React.Component {
