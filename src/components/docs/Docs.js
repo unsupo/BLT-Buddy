@@ -15,7 +15,7 @@ class Docs extends React.Component {
                 <br/>
                 <div className="slds-box slds-theme_default">
                     {/*<h3 className="slds-truncate">Docs</h3>*/}
-                    <iframe src={} />
+                    <iframe src="file:///Users/jarndt/blt/blt-code/plugins/blt/doc/cheat/cheat.html" />
                 </div>
             </BrandBand>
         );
