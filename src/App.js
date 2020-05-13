@@ -44,7 +44,6 @@ class App extends Component {
                 <BrandBand
                     id="brand-band-lightning-blue"
                     size="large"
-                    ba
                     backgroundSize="cover"
                     className="slds-p-around_large">
                     <div className="slds-box slds-theme_default">
