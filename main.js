@@ -82,6 +82,7 @@ function createWindow() {
     // win.loadFile(__dirname + "/build/index.html");
     win.loadURL('http://localhost:3000')
     win.on('close',(event)=>{
+        console.log(event)
         if(event.detail) {
             event.preventDefault()
             win.hide()
@@ -89,7 +90,7 @@ function createWindow() {
         return false
     })
     win.on('closed', () => {
-        win = null 
+        win = null
     })
     // win.on('closed',()=>win=null)
     return win
