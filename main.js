@@ -94,6 +94,12 @@ function createWindow() {
     return win
 }
 
+const getTrayWindow = () =>{
+    if(tray_window)
+        return tray_window
+    return createTrayWindow()
+}
+
 function createTrayWindow() {
     tray_window = new BrowserWindow({
         width: 220,
@@ -118,6 +124,7 @@ function createTrayWindow() {
             tray_window.hide()
         }
     })
+    return tray_window
 }
 
 const sendNotification = (title,body,onclick) => {
