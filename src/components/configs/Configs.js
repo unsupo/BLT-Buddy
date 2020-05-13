@@ -1,7 +1,7 @@
 import React from 'react';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
 
-class Docs extends React.Component {
+class Configs extends React.Component {
     render() {
         return (
             <BrandBand
@@ -16,7 +16,7 @@ class Docs extends React.Component {
         );
     }
 }
-export default Docs;
+export default Configs;
 // Example.displayName = 'BrandBandExample';
 //
 // ReactDOM.render(<Docs />, mountNode);

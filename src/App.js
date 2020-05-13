@@ -3,6 +3,7 @@ import './App.css';
 import Docs from './components/docs/Docs'
 import MyAppLauncher from './components/applauncher/AppLauncher';
 import IconSettings from "@salesforce/design-system-react/components/icon-settings";
+import Configs from "./components/configs/Configs";
 
 class App extends Component {
     static displayName = 'AppLauncherExample';
@@ -56,7 +57,7 @@ class App extends Component {
     getApp() {
         switch (this.state.app) {
             case "Documentation": return <Docs />
-            case "Configs": return <Config />
+            case "Configs": return <Configs />
         }
     }
 }
