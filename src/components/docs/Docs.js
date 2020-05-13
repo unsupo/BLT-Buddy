@@ -1,6 +1,6 @@
 import React from 'react';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
-var __html = require('./template.html');
+var __html = require('/Users/jarndt/blt/blt-code/plugins/blt/doc/cheat/cheat.html');
 
 class Docs extends React.Component {
     render() {
