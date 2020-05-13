@@ -41,15 +41,7 @@ class App extends Component {
         return (
             <IconSettings iconPath="/assets/icons">
                 <MyAppLauncher/>
-                <BrandBand
-                    id="brand-band-lightning-blue"
-                    size="large"
-                    backgroundSize="cover"
-                    className="slds-p-around_large">
-                    <div className="slds-box slds-theme_default">
-                        <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
-                    </div>
-                </BrandBand>
+                <
             </IconSettings>
         )
     };
