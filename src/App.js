@@ -41,7 +41,7 @@ class App extends Component {
     render() {
         return (
             <IconSettings iconPath="/assets/icons">
-                <MyAppLauncher sendData={} apps={
+                <MyAppLauncher sendData={this.getData} apps={
                     [
                         {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation', 'color': '#b67e6a', 'comp': 'Docs'},
                         {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76','comp': undefined}
