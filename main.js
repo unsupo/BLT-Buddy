@@ -45,7 +45,6 @@ const startUp = () => {
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
-    console.log(constants)
     mkdirp(constants.docdir)
     if(fs.existsSync(constants.projectFile)) {
         const dir = fs.readFileSync(constants.projectFile).toString()
