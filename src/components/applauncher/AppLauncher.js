@@ -61,6 +61,7 @@ class MyAppLauncher extends React.Component {
                         <AppLauncher
                             triggerName={MyAppLauncher.displayName}
                             search={search}
+                            isOpen={this.state.isOpen}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
                                 { this.createTiles() }
@@ -75,6 +76,10 @@ class MyAppLauncher extends React.Component {
             </IconSettings>
         );
     }
+    onClickEvent(e,t){
+        this.setState({isOpen: false});
+        this.props.sendData(e, t)
+    }
 
     createTiles() {
         let tiles = []
@@ -85,7 +90,7 @@ class MyAppLauncher extends React.Component {
                 iconText={v.iconText}
                 search={this.state.search}
                 title={v.title}
-                onClick={((e) =>{ this.props.sendData(e, v.title))}}
+                onClick={((e) =>this.onClickEvent(e,v.title))}
             />))
         return tiles
     }
@@ -93,7 +98,7 @@ class MyAppLauncher extends React.Component {
         let links = []
         Array.prototype.forEach.call(this.props.apps,v=>
             links.push(
-                <AppLauncherLink search={this.state.search} onClick={((e) => this.props.sendData(e, v.title))}>
+                <AppLauncherLink search={this.state.search} onClick={((e) => this.onClickEvent(e,v.title))}>
                     {v.title}
                 </AppLauncherLink>))
         return links
