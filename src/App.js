@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-
-import BrandBand from '@salesforce/design-system-react/components/brand-band';
-
-import Tabs from '@salesforce/design-system-react/components/tabs';
-import TabsPanel from '@salesforce/design-system-react/components/tabs/panel';
-import Constant from "./constant";
-import {Button} from "@salesforce/design-system-react";
+import Docs from './components/docs/Docs'
 import MyAppLauncher from './AppLauncher';
 import IconSettings from "@salesforce/design-system-react/components/icon-settings";
 
@@ -41,7 +35,7 @@ class App extends Component {
         return (
             <IconSettings iconPath="/assets/icons">
                 <MyAppLauncher/>
-                <
+                <Docs />
             </IconSettings>
         )
     };
