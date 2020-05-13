@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Docs from './components/docs/Docs'
-import MyAppLauncher from './AppLauncher';
+import MyAppLauncher from './components/applauncher/AppLauncher';
 import IconSettings from "@salesforce/design-system-react/components/icon-settings";
 
 class App extends Component {
