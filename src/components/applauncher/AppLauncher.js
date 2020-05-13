@@ -30,6 +30,7 @@ class MyAppLauncher extends React.Component {
 
     state = {
         search: '',
+        isOpenV: true
     };
 
     onSearch = (event) => {
@@ -77,7 +78,7 @@ class MyAppLauncher extends React.Component {
         );
     }
     onClickEvent(e,t){
-        this.setState({isOpenV: false});
+        this.setState({isOpenV: true});
         this.props.sendData(e, t)
     }
 
