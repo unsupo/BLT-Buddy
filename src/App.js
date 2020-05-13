@@ -43,9 +43,6 @@ class App extends Component {
                 <MyAppLauncher/>
                 <BrandBand
                     id="brand-band-lightning-blue"
-                    size="large"
-                    backgroundSize="contain"
-                    className="slds-p-around_large"
                     theme="default">
                     <div className="slds-box slds-theme_default">
                         <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
