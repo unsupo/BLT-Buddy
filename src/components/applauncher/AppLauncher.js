@@ -34,7 +34,7 @@ class MyAppLauncher extends React.Component {
     getInitialState() {
         let sample = localStorage.getItem("sample") || 0;
         return {sample};
-    },
+    };
 
     render() {
         const search = (
