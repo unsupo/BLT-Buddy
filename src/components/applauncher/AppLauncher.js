@@ -85,6 +85,7 @@ class MyAppLauncher extends React.Component {
                 iconText={v.iconText}
                 search={this.state.search}
                 title={v.title}
+                onClick={v.binding.}
             />))
         return tiles
     }
