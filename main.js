@@ -81,10 +81,10 @@ function createWindow() {
     })
     // win.loadFile(__dirname + "/build/index.html");
     win.loadURL('http://localhost:3000')
-    // win.on('close',(event)=>{
-        // event.preventDefault()
-        // win.hide()
-    // })
+    win.on('close',(event)=>{
+        event.preventDefault()
+        win.hide()
+    })
     win.on('closed',()=>win=null)
     return win
 }
