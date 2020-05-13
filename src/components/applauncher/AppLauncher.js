@@ -55,7 +55,7 @@ class MyAppLauncher extends React.Component {
         const headerButton = <Button label="Header Button" />;
 
         return (){
-            return 
+            return (
             <IconSettings iconPath="/assets/icons">
                 <GlobalNavigationBar>
                     <GlobalNavigationBarRegion region="primary">
@@ -92,7 +92,7 @@ class MyAppLauncher extends React.Component {
                         </AppLauncher>
                     </GlobalNavigationBarRegion>
                 </GlobalNavigationBar>
-            </IconSettings>
+            </IconSettings>)
     }
 }
 
