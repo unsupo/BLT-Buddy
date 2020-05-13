@@ -16,6 +16,11 @@ import isElectron from "is-electron";
 class MyAppLauncher extends React.Component {
     static displayName = 'BLT Buddy';
 
+    constructor(apps) {
+        super();
+        this.apps = apps;
+    }
+
     componentDidMount() {
         if (isElectron()) {
             console.log(window.ipcRenderer);
@@ -31,10 +36,10 @@ class MyAppLauncher extends React.Component {
         this.setState({ search: event.target.value });
     };
 
-    getInitialState() {
-        let sample = localStorage.getItem("sample") || 0;
-        return {sample};
-    };
+    // getInitialState() {
+    //     let sample = localStorage.getItem("sample") || 0;
+    //     return {sample};
+    // };
 
     render() {
         const search = (

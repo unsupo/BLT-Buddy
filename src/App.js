@@ -34,7 +34,7 @@ class App extends Component {
     render() {
         return (
             <IconSettings iconPath="/assets/icons">
-                <MyAppLauncher />
+                <MyAppLauncher apps={} />
                 <Docs />
             </IconSettings>
         )
