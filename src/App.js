@@ -13,6 +13,7 @@ class App extends Component {
 
     state = {
         search: '',
+        app: 'Documentation'
     };
 
 
@@ -36,7 +37,8 @@ class App extends Component {
     };
     getData(e,val){
         // do not forget to bind getData in constructor
-        console.log(val);
+        // console.log(val);
+        this.state.app = val
     }
     render() {
         return (
@@ -47,8 +49,15 @@ class App extends Component {
                         {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76','comp': undefined}
                     ]}/>
             </IconSettings>
+            {this.getApp()}
         )
     };
+
+    getApp() {
+        switch (this.state.app) {
+            case "Documentation": return <Docs />
+        }
+    }
 }
 
 export default App;
