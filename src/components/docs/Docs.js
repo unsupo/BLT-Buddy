@@ -13,7 +13,7 @@ class Docs extends React.Component {
                     <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
                 </div>
                 <br/>
-                <div className="slds-box slds-theme_default">
+                <div className="slds-box slds-theme_default" style={innerHeight: 100%}>
                     <h3 className="slds-truncate">Docs</h3>
                 </div>
             </BrandBand>
