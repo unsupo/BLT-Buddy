@@ -1,5 +1,17 @@
 [
-  "div": [
-    "",
+  [
+    {"type": "button", "name": "Sync", "color": "default", "classes": ["js-sync-action"]},
+    {"type": "button", "name": "Build", "classes": ["js-build-action"]}
   ],
+  [
+    {"type": "button", "name": "Start", "color": "positive", "classes": ["js-start-action"]},
+    {"type": "button", "name": "Stop", "color": "negative", "classes": ["js-stop-action"]}
+  ],
+  [
+    {"type": "button", "name": "Restart", "color": "negative", "classes": ["js-restart-action"]},
+    {"type": "button", "name": "Disable", "color": "negative", "classes": ["js-change-status-action"]}
+  ],
+  [{"type": "select", "classes": ["projects"]}],
+  [{"type": "a","name": "Launch Salesforce","href":"http://localhost:6109", "classes": ["open-webpage"]}],
+  [{"type": "a","name": "Advanced Features","href":"window:main", "classes": ["open-window"]}]
 ]
