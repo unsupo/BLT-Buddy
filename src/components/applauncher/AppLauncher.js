@@ -83,7 +83,10 @@ class MyAppLauncher extends React.Component {
     }
 
     createTiles() {
-        for(App a in this.apps)
+        // let tiles =
+        this.apps.forEach(
+
+        )
         <AppLauncherTile
             description="Edit configs of blt"
             iconBackgroundColor="#b67e6a"
