@@ -79,7 +79,7 @@ class MyAppLauncher extends React.Component {
     }
     isOpen(){
         if(this.state.isOpenV !== undefined && this.state.isOpenV){
-            this.state.isOpenV = undefined
+            this.setState({isOpenV: undefined});
             return true
         }
         return undefined;
