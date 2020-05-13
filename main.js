@@ -83,7 +83,7 @@ function createWindow() {
     win.loadURL('http://localhost:3000')
     win.on('close',(event)=>{
         console.log(event)
-        console.log(app)
+        console.log(app.)
         if(event.detail) {
             event.preventDefault()
             win.hide()
