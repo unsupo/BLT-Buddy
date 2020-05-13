@@ -1,8 +1,8 @@
 import React from 'react';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
 
-const __html = require('../../docs/doc/toc.html');
-const template = {__html: __html};
+// const __html = require('../../docs/doc/toc.html');
+// const template = {__html: __html};
 
 class Docs extends React.Component {
     render() {
@@ -17,7 +17,7 @@ class Docs extends React.Component {
                 </div>
                 <br/>
                 <div className="slds-box slds-theme_default">
-                    {/*<iframe src='../../docs/doc/toc.html'></iframe>*/}
+                    <iframe src='file:/../../docs/doc/toc.html'></iframe>
                     {/*<div dangerouslySetInnerHTML={template} />*/}
                 </div>
             </BrandBand>
