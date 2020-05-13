@@ -50,6 +50,7 @@ const startUp = () => {
         blt.set_project(dir)
     }else
         blt.set_project('app/main').then(dir=>console.log(dir))
+    command('ln -sf /Users/jarndt/blt/blt-code/plugins/blt/doc/')
 }
 
 app.whenReady()
