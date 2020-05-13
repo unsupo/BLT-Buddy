@@ -3,7 +3,7 @@
 const {mkdirp} = require("fs-extra");
 const fs = require('fs')
 
-const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
+const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification, application} = require('electron');
 const path = require('path');
 const blt = require('./scripts/blt')
 
@@ -82,10 +82,13 @@ function createWindow() {
     // win.loadFile(__dirname + "/build/index.html");
     win.loadURL('http://localhost:3000')
     win.on('close',(event)=>{
-        event.preventDefault()
-        win.hide()
+        if(!application.isQuitting) {
+            event.preventDefault()
+            win.hide()
+        }
+        return false
     })
-    win.on('closed',()=>win=null)
+    // win.on('closed',()=>win=null)
     return win
 }
 
