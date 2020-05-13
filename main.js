@@ -82,7 +82,8 @@ function createWindow() {
     // win.loadFile(__dirname + "/build/index.html");
     win.loadURL('http://localhost:3000')
     win.on('close',(event)=>{
-        if(!app.state.is)
+        event.preventDefault()
+        
     })
     return win
 }
