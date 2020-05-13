@@ -48,7 +48,8 @@ class App extends Component {
                 <MyAppLauncher sendData={this.getData} apps={
                     [
                         {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation', 'color': '#b67e6a'},
-                        {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76'}
+                        {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76'},
+                        {'title': 'Tray Customizer', 'iconText': 'TC', 'description': 'Customize Tray', 'color': '#597ab3'}
                     ]}/>
                 {this.getApp()}
             </IconSettings>
