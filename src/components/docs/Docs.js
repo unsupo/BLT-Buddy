@@ -12,6 +12,7 @@ class Docs extends React.Component {
                 <div className="slds-box slds-theme_default">
                     <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
                 </div>
+                <br/>
                 <div className="slds-box slds-theme_default">
                     <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
                 </div>
