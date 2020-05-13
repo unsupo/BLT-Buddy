@@ -83,17 +83,17 @@ class MyAppLauncher extends React.Component {
     }
 
     createTiles() {
-        // let tiles =
+        let tiles = []
         this.apps.forEach(
-
+            tiles.push(<AppLauncherTile
+                description="Edit configs of blt"
+                iconBackgroundColor="#b67e6a"
+                iconText="CO"
+                search={this.state.search}
+                title="Configs"
+            />)
         )
-        <AppLauncherTile
-            description="Edit configs of blt"
-            iconBackgroundColor="#b67e6a"
-            iconText="CO"
-            search={this.state.search}
-            title="Configs"
-        />
+
         <AppLauncherTile
             description="View and run blt docs"
             iconBackgroundColor="#69bad0"
