@@ -85,6 +85,7 @@ function createWindow() {
         event.preventDefault()
         win.hide()
         console.log('cloe')
+        event.
     })
     return win
 }
