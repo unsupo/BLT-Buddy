@@ -4,6 +4,7 @@ import Docs from './components/docs/Docs'
 import MyAppLauncher from './components/applauncher/AppLauncher';
 import IconSettings from "@salesforce/design-system-react/components/icon-settings";
 import Configs from "./components/configs/Configs";
+import TrayCustomizer from "./components/traycustomizer/TrayCustomizer";
 
 class App extends Component {
     static displayName = 'AppLauncherExample';
@@ -60,6 +61,7 @@ class App extends Component {
         switch (this.state.app) {
             case "Documentation": return <Docs />
             case "Configs": return <Configs />
+            case "Tray Customizer": return <TrayCustomizer />
         }
     }
 }
