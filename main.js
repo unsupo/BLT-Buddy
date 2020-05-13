@@ -84,10 +84,11 @@ function createWindow() {
     let isQuitting = false;
     app.on('quit',event => isQuitting = true)
     win.on('close',(event)=>{
-        if(!isQuitting)
+        if(!isQuitting) {
             event.preventDefault()
-        win.hide()
-        event.returnValue = false
+            win.hide()
+            event.returnValue = false
+        }
     })
     win.on('closed', () => {
         win = null
