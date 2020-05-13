@@ -10,7 +10,7 @@ class Configs extends React.Component {
                 backgroundSize="cover"
                 className="slds-p-around_large">
                 <div className="slds-box slds-theme_default">
-                    <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
+                    <h3 className="slds-text-heading_label slds-truncate">Configs</h3>
                 </div>
             </BrandBand>
         );
