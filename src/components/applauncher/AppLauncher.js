@@ -85,7 +85,7 @@ class MyAppLauncher extends React.Component {
                 iconText={v.iconText}
                 search={this.state.search}
                 title={v.title}
-                onClick={this.props.sendData(v.title)}
+                onClick={((e) => this.props.sendData(e, v.title))}
             />))
         return tiles
     }
@@ -93,7 +93,7 @@ class MyAppLauncher extends React.Component {
         let links = []
         Array.prototype.forEach.call(this.props.apps,v=>
             links.push(
-                <AppLauncherLink search={this.state.search} onClick={this.props.sendData(v.title)}>
+                <AppLauncherLink search={this.state.search} onClick={((e) => this.props.sendData(e, v.title))}>
                     {v.title}
                 </AppLauncherLink>))
         return links
