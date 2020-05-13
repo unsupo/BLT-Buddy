@@ -36,7 +36,7 @@ class App extends Component {
             <IconSettings iconPath="/assets/icons">
                 <MyAppLauncher apps={
                     [
-                        {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation'},
+                        {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation', 'color': '#'},
                         {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations'}
                     ]}/>
             </IconSettings>
