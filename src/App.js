@@ -40,6 +40,7 @@ class App extends Component {
         // do not forget to bind getData in constructor
         // console.log(val);
         this.state.app = val
+        this.render()
     }
     render() {
         return (
