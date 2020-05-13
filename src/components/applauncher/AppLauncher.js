@@ -30,7 +30,7 @@ class MyAppLauncher extends React.Component {
 
     state = {
         search: '',
-        isOpenV: false
+        isOpenV: undefined
     };
 
     onSearch = (event) => {
@@ -80,7 +80,7 @@ class MyAppLauncher extends React.Component {
     onClickEvent(e,t){
         this.setState({isOpenV: false});
         this.props.sendData(e, t)
-        this.setState({isOpenV: true});
+        this.setState({isOpenV: undefined});
     }
 
     createTiles() {
