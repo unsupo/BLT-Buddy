@@ -85,7 +85,7 @@ class MyAppLauncher extends React.Component {
                 iconText={v.iconText}
                 search={this.state.search}
                 title={v.title}
-                onClick={((e) => this.props.sendData(e, v.title))}
+                onClick={((e) =>{this. this.props.sendData(e, v.title))}}
             />))
         return tiles
     }
