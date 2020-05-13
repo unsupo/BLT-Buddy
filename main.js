@@ -45,12 +45,13 @@ const startUp = () => {
     mkdirp(constants.cmdlogdir)
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
+    mkdirp(constants.docdir)
     if(fs.existsSync(constants.projectFile)) {
         const dir = fs.readFileSync(constants.projectFile).toString()
         blt.set_project(dir)
     }else
         blt.set_project('app/main').then(dir=>console.log(dir))
-    command('ln -sf /Users/jarndt/blt/blt-code/plugins/blt/doc/')
+    command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
 }
 
 app.whenReady()
