@@ -83,9 +83,10 @@ function createWindow() {
     win.loadURL('http://localhost:3000')
     win.on('close',(event)=>{
         app.on('quit',event1 => win = null)
-        app.on('')
-        event.preventDefault()
-        win.hide()
+        if(win) {
+            event.preventDefault()
+            win.hide()
+        }
         return false
     })
     // win.on('closed',()=>win=null)
