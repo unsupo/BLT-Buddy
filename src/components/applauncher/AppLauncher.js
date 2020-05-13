@@ -82,11 +82,11 @@ class MyAppLauncher extends React.Component {
             this.state.isOpenV = undefined
             return true
         }
+        return undefined;
     }
     onClickEvent(e,t){
         this.setState({isOpenV: false});
         this.props.sendData(e, t)
-        this.setState({isOpenV: undefined});
     }
 
     createTiles() {
