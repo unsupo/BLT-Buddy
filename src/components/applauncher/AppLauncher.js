@@ -59,10 +59,9 @@ class MyAppLauncher extends React.Component {
                 <GlobalNavigationBar>
                     <GlobalNavigationBarRegion region="primary">
                         <AppLauncher
-                            onClose={this.setState({isOpen: true})}
                             triggerName={MyAppLauncher.displayName}
                             search={search}
-                            isOpen={this.state.isOpen}
+                            isOpen={this.state.isOpenV}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
                                 { this.createTiles() }
@@ -78,7 +77,7 @@ class MyAppLauncher extends React.Component {
         );
     }
     onClickEvent(e,t){
-        this.setState({isOpen: false});
+        this.setState({isOpenV: false});
         this.props.sendData(e, t)
     }
 
