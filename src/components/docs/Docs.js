@@ -17,7 +17,7 @@ class Docs extends React.Component {
                 </div>
                 <br/>
                 <div className="slds-box slds-theme_default">
-                    <iframe src='file:/../../docs/doc/toc.html'></iframe>
+                    <iframe src='file:///Users/jarndt/blt/blt-code/plugins/blt/doc/toc.html'></iframe>
                     {/*<div dangerouslySetInnerHTML={template} />*/}
                 </div>
             </BrandBand>
