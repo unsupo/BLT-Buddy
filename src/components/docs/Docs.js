@@ -16,7 +16,7 @@ class Docs extends React.Component {
                     <h3 className="slds-text-heading_label slds-truncate">Docs</h3>
                 </div>
                 <br/>
-                <div className="slds-box slds-theme_default" style={{minHeight: '100%'}}>
+                <div className="slds-box slds-theme_default" style={{flex: 'auto';}}>
                     {/*<iframe src='file:///Users/jarndt/blt/blt-code/plugins/blt/doc/toc.html'></iframe>*/}
                     {/*<div dangerouslySetInnerHTML={template} />*/}
 
