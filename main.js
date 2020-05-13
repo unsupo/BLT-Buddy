@@ -82,8 +82,8 @@ function createWindow() {
     // win.loadFile(__dirname + "/build/index.html");
     win.loadURL('http://localhost:3000')
     let isQuitting = false;
-    app.on('quit',event => isQuitting = true)
-    win.on('close',(event)=>{
+    app.on('before-quit',event => win.removeAllListeners())
+    win.addListener('close',(event)=>{
         if(!isQuitting) {
             event.preventDefault()
             win.hide()
