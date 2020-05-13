@@ -89,7 +89,9 @@ class MyAppLauncher extends React.Component {
             />))
         return tiles
     }
-
+    demoMethod(){
+        this.props.sendData(value);
+    }
     createLinks() {
         let links = []
         Array.prototype.forEach.call(this.props.apps,v=>
