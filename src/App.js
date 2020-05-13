@@ -8,7 +8,7 @@ class App extends Component {
     static displayName = 'AppLauncherExample';
     constructor() {
         super();
-        
+        this.getData = this.getData.bind(this);
     }
 
     state = {
