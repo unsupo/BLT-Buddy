@@ -34,7 +34,7 @@ class App extends Component {
     onSearch = (event) => {
         this.setState({search: event.target.value});
     };
-    getData(val){
+    getData(e,val){
         // do not forget to bind getData in constructor
         console.log(val);
     }
