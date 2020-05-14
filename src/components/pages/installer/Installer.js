@@ -58,9 +58,8 @@ const subStepsComplete = (step) => [
         onRenderSetupAssistantAction: (
             <Button
                 id={`step-${step}-substep0-action`}
-                checked
-                oldEventParameterOrder={false}
-                variant="toggle"
+                label="Install"
+                variant=""
             />
         ),
     },
