@@ -48,6 +48,7 @@ class Installer extends React.Component {
                         heading="Ansible Setup"
                         id="card-step-1"
                         isExpandable
+
                         onRenderContent={() => (
                             <ProgressIndicator
                                 // completedSteps={subStepsComplete('complete')}
@@ -65,6 +66,7 @@ class Installer extends React.Component {
                         estimatedTime="4 mins"
                         id="base-step-2"
                         isExpandable
+                        isOpen={true}
                         onRenderContent={() => (
                             <Button
                                 id="base-step-2-action"
