@@ -68,19 +68,24 @@ class Installer extends React.Component {
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
-                            {
-                                id: `step-0-substep1`,
-                                label:
-                                    '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
-                                onRenderSetupAssistantAction: (
-                                    <Button
-                                        id={`step-0-substep1-action`}
-                                        label="View in Trailhead"
-                                        variant="link"
-                                    />
-                                ),
-                            }
-                        )}
+                            <ProgressIndicator
+                                // completedSteps={subStepsComplete('complete')}
+                                id="card-step-1-progress-indicator"
+                                orientation="vertical"
+                                steps={
+                                    id: `step-0-substep1`,
+                                    label:
+                                        '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
+                                    onRenderSetupAssistantAction: (
+                                        <Button
+                                            id={`step-0-substep1-action`}
+                                            label="View in Trailhead"
+                                            variant="link"
+                                        />
+                                    ),
+                                }
+                                variant="setup-assistant"
+                            />)}
                         progress={0}
                     />
                 </SetupAssistant>
