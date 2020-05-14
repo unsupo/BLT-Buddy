@@ -59,7 +59,6 @@ const subStepsComplete = (step) => [
             <Button
                 id={`step-${step}-substep0-action`}
                 label="Install"
-                variant=""
             />
         ),
     },
