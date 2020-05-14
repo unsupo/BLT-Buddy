@@ -37,7 +37,7 @@ class App extends Component {
     };
     displayAlert() {
         if(this.state.alert)
-            return (<AlertContainer>
+            return (<AlertContainer className='slds-accordion'>
                 <Alert
                     icon={<Icon category="utility" name="error" />}
                     labels={{
