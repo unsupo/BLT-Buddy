@@ -48,7 +48,7 @@ class MyAppLauncher extends React.Component {
                 assistiveText={{ label: 'Find an app' }}
             />
         );
-        const headerButton = <Button label="Header Button" />;
+        const headerButton = <Button label="HI" />;
 
         return (
             <IconSettings iconPath="/assets/icons">
