@@ -14,7 +14,7 @@ class Default extends React.Component {
                 </div>
                 <br/>
                 <div className="slds-box slds-theme_default">
-
+                    
                 </div>
             </BrandBand>
         );
