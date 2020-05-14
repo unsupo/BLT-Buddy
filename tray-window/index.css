@@ -36,6 +36,11 @@
     background-color: var(--background-color);
 }
 
+select {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .column {
     width: 50%;
     float: left;
