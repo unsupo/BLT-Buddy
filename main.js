@@ -196,11 +196,13 @@ const getWindowPosition = () => {
 ipcMain.handle('ui',(args)=>{
     // pass in the ui page to remember page you were on
     // if blt isn't installed start on the installer page
-    if(uipage)
-        return {page: uipage, details: 'not installed'}
-    if(args){
-
-    }
+    return new Promise(resolve => {
+        if (uipage)
+            resolve({page: uipage, details: 'not installed'})
+        if (args) {
+            fs.writeFileSync()
+        }
+    })
 })
 
 ipcMain.on('show-window', () => {
