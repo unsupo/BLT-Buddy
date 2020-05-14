@@ -68,12 +68,18 @@ class Installer extends React.Component {
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
-                            <code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>,
-                            <Button
-                                id="base-step-2-action"
-                                label="Install"
-                                variant="outline-brand"
-                            />
+                            {
+                                id: `step-${step}-substep1`,
+                                label:
+                                    '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
+                                onRenderSetupAssistantAction: (
+                                    <Button
+                                        id={`step-${step}-substep1-action`}
+                                        label="View in Trailhead"
+                                        variant="link"
+                                    />
+                                ),
+                            }
                         )}
                         progress={0}
                     />
