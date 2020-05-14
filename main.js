@@ -196,6 +196,7 @@ const getWindowPosition = () => {
 ipcMain.handle('ui',(args)=>{
     // pass in the ui page to remember page you were on
     // if blt isn't installed start on the installer page
+    console.log(args)
     return new Promise(resolve => {
         switch (args['key']) {
             case 'constructor':
