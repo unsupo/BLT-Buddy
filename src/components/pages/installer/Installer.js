@@ -6,6 +6,7 @@ import ProgressIndicator from "@salesforce/design-system-react/components/progre
 import SetupAssistantStep from '@salesforce/design-system-react/components/setup-assistant/step';
 import isElectron from "is-electron";
 import {Button} from "@salesforce/design-system-react";
+import Checkbox from "@salesforce/design-system-react/components/checkbox";
 
 /*
 This page will be a form for all the information blt needs to install
