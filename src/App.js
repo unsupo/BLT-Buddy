@@ -10,6 +10,9 @@ import Actions from "./components/pages/actions/Actions";
 import Timings from "./components/pages/timings/Timings";
 import Monitoring from "./components/pages/monitoring/Monitoring";
 import isElectron from "is-electron";
+import AlertContainer from "@salesforce/design-system-react/components/alert/container";
+import Alert from "@salesforce/design-system-react/components/alert";
+import Icon from "@salesforce/design-system-react/components/icon";
 
 class App extends Component {
     static displayName = 'App.js';
@@ -19,8 +22,10 @@ class App extends Component {
         this.getData = this.getData.bind(this);
         if(isElectron())
             window.ipcRenderer.invoke('ui',{key: 'constructor'}).then(value => {
-                if(value)
+                if(value) {
                     this.setState({app: value.app})
+                    if()
+                }
             })
     }
 
@@ -30,7 +35,20 @@ class App extends Component {
     };
     displayAlert() {
         if(this.state.alert)
-            return ();
+            return (<AlertContainer>
+                <Alert
+                    icon={<Icon category="utility" name="error" />}
+                    labels={{
+                        heading:
+                            'BLT is not installed, please use the ',
+                        headingLink: 'installer',
+                    }}
+                    onClickHeadingLink={() => {
+                        console.log('Link clicked.');
+                    }}
+                    variant="error"
+                />
+            </AlertContainer>);
     }
     getData(e,val){
         this.setState({app:val})
