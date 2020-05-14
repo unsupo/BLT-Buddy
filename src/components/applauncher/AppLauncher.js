@@ -37,11 +37,6 @@ class MyAppLauncher extends React.Component {
         this.setState({ search: event.target.value });
     };
 
-    // getInitialState() {
-    //     let sample = localStorage.getItem("sample") || 0;
-    //     return {sample};
-    // };
-
     render() {
         const search = (
             <Search
@@ -80,11 +75,6 @@ class MyAppLauncher extends React.Component {
     isOpen(){
         console.log(this.state.isOpenV)
         return this.state.isOpenV
-        // if(this.state.isOpenV !== undefined && this.state.isOpenV){
-        //     this.setState({isOpenV: undefined});
-        //     return true
-        // }
-        // return false;
     }
     onClickEvent(e,t){
         this.setState({isOpenV: false});
