@@ -59,6 +59,7 @@ class MyAppLauncher extends React.Component {
                             triggerName={MyAppLauncher.displayName}
                             search={search}
                             onClose={this.close}
+                            triggerOnClick={this.open}
                             isOpen={this.state.isOpenV}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
@@ -73,6 +74,9 @@ class MyAppLauncher extends React.Component {
                 </GlobalNavigationBar>
             </IconSettings>
         );
+    }
+    open(){
+        this.setState({isOpenV: true})
     }
     close(){
         this.setState({isOpenV: false})
