@@ -106,6 +106,8 @@ const getTrayWindow = () =>{
 }
 
 function createTrayWindow() {
+    // tray height is based on number of elements in tray-display.json
+    // tray width is based on max number elements in elements in tray-display.json
     tray_window = new BrowserWindow({
         width: 220,
         height: 350,
