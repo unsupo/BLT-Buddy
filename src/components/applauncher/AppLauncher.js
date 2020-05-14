@@ -58,8 +58,8 @@ class MyAppLauncher extends React.Component {
                             ariaHideApp={false}
                             triggerName={MyAppLauncher.displayName}
                             search={search}
-                            onClose={this.close}
-                            triggerOnClick={this.open}
+                            onClose={this.close.bind(this)}
+                            triggerOnClick={this.open.bind(this)}
                             isOpen={this.state.isOpenV}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
