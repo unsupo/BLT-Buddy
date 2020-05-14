@@ -29,6 +29,7 @@ class Installer extends React.Component {
                         />
                     }
                 >
+                </SetupAssistant>
             </Default>
         );
     }
