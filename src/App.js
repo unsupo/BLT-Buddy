@@ -25,7 +25,7 @@ class App extends Component {
                 if(value) {
                     console.log(value)
                     this.setState({app: value.app})
-                    if(Object.values(value).indexOf('details') > -1 && value.details === 'not installed')
+                    if(value.hasOwnProperty('details') && value.details === 'not installed')
                         this.setState({alert: 'blt not installed'})
                 }
             })
