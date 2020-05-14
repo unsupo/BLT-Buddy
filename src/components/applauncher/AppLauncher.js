@@ -58,7 +58,8 @@ class MyAppLauncher extends React.Component {
                             ariaHideApp={false}
                             triggerName={MyAppLauncher.displayName}
                             search={search}
-                            isOpen={this.isOpen()}
+                            onClose={this.close}
+                            isOpen={this.state.isOpenV}
                             modalHeaderButton={headerButton}>
                             <AppLauncherExpandableSection title="Tile Section">
                                 { this.createTiles() }
@@ -73,9 +74,8 @@ class MyAppLauncher extends React.Component {
             </IconSettings>
         );
     }
-    isOpen(){
-        console.log(this.state.isOpenV)
-        return this.state.isOpenV
+    close(){
+        this.setState({isOpenV: false})
     }
     onClickEvent(e,t){
         this.setState({isOpenV: false});
