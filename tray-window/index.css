@@ -37,7 +37,11 @@
 }
 
 select {
-    width: 10px;
+    width: 150px !important;
+    text-alight: center;
+    text-align-last: center;
+    width: 50% !important;
+    margin-left: 25% !important;
 }
 
 .column {
