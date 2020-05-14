@@ -100,7 +100,7 @@ class MyAppLauncher extends React.Component {
         let links = []
         Array.prototype.forEach.call(this.props.apps,v=>
             links.push(
-                <AppLauncherLink search={this.state.search} onClick={((e) => this.onClickEvent(e,v.title))}>
+                <AppLauncherLink key={v.title} search={this.state.search} onClick={((e) => this.onClickEvent(e,v.title))}>
                     {v.title}
                 </AppLauncherLink>))
         return links
