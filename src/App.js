@@ -16,7 +16,12 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.getData = this.getData.bind(this);
-    }
+        ipcRenderer.invoke('ui').then(value => {
+            if(value)
+                this.setState({app: value})
+        })
+    })
+
 
     state = {
         search: '',

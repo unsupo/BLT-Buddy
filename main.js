@@ -190,6 +190,9 @@ const getWindowPosition = () => {
     return {x: x, y: y}
 }
 
+ipcMain.handle('ui',(args)=>{
+    
+})
 
 ipcMain.on('show-window', () => {
     showTrayWindow()
