@@ -10,7 +10,23 @@ class Installer extends React.Component {
     render() {
         return (
             <Default title={'Installer'}>
-                <p>HI</p>
+                <SetupAssistant
+                    id="card-setup-assistant"
+                    isCard
+                    progressBar={
+                        <ProgressBar
+                            color="success"
+                            id="card-setup-assistant-progress-bar"
+                            labels={{
+                                label:
+                                    'Complete all the steps below to finish setting up Einstein Visibility',
+                            }}
+                            radius="circular"
+                            value={50}
+                            variant="light"
+                        />
+                    }
+                >
             </Default>
         );
     }
