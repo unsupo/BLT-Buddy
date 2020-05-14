@@ -9,6 +9,7 @@ import Installer from "./components/pages/installer/Installer";
 import Actions from "./components/pages/actions/Actions";
 import Timings from "./components/pages/timings/Timings";
 import Monitoring from "./components/pages/monitoring/Monitoring";
+import isElectron from "is-electron";
 
 class App extends Component {
     static displayName = 'App.js';
@@ -16,10 +17,11 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.getData = this.getData.bind(this);
-        ipcRenderer.invoke('ui').then(value => {
-            if(value)
-                this.setState({app: value.app})
-        })
+        if(isElectron())
+            ipcRenderer.invoke('ui').then(value => {
+                if(value)
+                    this.setState({app: value.app})
+            })
     }
 
 
@@ -33,7 +35,8 @@ class App extends Component {
     getData(e,val){
         this.setState({app:val})
         this.forceUpdate()
-        ipcRenderer.invoke('ui',{app: val})
+        if(isElectron())
+            ipcRenderer.invoke('ui',{app: val})
     }
     render() {
         return (
