@@ -4,7 +4,7 @@ const {resolveHome} = require('./cmd')
 const path = require('path')
 
 const logdir = resolveHome(path.join("~","logs"))
-const bltdir = resolveHome(path.join("~","blt"))
+const bltdir = resolveHome(path.join("~","blt-test"))
 const bltdocsdir = resolveHome(path.join(bltdir,"blt-code","plugins","blt","doc"))
 const basedir = path.join(process.cwd(),'data')
 const cmddir = path.join(basedir,"cmd")
