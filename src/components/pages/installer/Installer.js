@@ -66,11 +66,9 @@ class Installer extends React.Component {
                         id="card-step-2"
                         onRenderContent={() => (
                             <Button
-                                // completedSteps={subStepsComplete('complete')}
-                                id="card-step-1-progress-indicator"
-                                orientation="vertical"
-                                // steps={subStepsComplete('complete')}
-                                variant="setup-assistant"
+                                id="base-step-2-action"
+                                label="Install"
+                                variant="outline-brand"
                             />
                         )}
                         progress={0}
