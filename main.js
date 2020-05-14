@@ -56,7 +56,7 @@ const startUp = () => {
     if(!fs.existsSync(constants.bltdir))
         uipage = 'Installer'
     if(!fs.existsSync(constants.uidata))
-        fs.writeFileSync(JSON.stringify({app: 'Monitoring'}))
+        fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
 }
 
 app.whenReady()
