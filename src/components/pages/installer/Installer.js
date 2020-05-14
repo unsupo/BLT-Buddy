@@ -2,6 +2,7 @@ import React from 'react';
 import Default from "../../defaultpage/Default";
 import SetupAssistant from "@salesforce/design-system-react/components/setup-assistant";
 import ProgressBar from "@salesforce/design-system-react/components/progress-bar";
+import ProgressIndicator from "@salesforce/design-system-react/components/progress-indicator";
 
 /*
 This page will be a form for all the information blt needs to install
