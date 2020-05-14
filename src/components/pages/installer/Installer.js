@@ -74,7 +74,7 @@ class Installer extends React.Component {
                                     '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
                                 onRenderSetupAssistantAction: (
                                     <Button
-                                        id={`step-${step}-substep1-action`}
+                                        id={`step-0-substep1-action`}
                                         label="View in Trailhead"
                                         variant="link"
                                     />
