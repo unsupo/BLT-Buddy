@@ -35,6 +35,7 @@ fixPath();
 let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
+let uipage;
 
 // actions to do on application start up
 const startUp = () => {
@@ -51,7 +52,9 @@ const startUp = () => {
         blt.set_project(dir)
     }else
         blt.set_project('app/main').then(dir=>console.log(dir))
-    command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
+    // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
+    if(!fs.existsSync(constants.bltdir))
+        uipage = 'Installer'
 }
 
 app.whenReady()
@@ -191,7 +194,13 @@ const getWindowPosition = () => {
 }
 
 ipcMain.handle('ui',(args)=>{
-    
+    // pass in the ui page to remember page you were on
+    // if blt isn't installed start on the installer page
+    if(uipage)
+        return {page: uipage, details: 'not installed'}
+    if(args){
+
+    }
 })
 
 ipcMain.on('show-window', () => {

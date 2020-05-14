@@ -20,7 +20,7 @@ class App extends Component {
             if(value)
                 this.setState({app: value})
         })
-    })
+    }
 
 
     state = {
