@@ -68,7 +68,7 @@ class Installer extends React.Component {
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
-                            <code>python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)</code>,
+                            <code><![CDATA[python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)]]></code>,
                             <Button
                                 id="base-step-2-action"
                                 label="Install"
