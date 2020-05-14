@@ -200,7 +200,7 @@ ipcMain.handle('ui',(args)=>{
         if (uipage)
             resolve({page: uipage, details: 'not installed'})
         if (args) {
-            fs.writeFileSync()
+            fs.writeFileSync(constants.uidata,{page: args})
         }
     })
 })
