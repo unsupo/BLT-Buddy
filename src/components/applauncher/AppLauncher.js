@@ -22,10 +22,10 @@ class MyAppLauncher extends React.Component {
     }
 
     componentDidMount() {
-        if (isElectron()) {
-            console.log(window.ipcRenderer);
-            // window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({'health':JSON.parse(value['res'])['app']['ui_check']}))
-        }
+        // if (isElectron()) {
+        //     console.log(window.ipcRenderer);
+        //     // window.ipcRenderer.invoke('api', {cmd:'check-health'}).then(value => this.setState({'health':JSON.parse(value['res'])['app']['ui_check']}))
+        // }
     }
 
     state = {
