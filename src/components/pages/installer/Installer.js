@@ -43,10 +43,26 @@ class Installer extends React.Component {
                 >
                     <SetupAssistantStep
                         description="Enter in Configurations"
-                        estimatedTime="4 mins"
+                        estimatedTime="1 min"
                         heading="Ansible Setup"
                         id="card-step-1"
                         isExpandable
+                        onRenderContent={() => (
+                            <ProgressIndicator
+                                // completedSteps={subStepsComplete('complete')}
+                                id="card-step-1-progress-indicator"
+                                orientation="vertical"
+                                // steps={subStepsComplete('complete')}
+                                variant="setup-assistant"
+                            />
+                        )}
+                        progress={0}
+                    />
+                    <SetupAssistantStep
+                        heading="Ansible Install"
+                        description="Run the installer"
+                        estimatedTime="4 mins"
+                        id="card-step-2"
                         onRenderContent={() => (
                             <ProgressIndicator
                                 // completedSteps={subStepsComplete('complete')}
