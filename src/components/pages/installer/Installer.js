@@ -34,7 +34,7 @@ class Installer extends React.Component {
                     <SetupAssistantStep
                         description="Enter in Configurations"
                         estimatedTime="4 mins"
-                        heading="Add Users to Your Org"
+                        heading="Ansible Setup"
                         id="card-step-1"
                         isExpandable
                         onRenderContent={() => (
@@ -46,7 +46,7 @@ class Installer extends React.Component {
                                 variant="setup-assistant"
                             />
                         )}
-                        progress={100}
+                        progress={0}
                     />
                 </SetupAssistant>
             </Default>
