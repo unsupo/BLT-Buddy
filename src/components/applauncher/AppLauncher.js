@@ -55,6 +55,7 @@ class MyAppLauncher extends React.Component {
                 <GlobalNavigationBar>
                     <GlobalNavigationBarRegion region="primary">
                         <AppLauncher
+                            ariaHideApp={false}
                             triggerName={MyAppLauncher.displayName}
                             search={search}
                             isOpen={this.isOpen()}
