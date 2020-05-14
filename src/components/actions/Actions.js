@@ -8,7 +8,7 @@ or you can use in Timings
 class Actions extends React.Component {
     render() {
         return (
-            <Default title={'Configurations'}>
+            <Default title={'Actions'}>
                 <p>HI</p>
             </Default>
         );

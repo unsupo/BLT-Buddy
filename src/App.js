@@ -6,6 +6,8 @@ import IconSettings from "@salesforce/design-system-react/components/icon-settin
 import Configs from "./components/configs/Configs";
 import TrayCustomizer from "./components/traycustomizer/TrayCustomizer";
 import Installer from "./components/installer/Installer";
+import Actions from "./components/actions/Actions";
+import Timings from "./components/timings/Timings";
 
 class App extends Component {
     static displayName = 'AppLauncherExample';
@@ -36,7 +38,9 @@ class App extends Component {
                         {'title': 'Documentation', 'iconText': 'DO', 'description': 'Documentation', 'color': '#b67e6a'},
                         {'title': 'Configs', 'iconText': 'CO', 'description': 'Configurations', 'color': '#e0cf76'},
                         {'title': 'Tray Customizer', 'iconText': 'TC', 'description': 'Customize Tray', 'color': '#597ab3'},
-                        {'title': 'Installer', 'iconText': 'TC', 'description': 'Customize Tray', 'color': '#59a734'}
+                        {'title': 'Installer', 'iconText': 'IN', 'description': 'Install BLT with adventure and ansible', 'color': '#59a734'},
+                        {'title': 'Actions', 'iconText': 'AC', 'description': 'Create Actions for tray and timings, like sync and build', 'color': '#c71717'},
+                        {'title': 'Timings', 'iconText': 'TM', 'description': 'Schedule if/when actions should run like at 5am everyday', 'color': '#a78a34'}
                     ]}/>
                 {/*Then display the picked page here*/}
                 {this.getApp()}
@@ -50,6 +54,8 @@ class App extends Component {
             case "Configs": return <Configs />
             case "Tray Customizer": return <TrayCustomizer />
             case "Installer": return <Installer />
+            case "Actions": return <Actions />
+            case "Timings": return <Timings />
         }
     }
 }
