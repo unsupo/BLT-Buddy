@@ -12,19 +12,96 @@ This page will be a form for all the information blt needs to install
 Then when the user clicks a button it sends all the information to
 an expect script which installs blt and runs the adventure setup
 */
-const steps = () => [
+const subSteps = (step) => [
     {
-    id: `step-0-substep1`,
-    label:
-'<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
-    onRenderSetupAssistantAction: (
-    <Button
-        id={`step-0-substep1-action`}
-        label="View in Trailhead"
-        variant="link"
-    />
-    )}
-]
+        id: `step-${step}-substep0`,
+        label: 'Turn on Lightning for all users.',
+        onRenderSetupAssistantAction: (
+            <Checkbox
+                id={`step-${step}-substep0-action`}
+                checked
+                oldEventParameterOrder={false}
+                variant="toggle"
+            />
+        ),
+    },
+    {
+        id: `step-${step}-substep1`,
+        label:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        onRenderSetupAssistantAction: (
+            <Button
+                id={`step-${step}-substep1-action`}
+                label="View in Trailhead"
+                variant="link"
+            />
+        ),
+    },
+    {
+        id: `step-${step}-substep2`,
+        label: 'Lorem ipsum dolor sit amet, lorem ipsum dolor.',
+        onRenderSetupAssistantAction: (
+            <Button
+                id={`step-${step}-substep2-action`}
+                label="Add Users"
+                variant="outline-brand"
+            />
+        ),
+    },
+];
+
+const subStepsComplete = (step) => [
+    {
+        id: `step-${step}-substep0`,
+        label: 'Turn on Lightning for all users.',
+        onRenderSetupAssistantAction: (
+            <Checkbox
+                id={`step-${step}-substep0-action`}
+                checked
+                oldEventParameterOrder={false}
+                variant="toggle"
+            />
+        ),
+    },
+    {
+        id: `step-${step}-substep1`,
+        label:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        onRenderSetupAssistantAction: (
+            <Button
+                id={`step-${step}-substep1-action`}
+                label="View in Trailhead"
+                variant="link"
+            />
+        ),
+    },
+];
+
+const subStepsIncomplete = (step) => [
+    {
+        id: `step-${step}-substep0`,
+        label: 'Turn on Lightning for all users.',
+        onRenderSetupAssistantAction: (
+            <Checkbox
+                id={`step-${step}-substep0-action`}
+                oldEventParameterOrder={false}
+                variant="toggle"
+            />
+        ),
+    },
+    {
+        id: `step-${step}-substep1`,
+        label:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        onRenderSetupAssistantAction: (
+            <Button
+                id={`step-${step}-substep1-action`}
+                label="View in Trailhead"
+                variant="link"
+            />
+        ),
+    },
+];
 
 class Installer extends React.Component {
     constructor(props) {
