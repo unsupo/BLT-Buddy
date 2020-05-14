@@ -1,5 +1,5 @@
 import React from 'react';
-import Default from "../defaultpage/Default";
+import Default from "../../defaultpage/Default";
 
 /*
 This page allows you to decide what goes in the tray.

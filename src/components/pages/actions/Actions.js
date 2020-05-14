@@ -1,5 +1,5 @@
 import React from 'react';
-import Default from "../defaultpage/Default";
+import Default from "../../defaultpage/Default";
 
 /*
 This is where you create actions that you can use in the tray

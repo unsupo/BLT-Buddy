@@ -1,5 +1,5 @@
 import React from 'react';
-import Default from "../defaultpage/Default";
+import Default from "../../defaultpage/Default";
 
 class Configs extends React.Component {
     render() {

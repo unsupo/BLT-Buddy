@@ -1,5 +1,5 @@
 import React from 'react';
-import Default from "../defaultpage/Default";
+import Default from "../../defaultpage/Default";
 
 /*
 This page will be a form for all the information blt needs to install
