@@ -19,7 +19,6 @@ class App extends Component {
 
     state = {
         search: '',
-        app: 'Documentation'
     };
 
     onSearch = (event) => {
@@ -56,6 +55,7 @@ class App extends Component {
             case "Installer": return <Installer />
             case "Actions": return <Actions />
             case "Timings": return <Timings />
+            default: return <Docs />
         }
     }
 }
