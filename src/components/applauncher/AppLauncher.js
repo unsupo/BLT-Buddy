@@ -11,7 +11,6 @@ import GlobalNavigationBarRegion from '@salesforce/design-system-react/component
 import Button from '@salesforce/design-system-react/components/button';
 import Search from '@salesforce/design-system-react/components/input/search';
 import IconSettings from '@salesforce/design-system-react/components/icon-settings';
-import isElectron from "is-electron";
 
 class MyAppLauncher extends React.Component {
     static displayName = 'BLT Buddy';
