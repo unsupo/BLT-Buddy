@@ -23,6 +23,7 @@ class App extends Component {
         if(isElectron())
             window.ipcRenderer.invoke('ui',{key: 'constructor'}).then(value => {
                 if(value) {
+                    console.log(value)
                     this.setState({app: value.app})
                     if(Object.values(value).indexOf('details') > -1 && value.details === 'not installed')
                         this.setState({alert: 'blt not installed'})
