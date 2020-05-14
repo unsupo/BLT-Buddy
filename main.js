@@ -198,9 +198,9 @@ ipcMain.handle('ui',(args)=>{
     // if blt isn't installed start on the installer page
     return new Promise(resolve => {
         if (uipage)
-            resolve({page: uipage, details: 'not installed'})
+            resolve({app: uipage, details: 'not installed'})
         if (args) {
-            fs.writeFileSync(constants.uidata,{page: args})
+            fs.writeFileSync(constants.uidata,args)
         }
     })
 })

@@ -18,7 +18,7 @@ class App extends Component {
         this.getData = this.getData.bind(this);
         ipcRenderer.invoke('ui').then(value => {
             if(value)
-                this.setState({app: value})
+                this.setState({app: value.app})
         })
     }
 
@@ -33,6 +33,7 @@ class App extends Component {
     getData(e,val){
         this.setState({app:val})
         this.forceUpdate()
+        ipcRenderer.invoke('ui',{app: val})
     }
     render() {
         return (
