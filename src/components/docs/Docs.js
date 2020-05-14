@@ -8,7 +8,9 @@ import Default from "../defaultpage/Default";
 class Docs extends React.Component {
     render() {
         return (
-            <Default title={'Documentation'}>hi </Default>
+            <Default title={'Documentation'}>
+                <p>HI</p>
+            </Default>
         );
     }
 }
