@@ -86,6 +86,7 @@ class MyAppLauncher extends React.Component {
         let tiles = []
         Array.prototype.forEach.call(this.props.apps,v=>
             tiles.push(<AppLauncherTile
+                key={v.title}
                 description={v.description}
                 iconBackgroundColor={v.color}
                 iconText={v.iconText}
