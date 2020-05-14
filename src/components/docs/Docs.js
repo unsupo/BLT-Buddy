@@ -1,5 +1,4 @@
 import React from 'react';
-import BrandBand from '@salesforce/design-system-react/components/brand-band';
 import Default from "../defaultpage/Default";
 
 // const __html = require('../../docs/doc/toc.html');
@@ -15,6 +14,3 @@ class Docs extends React.Component {
     }
 }
 export default Docs;
-// Example.displayName = 'BrandBandExample';
-//
-// ReactDOM.render(<Docs />, mountNode);
