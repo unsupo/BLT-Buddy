@@ -28,10 +28,10 @@ class App extends Component {
     state = {
         search: '',
     };
-
-    onSearch = (event) => {
-        this.setState({search: event.target.value});
-    };
+    displayAlert() {
+        if(this.state.alert)
+            return ();
+    }
     getData(e,val){
         this.setState({app:val})
         this.forceUpdate()
@@ -52,6 +52,7 @@ class App extends Component {
                         {'title': 'Timings', 'iconText': 'TM', 'description': 'Schedule if/when actions should run like at 5am everyday', 'color': '#a78a34'},
                         {'title': 'Monitoring', 'iconText': 'MN', 'description': 'Monitor health of BLT', 'color': '#3483a7'}
                     ]}/>
+                {this.displayAlert()}
                 {/*Then display the picked page here*/}
                 {this.getApp()}
             </IconSettings>
