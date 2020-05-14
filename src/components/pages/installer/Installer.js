@@ -5,6 +5,7 @@ import ProgressBar from "@salesforce/design-system-react/components/progress-bar
 import ProgressIndicator from "@salesforce/design-system-react/components/progress-indicator";
 import SetupAssistantStep from '@salesforce/design-system-react/components/setup-assistant/step';
 import isElectron from "is-electron";
+import {Button} from "@salesforce/design-system-react";
 
 /*
 This page will be a form for all the information blt needs to install
@@ -64,7 +65,7 @@ class Installer extends React.Component {
                         estimatedTime="4 mins"
                         id="card-step-2"
                         onRenderContent={() => (
-                            <ProgressIndicator
+                            <Button
                                 // completedSteps={subStepsComplete('complete')}
                                 id="card-step-1-progress-indicator"
                                 orientation="vertical"
