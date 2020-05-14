@@ -198,12 +198,10 @@ ipcMain.handle('ui',(args)=>{
     // if blt isn't installed start on the installer page
     return new Promise(resolve => {
         switch (args['key']) {
-            case 'constructor': return uipage ? {app: uipage, details: 'not installed'} : JSON.parse(fs.readFileSync(constants.uidata))
-        }
-        if (uipage)
-            resolve({app: uipage, details: 'not installed'})
-        if (args) {
-            fs.writeFileSync(constants.uidata,JSON.stringify(args))
+            case 'constructor':
+                return resolve(uipage ? {app: uipage, details: 'not installed'} : JSON.parse(fs.readFileSync(constants.uidata).toString()))
+            case 'changepage': fs.writeFileSync(constants.uidata,JSON.stringify(args)); return resolve(true);
+            default: return resolve(false)
         }
     })
 })

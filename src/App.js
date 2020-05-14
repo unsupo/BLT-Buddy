@@ -18,7 +18,7 @@ class App extends Component {
         super(props);
         this.getData = this.getData.bind(this);
         if(isElectron())
-            window.ipcRenderer.invoke('ui').then(value => {
+            window.ipcRenderer.invoke('ui',{key: 'constructor'}).then(value => {
                 if(value)
                     this.setState({app: value.app})
             })
@@ -36,7 +36,7 @@ class App extends Component {
         this.setState({app:val})
         this.forceUpdate()
         if(isElectron())
-            window.ipcRenderer.invoke('ui',{app: val})
+            window.ipcRenderer.invoke('ui',{key: 'changepage',app: val})
     }
     render() {
         return (
