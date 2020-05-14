@@ -16,7 +16,7 @@ an expect script which installs blt and runs the adventure setup
 const subSteps = (step) => [
     {
         id: `step-${step}-substep0`,
-        label: 'Turn on Lightning for all users.',
+        label: '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
         onRenderSetupAssistantAction: (
             <Checkbox
                 id={`step-${step}-substep0-action`}
