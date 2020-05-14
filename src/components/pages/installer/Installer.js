@@ -69,7 +69,7 @@ class Installer extends React.Component {
                         isOpen={true}
                         onRenderContent={() => (
                             {
-                                id: `step-${step}-substep1`,
+                                id: `step-0-substep1`,
                                 label:
                                     '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
                                 onRenderSetupAssistantAction: (
