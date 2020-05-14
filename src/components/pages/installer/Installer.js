@@ -59,7 +59,7 @@ class Installer extends React.Component {
                         progress={0}
                     />
                     <SetupAssistantStep
-                        heading="Ansible Install"
+                        heading="Install Ansible"
                         description="Run the installer"
                         estimatedTime="4 mins"
                         id="card-step-2"
