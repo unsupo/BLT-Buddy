@@ -53,9 +53,10 @@ const startUp = () => {
     }else
         blt.set_project('app/main').then(dir=>console.log(dir))
     // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
-    if(!fs.existsSync(constants.bltdir))
+    if(!fs.existsSync(constants.bltdir)) {
         uipage = 'Installer'
-    if(!fs.existsSync(constants.uidata))
+        console.log('b lt does not exist')
+    }if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
 }
 
