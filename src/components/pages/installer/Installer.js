@@ -78,7 +78,7 @@ class Installer extends React.Component {
                         heading="Install Ansible"
                         description="Run the installer"
                         estimatedTime="4 mins"
-                        id="base-step-2"
+                        id="card-step-2"
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
