@@ -29,6 +29,23 @@ class Installer extends React.Component {
                         />
                     }
                 >
+                    <SetupAssistantStep
+                        description="Enter in Configurations"
+                        estimatedTime="4 mins"
+                        heading="Add Users to Your Org"
+                        id="card-step-1"
+                        isExpandable
+                        onRenderContent={() => (
+                            <ProgressIndicator
+                                completedSteps={subStepsComplete('complete')}
+                                id="card-step-1-progress-indicator"
+                                orientation="vertical"
+                                steps={subStepsComplete('complete')}
+                                variant="setup-assistant"
+                            />
+                        )}
+                        progress={100}
+                    />
                 </SetupAssistant>
             </Default>
         );
