@@ -68,7 +68,7 @@ class Installer extends React.Component {
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
-                            <code></code>
+                            <code></code>,
                             <Button
                                 id="base-step-2-action"
                                 label="Install"
