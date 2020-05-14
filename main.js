@@ -193,7 +193,7 @@ const getWindowPosition = () => {
     return {x: x, y: y}
 }
 
-ipcMain.handle('ui',(args)=>{
+ipcMain.handle('ui',(event,args)=>{
     // pass in the ui page to remember page you were on
     // if blt isn't installed start on the installer page
     console.log(args)
