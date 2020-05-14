@@ -10,7 +10,7 @@ import Actions from "./components/actions/Actions";
 import Timings from "./components/timings/Timings";
 
 class App extends Component {
-    static displayName = 'AppLauncherExample';
+    static displayName = 'App.js';
 
     constructor(props) {
         super(props);
