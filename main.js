@@ -55,6 +55,8 @@ const startUp = () => {
     // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
     if(!fs.existsSync(constants.bltdir))
         uipage = 'Installer'
+    if(!fs.existsSync(constants.uidata))
+        fs.writeFileSync(JSON.stringify({app: 'Monitoring'}))
 }
 
 app.whenReady()
