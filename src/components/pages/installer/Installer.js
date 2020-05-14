@@ -4,6 +4,7 @@ import SetupAssistant from "@salesforce/design-system-react/components/setup-ass
 import ProgressBar from "@salesforce/design-system-react/components/progress-bar";
 import ProgressIndicator from "@salesforce/design-system-react/components/progress-indicator";
 import SetupAssistantStep from '@salesforce/design-system-react/components/setup-assistant/step';
+import isElectron from "is-electron";
 
 /*
 This page will be a form for all the information blt needs to install
@@ -11,6 +12,15 @@ Then when the user clicks a button it sends all the information to
 an expect script which installs blt and runs the adventure setup
 */
 class Installer extends React.Component {
+    constructor(props) {
+        super(props);
+        if(isElectron())
+            // i expect server to give me details about the install process
+            window.ipcRenderer.invoke('installer',{key: 'constructor'}).then(value => {
+                // expect if ansible boostrap is complete, know that by if ~/.ansible exists and contains env.sh
+            })
+    }
+
     render() {
         return (
             <Default title={'Installer'}>
