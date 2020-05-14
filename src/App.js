@@ -73,9 +73,11 @@ class App extends Component {
                         {'title': 'Timings', 'iconText': 'TM', 'description': 'Schedule if/when actions should run like at 5am everyday', 'color': '#a78a34'},
                         {'title': 'Monitoring', 'iconText': 'MN', 'description': 'Monitor health of BLT', 'color': '#3483a7'}
                     ]}/>
+                <div>
                 {this.displayAlert()}
                 {/*Then display the picked page here*/}
                 {this.getApp()}
+                </div>
             </IconSettings>
         )
     };
