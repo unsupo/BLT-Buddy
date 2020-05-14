@@ -24,7 +24,8 @@ class App extends Component {
             window.ipcRenderer.invoke('ui',{key: 'constructor'}).then(value => {
                 if(value) {
                     this.setState({app: value.app})
-                    if()
+                    if(Object.values(value).indexOf('details') > -1 && value.details === 'not installed')
+                        this.setState({alert: 'blt not installed'})
                 }
             })
     }
@@ -49,6 +50,7 @@ class App extends Component {
                     variant="error"
                 />
             </AlertContainer>);
+        return undefined
     }
     getData(e,val){
         this.setState({app:val})
