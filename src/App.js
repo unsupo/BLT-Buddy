@@ -26,7 +26,7 @@ class App extends Component {
         this.setState({search: event.target.value});
     };
     getData(e,val){
-        this.state.app = val
+        this.setState({app:val})
         this.forceUpdate()
     }
     render() {
