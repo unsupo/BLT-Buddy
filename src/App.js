@@ -45,7 +45,7 @@ class App extends Component {
                         headingLink: 'installer',
                     }}
                     onClickHeadingLink={() => {
-                        console.log('Link clicked.');
+                        this.getData(undefined,'Installer')
                     }}
                     variant="error"
                 />
