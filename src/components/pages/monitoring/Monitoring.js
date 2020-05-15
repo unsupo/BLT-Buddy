@@ -41,7 +41,7 @@ class Monitoring extends React.Component {
                         <Icon
                             assistiveText={{ label: 'User' }}
                             category="standard"
-                            name="task2"
+                            name={this.state.health.app.ui_check === "UP" ? "task2" : "first_non_empty"}
                         />
                     }
                     label="Status"
