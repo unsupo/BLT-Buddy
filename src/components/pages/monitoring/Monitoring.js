@@ -25,7 +25,7 @@ class Monitoring extends React.Component {
         }
     }
     componentDidMount() {
-        this.interval = setInterval(() => this.get_app_health(), 1000);
+        this.interval = setInterval(() => this.get_app_health, 1000);
     }
     componentWillUnmount() {
         clearInterval(this.interval);
