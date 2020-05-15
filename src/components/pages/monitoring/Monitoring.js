@@ -1,6 +1,7 @@
 import React from 'react';
 import Default from "../../defaultpage/Default";
 import {PageHeaderControl} from "@salesforce/design-system-react";
+import PageHeader from "@salesforce/design-system-react/components/page-header";
 
 /*
 This is where you create actions that you can use in the tray
