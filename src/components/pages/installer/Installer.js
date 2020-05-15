@@ -13,44 +13,6 @@ This page will be a form for all the information blt needs to install
 Then when the user clicks a button it sends all the information to
 an expect script which installs blt and runs the adventure setup
 */
-const subSteps = (step) => [
-    {
-        id: `step-${step}-substep0`,
-        label: '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
-        onRenderSetupAssistantAction: (
-            <Checkbox
-                id={`step-${step}-substep0-action`}
-                checked
-                oldEventParameterOrder={false}
-                variant="toggle"
-            />
-        ),
-    },
-    {
-        id: `step-${step}-substep1`,
-        label:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        onRenderSetupAssistantAction: (
-            <Button
-                id={`step-${step}-substep1-action`}
-                label="View in Trailhead"
-                variant="link"
-            />
-        ),
-    },
-    {
-        id: `step-${step}-substep2`,
-        label: 'Lorem ipsum dolor sit amet, lorem ipsum dolor.',
-        onRenderSetupAssistantAction: (
-            <Button
-                id={`step-${step}-substep2-action`}
-                label="Add Users"
-                variant="outline-brand"
-            />
-        ),
-    },
-];
-
 const subStepsComplete = (step) => [
     {
         id: `step-${step}-substep0`,
@@ -59,18 +21,6 @@ const subStepsComplete = (step) => [
             <Button
                 id={`step-${step}-substep0-action`}
                 label="Install"
-            />
-        ),
-    },
-    {
-        id: `step-${step}-substep1`,
-        label:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        onRenderSetupAssistantAction: (
-            <Button
-                id={`step-${step}-substep1-action`}
-                label="View in Trailhead"
-                variant="link"
             />
         ),
     },
