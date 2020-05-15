@@ -20,7 +20,7 @@ blt --project app/main adventure:--run gybo
 const subStepsComplete = (step) => [
     {
         id: `step-${step}-substep0`,
-        label: 'python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)',
+        label: 'Install Ansible Using the Following code',
         onRenderSetupAssistantAction: (
             <Button
                 id={`step-${step}-substep0-action`}
