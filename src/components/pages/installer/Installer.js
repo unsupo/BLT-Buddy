@@ -17,7 +17,7 @@ python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)
 sudo_ansible-playbook $BOOTSTRAP
 blt --project app/main adventure:--run gybo
 */
-const subStepsComplete = (step) => [
+const install = (step) => [
     {
         id: `step-${step}-substep0`,
         label: 'Install Ansible Using the Following code',
@@ -28,6 +28,8 @@ const subStepsComplete = (step) => [
             />
         ),
     },
+];
+const bootstrap = (step) =>[
     {
         id: `step-${step}-substep0`,
         label: 'Bootstrap Ansible Using the Following code',
@@ -38,7 +40,7 @@ const subStepsComplete = (step) => [
             />
         ),
     },
-];
+]
 
 
 class Installer extends React.Component {
@@ -101,10 +103,30 @@ class Installer extends React.Component {
                             <ProgressIndicator
                                 id="card-step-1-progress-indicator"
                                 orientation="vertical"
-                                steps={subStepsComplete('complete')}
+                                steps={install('complete')}
                                 variant="setup-assistant"
                             />
                             <code>python &#x3C;(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)</code>
+                            </React.Fragment>
+                        )}
+                        progress={0}
+                    />
+                    <SetupAssistantStep
+                        heading="Bootstrap Ansible"
+                        description="Run the bootstrapper"
+                        estimatedTime="5 mins"
+                        id="card-step-3"
+                        isExpandable
+                        isOpen={true}
+                        onRenderContent={() => (
+                            <React.Fragment>
+                                <ProgressIndicator
+                                    id="card-step-1-progress-indicator"
+                                    orientation="vertical"
+                                    steps={install('complete')}
+                                    variant="setup-assistant"
+                                />
+                                <code>python &#x3C;(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)</code>
                             </React.Fragment>
                         )}
                         progress={0}
