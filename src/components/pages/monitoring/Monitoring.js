@@ -12,7 +12,7 @@ or you can use in Timings
 class Monitoring extends React.Component {
     constructor(props) {
         super(props);
-        this.interval = setInterval(() => this.get_app_health(), 1000);
+        this.interval = setInterval(() => this.get_app_health, 1000);
     }
     state = {
         health: '',
