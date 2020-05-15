@@ -12,7 +12,11 @@ class Monitoring extends React.Component {
             <Default title={'Monitoring'}>
                 <PageHeader
                     details={[
-                        {}
+                        {
+                            label: 'Field 1',
+                            content:
+                                'Description that demonstrates truncation with content. Description that demonstrates truncation with content.',
+                            truncate: true}
                     ]}
                     icon={
                         <Icon
@@ -22,7 +26,7 @@ class Monitoring extends React.Component {
                         />
                     }
                     label="Record Type"
-                    onRenderActions={actions}
+                    // onRenderActions={actions}
                     title="Record Title"
                     variant="record-home"
                 />
