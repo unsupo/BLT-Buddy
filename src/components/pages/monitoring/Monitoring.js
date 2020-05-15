@@ -41,16 +41,20 @@ class Monitoring extends React.Component {
                         <Icon
                             assistiveText={{ label: 'User' }}
                             category="standard"
-                            name={this.state.health.app.ui_check === "UP" ? "task2" : "first_non_empty"}
+                            name={this.isRunning() ? "task2" : "first_non_empty"}
                         />
                     }
                     label="Status"
                     // onRenderActions={actions}
-                    title={this.state.health.app.ui_check === "UP" ? "Running" : "Stopped"}
+                    title={this.isRunning() ? "Running" : "Stopped"}
                     variant="record-home"
                 />
             </Default>
         );
+    }
+
+    isRunning() {
+        return this.state.health.app['ui_check'] === "UP";
     }
 }
 export default Monitoring;
