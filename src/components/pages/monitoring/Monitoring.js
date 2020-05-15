@@ -1,5 +1,6 @@
 import React from 'react';
 import Default from "../../defaultpage/Default";
+import {PageHeaderControl} from "@salesforce/design-system-react";
 
 /*
 This is where you create actions that you can use in the tray
@@ -9,7 +10,8 @@ class Monitoring extends React.Component {
     render() {
         return (
             <Default title={'Monitoring'}>
-                <p>HI</p>
+                <PageHeaderControl>
+                </PageHeaderControl>
             </Default>
         );
     }
