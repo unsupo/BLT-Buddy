@@ -133,7 +133,7 @@ class Installer extends React.Component {
                         heading="Run the Adventure"
                         description="Run the Adventure"
                         estimatedTime="5 mins"
-                        id="card-step-3"
+                        id="card-step-4"
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
