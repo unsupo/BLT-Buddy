@@ -78,7 +78,7 @@ class Installer extends React.Component {
                             id="card-setup-assistant-progress-bar"
                             labels={{
                                 label:
-                                    'Complete all the steps below to finish installing ansible',
+                                    'Complete all the steps below to finish installing Ansible',
                             }}
                             radius="circular"
                             value={50}
