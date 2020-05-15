@@ -46,7 +46,7 @@ class Monitoring extends React.Component {
                     }
                     label="Status"
                     // onRenderActions={actions}
-                    title={this.state.health.app.ui_check === "" "Running"}
+                    title={this.state.health.app.ui_check === "UP" ? "Running" : "Stopped"}
                     variant="record-home"
                 />
             </Default>
