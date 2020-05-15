@@ -141,6 +141,45 @@ class Installer extends React.Component {
                         )}
                         progress={0}
                     />
+                </SetupAssistant>
+
+                <SetupAssistant
+                    id="card-setup-assistant"
+                    isCard
+                    progressBar={
+                        <ProgressBar
+                            color="success"
+                            id="card-setup-assistant-progress-bar"
+                            labels={{
+                                label:
+                                    'Complete all the steps below to finish installing BLT',
+                            }}
+                            radius="circular"
+                            value={50}
+                            variant="light"
+                        />
+                    }
+                >
+                    <SetupAssistantStep
+                        heading="Adventure Setup"
+                        description="Enter Adventure Configurations"
+                        estimatedTime="5 mins"
+                        id="card-step-4"
+                        isExpandable
+                        isOpen={true}
+                        onRenderContent={() => (
+                            <React.Fragment>
+                                <ProgressIndicator
+                                    id="card-step-1-progress-indicator"
+                                    orientation="vertical"
+                                    steps={adventure('complete')}
+                                    variant="setup-assistant"
+                                />
+                                <code>blt --project app/main adventure:--run gybo</code>
+                            </React.Fragment>
+                        )}
+                        progress={0}
+                    />
                     <SetupAssistantStep
                         heading="Run the Adventure"
                         description="Run the Adventure"
