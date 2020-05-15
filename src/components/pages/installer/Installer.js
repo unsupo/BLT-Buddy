@@ -28,33 +28,18 @@ const subStepsComplete = (step) => [
             />
         ),
     },
-];
-
-const subStepsIncomplete = (step) => [
     {
         id: `step-${step}-substep0`,
-        label: 'Turn on Lightning for all users.',
-        onRenderSetupAssistantAction: (
-            <Checkbox
-                id={`step-${step}-substep0-action`}
-                oldEventParameterOrder={false}
-                variant="toggle"
-            />
-        ),
-    },
-    {
-        id: `step-${step}-substep1`,
-        label:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        label: 'Bootstrap Ansible Using the Following code',
         onRenderSetupAssistantAction: (
             <Button
-                id={`step-${step}-substep1-action`}
-                label="View in Trailhead"
-                variant="link"
+                id={`step-${step}-substep0-action`}
+                label="Bootstrap"
             />
         ),
     },
 ];
+
 
 class Installer extends React.Component {
     constructor(props) {
