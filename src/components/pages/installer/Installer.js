@@ -12,6 +12,8 @@ import Checkbox from "@salesforce/design-system-react/components/checkbox";
 This page will be a form for all the information blt needs to install
 Then when the user clicks a button it sends all the information to
 an expect script which installs blt and runs the adventure setup
+
+sudo_ansible-playbook $BOOTSTRAP
 */
 const subStepsComplete = (step) => [
     {
