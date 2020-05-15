@@ -27,9 +27,9 @@ class Monitoring extends React.Component {
                             name="task2"
                         />
                     }
-                    label="Record Type"
+                    label="Status"
                     // onRenderActions={actions}
-                    title="Record Title"
+                    title="Running"
                     variant="record-home"
                 />
             </Default>
