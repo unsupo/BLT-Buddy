@@ -9,6 +9,12 @@ This is where you create actions that you can use in the tray
 or you can use in Timings
  */
 class Monitoring extends React.Component {
+    constructor(props) {
+        super(props);
+        window.ipcRenderer.invoke('api',{'cmd': 'check-health'}).then(value => {
+            
+        })
+    }
     render() {
         return (
             <Default title={'Monitoring'}>
