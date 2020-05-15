@@ -41,6 +41,18 @@ const bootstrap = (step) =>[
         ),
     },
 ]
+const adventure = (step) =>[
+    {
+        id: `step-${step}-substep0`,
+        label: 'Run the adventure using the Following code',
+        onRenderSetupAssistantAction: (
+            <Button
+                id={`step-${step}-substep0-action`}
+                label="Run Adventure"
+            />
+        ),
+    },
+]
 
 
 class Installer extends React.Component {
@@ -141,10 +153,10 @@ class Installer extends React.Component {
                                 <ProgressIndicator
                                     id="card-step-1-progress-indicator"
                                     orientation="vertical"
-                                    steps={bootstrap('complete')}
+                                    steps={adventure('complete')}
                                     variant="setup-assistant"
                                 />
-                                <code>sudo_ansible-playbook $BOOTSTRAP</code>
+                                <code>blt --project app/main adventure:--run gybo</code>
                             </React.Fragment>
                         )}
                         progress={0}
