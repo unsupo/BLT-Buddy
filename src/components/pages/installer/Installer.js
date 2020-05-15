@@ -54,7 +54,7 @@ const subSteps = (step) => [
 const subStepsComplete = (step) => [
     {
         id: `step-${step}-substep0`,
-        label: '<code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>',
+        label: '',
         onRenderSetupAssistantAction: (
             <Button
                 id={`step-${step}-substep0-action`}
