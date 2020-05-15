@@ -119,9 +119,6 @@ class Installer extends React.Component {
                                 steps={subStepsComplete('complete')}
                                 variant="setup-assistant"
                             />
-                            <ScopedNotification
-                                id="stuff"
-                                theme="light" />
                             </React.Fragment>
                         )}
                         progress={0}
