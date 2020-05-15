@@ -3,6 +3,7 @@ import Default from "../../defaultpage/Default";
 import {PageHeaderControl} from "@salesforce/design-system-react";
 import PageHeader from "@salesforce/design-system-react/components/page-header";
 import Icon from "@salesforce/design-system-react/components/icon";
+import isElectron from "is-electron";
 
 /*
 This is where you create actions that you can use in the tray
@@ -11,9 +12,19 @@ or you can use in Timings
 class Monitoring extends React.Component {
     constructor(props) {
         super(props);
-        window.ipcRenderer.invoke('api',{'cmd': 'check-health'}).then(value => {
-            
-        })
+    }
+    get_app_health(){
+        if(isElectron()) {
+            window.ipcRenderer.invoke('api', {'cmd': 'check-health'}).then(value => {
+                this.setState({health: value})
+            })
+        }
+    }
+    componentDidMount() {
+        this.interval = setInterval(() => this.get_app_health(), 1000);
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
     render() {
         return (
@@ -35,7 +46,7 @@ class Monitoring extends React.Component {
                     }
                     label="Status"
                     // onRenderActions={actions}
-                    title="Running"
+                    title={"Running"}
                     variant="record-home"
                 />
             </Default>
