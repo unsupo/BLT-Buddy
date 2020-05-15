@@ -22,7 +22,6 @@ const subStepsComplete = (step) => [
         id: `step-${step}-substep0`,
         label: 'python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)',
         onRenderSetupAssistantAction: (
-            <code>test</code>,
             <Button
                 id={`step-${step}-substep0-action`}
                 label="Install"
@@ -120,6 +119,7 @@ class Installer extends React.Component {
                                 steps={subStepsComplete('complete')}
                                 variant="setup-assistant"
                             />
+                            <code>test</code>
                             </React.Fragment>
                         )}
                         progress={0}
