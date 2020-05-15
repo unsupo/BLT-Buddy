@@ -15,6 +15,7 @@ an expect script which installs blt and runs the adventure setup
 
 python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)
 sudo_ansible-playbook $BOOTSTRAP
+blt --project app/main adventure:--run gybo
 */
 const subStepsComplete = (step) => [
     {
