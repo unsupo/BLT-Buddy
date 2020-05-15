@@ -60,10 +60,11 @@ class Installer extends React.Component {
     constructor(props) {
         super(props);
         if(isElectron())
+            ;
             // i expect server to give me details about the install process
-            window.ipcRenderer.invoke('installer',{key: 'constructor'}).then(value => {
-                // expect if ansible boostrap is complete, know that by if ~/.ansible exists and contains env.sh
-            })
+            // window.ipcRenderer.invoke('installer',{key: 'constructor'}).then(value => {
+            //     // expect if ansible boostrap is complete, know that by if ~/.ansible exists and contains env.sh
+            // })
     }
 
     render() {
