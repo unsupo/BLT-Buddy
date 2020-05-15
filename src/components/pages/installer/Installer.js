@@ -22,7 +22,7 @@ const subStepsComplete = (step) => [
         id: `step-${step}-substep0`,
         label: 'python <(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)',
         onRenderSetupAssistantAction: (
-            <code>test</code>
+            <code>test</code>,
             <Button
                 id={`step-${step}-substep0-action`}
                 label="Install"
