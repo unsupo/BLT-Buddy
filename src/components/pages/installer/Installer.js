@@ -82,10 +82,8 @@ class Installer extends React.Component {
                         isExpandable
                         onRenderContent={() => (
                             <ProgressIndicator
-                                completedSteps={subStepsComplete('complete')}
                                 id="card-step-1-progress-indicator"
                                 orientation="vertical"
-                                steps={subStepsComplete('complete')}
                                 variant="setup-assistant"
                             />
                         )}
