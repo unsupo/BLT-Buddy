@@ -10,8 +10,20 @@ class Monitoring extends React.Component {
     render() {
         return (
             <Default title={'Monitoring'}>
-                <PageHeaderControl>
-                </PageHeaderControl>
+                <PageHeader
+                    details={details}
+                    icon={
+                        <Icon
+                            assistiveText={{ label: 'User' }}
+                            category="standard"
+                            name="opportunity"
+                        />
+                    }
+                    label="Record Type"
+                    onRenderActions={actions}
+                    title="Record Title"
+                    variant="record-home"
+                />
             </Default>
         );
     }
