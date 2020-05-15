@@ -54,7 +54,10 @@ class Monitoring extends React.Component {
     }
 
     isRunning() {
-        return this.state.health && this.state.health['app'] && this.state.health['app']['ui_check'] === "UP";
+        if(this.state.health)
+            return true
+        return false
+        // return this.state.health && this.state.health['app'] && this.state.health['app']['ui_check'] === "UP";
     }
 }
 export default Monitoring;
