@@ -31,7 +31,7 @@ class Monitoring extends React.Component {
         clearInterval(this.interval);
     }
     render() {
-        this.get_app_health()
+        this.interval = setInterval(() => this.get_app_health, 1000);
         return (
             <Default title={'Monitoring'}>
                 <PageHeader
