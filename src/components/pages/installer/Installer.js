@@ -5,7 +5,7 @@ import ProgressBar from "@salesforce/design-system-react/components/progress-bar
 import ProgressIndicator from "@salesforce/design-system-react/components/progress-indicator";
 import SetupAssistantStep from '@salesforce/design-system-react/components/setup-assistant/step';
 import isElectron from "is-electron";
-import {Button} from "@salesforce/design-system-react";
+import {Button, ScopedNotification} from "@salesforce/design-system-react";
 import Checkbox from "@salesforce/design-system-react/components/checkbox";
 
 /*
@@ -112,12 +112,18 @@ class Installer extends React.Component {
                         isExpandable
                         isOpen={true}
                         onRenderContent={() => (
+                            <React.Fragment>
                             <ProgressIndicator
                                 id="card-step-1-progress-indicator"
                                 orientation="vertical"
                                 steps={subStepsComplete('complete')}
                                 variant="setup-assistant"
-                            />)}
+                            />
+                            <ScopedNotification
+                                id="stuff"
+                                theme="light" />
+                            </React.Fragment>
+                        )}
                         progress={0}
                     />
                 </SetupAssistant>
