@@ -58,9 +58,8 @@ class Monitoring extends React.Component {
     }
 
     isRunning() {
-        if(this.state.hasOwnProperty('health'))
-            return true
-        return false
+        return this.state.hasOwnProperty('health');
+
         // return this.state.health && this.state.health['app'] && this.state.health['app']['ui_check'] === "UP";
     }
 }
