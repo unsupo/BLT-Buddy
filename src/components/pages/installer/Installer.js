@@ -123,10 +123,10 @@ class Installer extends React.Component {
                                 <ProgressIndicator
                                     id="card-step-1-progress-indicator"
                                     orientation="vertical"
-                                    steps={install('complete')}
+                                    steps={bootstrap('complete')}
                                     variant="setup-assistant"
                                 />
-                                <code>python &#x3C;(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)</code>
+                                <code>sudo_ansible-playbook $BOOTSTRAP</code>
                             </React.Fragment>
                         )}
                         progress={0}
