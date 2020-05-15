@@ -129,6 +129,26 @@ class Installer extends React.Component {
                         )}
                         progress={0}
                     />
+                    <SetupAssistantStep
+                        heading="Run the Adventure"
+                        description="Run the Adventure"
+                        estimatedTime="5 mins"
+                        id="card-step-3"
+                        isExpandable
+                        isOpen={true}
+                        onRenderContent={() => (
+                            <React.Fragment>
+                                <ProgressIndicator
+                                    id="card-step-1-progress-indicator"
+                                    orientation="vertical"
+                                    steps={bootstrap('complete')}
+                                    variant="setup-assistant"
+                                />
+                                <code>sudo_ansible-playbook $BOOTSTRAP</code>
+                            </React.Fragment>
+                        )}
+                        progress={0}
+                    />
                 </SetupAssistant>
             </Default>
         );
