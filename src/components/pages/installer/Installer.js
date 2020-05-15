@@ -119,7 +119,7 @@ class Installer extends React.Component {
                                 steps={subStepsComplete('complete')}
                                 variant="setup-assistant"
                             />
-                            <code>python+%3C%28curl+https%3A%2F%2Fsfdc-ansible.s3.amazonaws.com%2Fansiblebootstrap.py%29</code>
+                            <code>python &#x3C;(curl https://sfdc-ansible.s3.amazonaws.com/ansiblebootstrap.py)</code>
                             </React.Fragment>
                         )}
                         progress={0}
