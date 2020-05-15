@@ -11,7 +11,9 @@ class Monitoring extends React.Component {
         return (
             <Default title={'Monitoring'}>
                 <PageHeader
-                    details={details}
+                    details={[
+                        {}
+                    ]}
                     icon={
                         <Icon
                             assistiveText={{ label: 'User' }}
