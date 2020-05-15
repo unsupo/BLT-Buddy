@@ -24,7 +24,7 @@ class Monitoring extends React.Component {
                         <Icon
                             assistiveText={{ label: 'User' }}
                             category="standard"
-                            name="opportunity"
+                            name="task2"
                         />
                     }
                     label="Record Type"
