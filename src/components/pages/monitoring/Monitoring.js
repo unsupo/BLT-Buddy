@@ -13,6 +13,9 @@ class Monitoring extends React.Component {
     constructor(props) {
         super(props);
     }
+    state = {
+        health: '',
+    };
     get_app_health(){
         if(isElectron()) {
             window.ipcRenderer.invoke('api', {'cmd': 'check-health'}).then(value => {
