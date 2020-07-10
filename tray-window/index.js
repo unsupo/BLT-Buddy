@@ -132,13 +132,10 @@ const updateView = (data) => {
     let openLink = document.getElementsByClassName('open-webpage')[0];
 
     if(data['app']['ui_check'] === 'UP') {
-        status = RUNNING;
         openLink.style.visibility = "visible";
-    }else {
-        status = DOWN;
+        setStatus(RUNNING);
+    }else
         openLink.style.visibility = "hidden";
-    }
-    setStatus(status);
 
     if(document.querySelector('.js-health-check-port')) {
         document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
