@@ -62,7 +62,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 }
 
 const disableEnableAllButtons = (isDisabled) => {
-    class_cmds.filter(a->a.)
+    disableEnableButtons(class_cmds.filter(a=>a.toString().startsWith('js-') && a.toString().endsWith('-action')),isDisabled);
 }
 
 // use this for blt commands that require status change
@@ -169,6 +169,9 @@ const updateData = () =>{
                 value = JSON.parse(value['res']);
             }catch (e) {
                 console.log(e)
+            }
+            if(value) {
+                disableEnableAllButtons(true);
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
             // if (value && ((new Date) - createdNotificationTime > tenMinutes))
