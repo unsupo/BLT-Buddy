@@ -60,6 +60,10 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
             isDisabled?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
 }
 
+const disableEnableAllButtons = (isDisabled) => {
+    
+}
+
 // use this for blt commands that require status change
 const runCommand = (cmd, args) =>{
     isWorking = true;
