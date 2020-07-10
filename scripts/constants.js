@@ -8,6 +8,7 @@ const bltdir = resolveHome(path.join("~","blt"))
 const bltdocsdir = resolveHome(path.join(bltdir,"blt-code","plugins","blt","doc"))
 const basedir = path.join(process.cwd(),'data')
 const cmddir = path.join(basedir,"cmd")
+const timingslogdir = path.join(basedir,"timings")
 const cmdlogdir = path.join(cmddir,"logs")
 const cmdexitdir = path.join(cmddir,"exit")
 const piddir = path.join(cmddir,'pids')
@@ -22,6 +23,7 @@ global.constants = Object.freeze({
     basedir: basedir,
     cmddir: cmddir,
     cmdlogdir: cmdlogdir,
+    timingslogdir: timingslogdir,
     piddir: piddir,
     scriptsdir: scriptsdir,
     logfile: logfile,
