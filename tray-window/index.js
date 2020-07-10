@@ -200,6 +200,9 @@ const updateData = () =>{
             if(!value) {
                 disableEnableAllButtons(true);
                 setStatus(CANT_CONNECT)
+            }else if (STATUS === CANT_CONNECT){
+                disableEnableButtons(false);
+                setStatus("DOWN");
             }
             isGettingNexusConnectionData = false;
         });
