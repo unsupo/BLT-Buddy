@@ -112,7 +112,7 @@ const runApiCommand = (cmd) =>{
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                 setStatus(s);
                 ipcRenderer.send('app-update', {
-                    'icon':s, 'tool-tip':s
+                    'icon':s.toLowerCase(), 'tool-tip':s
                 });
             }
             updateFunc()
@@ -157,7 +157,7 @@ const updateData = () =>{
                 if(!isWorking) {
                     const s = res['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                     ipcRenderer.send('app-update', {
-                        'icon':s, 'tool-tip':s
+                        'icon':s.toLowerCase(), 'tool-tip':s
                     });
                 }
             }catch (e) {
