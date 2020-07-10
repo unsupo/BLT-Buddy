@@ -26,6 +26,8 @@ const commands = {
     enable_blt: `${blt} ${replace_project} --enable`,
     disable_blt: `${blt} ${replace_project} --enable`,
     start_blt: `${blt} ${replace_project} --start-bg`,
+    enable_force: `${blt} ${replace_project} --enable force`,
+    
     adventure_build: `cd ${working_dir_replace} && yes '' | Adventure build`,
     get_project_dirs: `cd ${blt_dir} &&  find app ! -path . ! -path app -name 'enabled.blt' -maxdepth 3 | xargs -I{} dirname {} | sort`,
     get_project_dir_status: `dir=${working_dir_replace}; [[ -f $dir/enabled.blt &&  $(egrep '^enabled\\s+=\\s+true' $dir/enabled.blt) ]] && printf 0 || printf 1`,
@@ -51,6 +53,7 @@ exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
 exports.adventure_build = () => run_cmd(commands.adventure_build)
+exports.enable_force = () => run_cmd(commands.enable_force)
 // fast running commands use _cmd
 exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
 exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
