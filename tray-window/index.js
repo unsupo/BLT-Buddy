@@ -4,7 +4,8 @@ let previousData = {}
 let isWorking = false;
 let lastCommand = undefined;
 let isError = false;
-let status = 'STOPPED'
+let STATUS = 'STOPPED'
+const CANT_CONNECT = 'CAN"T CONNECT';
 
 /*
 All on click events handled here
@@ -34,6 +35,7 @@ document.addEventListener('click', (event) => {
 })
 
 const setStatus = (status) => {
+    STATUS = status;
     document.querySelector('.js-summary').textContent = status
 }
 
@@ -146,7 +148,7 @@ const updateView = (data) => {
 let isGettingHealthData = false, isGettingSFMData = false, isGettingNexusConnectionData;
 let createdNotificationTime = Date.now()-1000;
 const updateData = () =>{
-    if(!isGettingHealthData) {
+    if(!isGettingHealthData && STATUS !== CANT_CONNECT) {
         isGettingHealthData = true;
         getHealthData().then(value => {
             try {
@@ -166,7 +168,7 @@ const updateData = () =>{
             isGettingHealthData = false;
         })
     }
-    if(!isGettingSFMData) {
+    if(!isGettingSFMData && STATUS !== CANT_CONNECT) {
         isGettingSFMData = true;
         getSFMData().then(value => {
             try {
@@ -195,7 +197,7 @@ const updateData = () =>{
             }
             if(!value) {
                 disableEnableAllButtons(true);
-                setStatus('CAN"T CONNECT')
+                setStatus(CANT_CONNECT)
             }
             isGettingNexusConnectionData = false;
         });
