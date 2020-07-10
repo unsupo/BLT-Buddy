@@ -145,6 +145,11 @@ const updateView = (data) => {
     }
 
 }
+
+const addVPNButton = () => {
+    
+}
+
 let isGettingHealthData = false, isGettingSFMData = false, isGettingNexusConnectionData;
 let createdNotificationTime = Date.now()-1000;
 const updateData = () =>{
@@ -187,6 +192,7 @@ const updateData = () =>{
             isGettingSFMData = false;
         })
     }
+
     if(!isGettingNexusConnectionData){
         isGettingNexusConnectionData = true;
         runBasicApiCommand({cmd:'check_nexus_connection'}).then(value => {
@@ -198,6 +204,7 @@ const updateData = () =>{
             if(!value) {
                 disableEnableAllButtons(true);
                 setStatus(CANT_CONNECT)
+                addVPNButton()
             }
             isGettingNexusConnectionData = false;
         });
