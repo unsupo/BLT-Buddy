@@ -43,7 +43,7 @@ const waitForPid = (pid, exitfile,logfile) => {
             function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
                 while (!fs.existsSync(exitfile))
-                    sleep(1000); // wait until exit file is created
+                    setTimeout(null,1000); // wait until exit file is created
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
                     value['err']=logfile
