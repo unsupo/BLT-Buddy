@@ -72,6 +72,8 @@ const _run_cmd = (cmd) => {
 
         const hash = md5(cmd)
         const timings = path.join(constants.timingslogdir, hash + ".timings");
+        // this will save timings data, averaging the difference between start and end times gives a good predicted time
+        // for this command
         fs.writeFileSync(timings,"s: "+new Date().getTime()) // script starting write out time it started
         const log =  path.join(constants.cmdlogdir, hash + ".log")
         const out = fs.openSync(log,'a')
