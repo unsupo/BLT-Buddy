@@ -72,6 +72,7 @@ const _run_cmd = (cmd) => {
 
         const hash = md5(cmd)
         const timings = path.join(constants.timingslogdir, hash + ".timings");
+        fs.writeFileSync(timings,)
         const log =  path.join(constants.cmdlogdir, hash + ".log")
         const out = fs.openSync(log,'a')
         const err = fs.openSync(log,'a')
