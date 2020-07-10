@@ -102,7 +102,7 @@ class BLT:
 
     def check_nexus_connection(self):
         try:
-            return self.check_host('nexus.soma.salesforce.com') == 0
+            return self.check_host('google.com') == 0
         except Exception:
             return 1
 
