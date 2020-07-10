@@ -5,7 +5,7 @@ let isWorking = false;
 let lastCommand = undefined;
 let isError = false;
 let STATUS = 'STOPPED'
-const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'STOPPED', RUNNING = 'running';
+const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'STOPPED', RUNNING = 'RUNNING';
 
 /*
 All on click events handled here
@@ -155,7 +155,7 @@ const updateData = () =>{
 
                 updateView(res);
                 if(!isWorking) {
-                    const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                    const s = value['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                     ipcRenderer.send('app-update', {
                         'icon':s, 'tool-tip':s
                     });
