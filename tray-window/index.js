@@ -16,7 +16,8 @@ class_cmds = [
     ['js-kill-action','kill-blt',{'timeout':0}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
     ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit'],
     ['js-change-status-action']
-]
+] // TODO should say stopping not killing
+// TODO stopping app still shows is running will it's trying to stop it
 document.addEventListener('click', (event) => {
     if (event.target.href) {
         // open window links
