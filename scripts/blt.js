@@ -23,6 +23,7 @@ const replace_project = "[project]", working_dir_replace = '[working_dir]'
 const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
+    sdb_go: `${blt} ${replace_project} --sdb-go`,
     sync_blt: `${blt} ${replace_project} --sync`,
     ide_blt: `${blt} ${replace_project} --ide`,
     enable_blt: `${blt} ${replace_project} --enable`,
@@ -48,6 +49,7 @@ const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
 exports.db_start = () => run_cmd(commands.db_start)
+exports.sdb_go = () => run_cmd(commands.sdb_go)
 exports.restartBlt = () => run_cmd(commands.restart_blt)
 exports.sync_blt = () => run_cmd(commands.sync_blt)
 exports.build_blt = () => run_cmd(commands.sync_blt)
