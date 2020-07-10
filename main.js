@@ -56,9 +56,10 @@ const startUp = () => {
     }else // otherwise set app/main as the default project
         blt.set_project('app/main').then(dir=>console.log(dir))
     // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
-    
+    // if blt isn't installed on this computer then set the page to the installer page
     if(!fs.existsSync(constants.bltdir))
         uipage = 'Installer'
+    // if uidata is saved on this machine then load the ui using that data
     if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
 }
