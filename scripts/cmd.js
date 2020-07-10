@@ -12,7 +12,7 @@ fixPath();
 const md5 = (str) => crypto.createHash('md5').update(str).digest('hex')
 
 const python_options = {
-    pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
+    pythonPath: path.join(__dirname, '.venv', 'bin', 'python')
 }
 
 const _runPython = (args, callback) =>{
