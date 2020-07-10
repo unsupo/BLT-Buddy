@@ -80,6 +80,8 @@ class BLT:
                 my_parser.add_argument("--" + function, nargs='*')
         args = my_parser.parse_args()
         self.pretty = args.pretty
+        self.host = args.url
+        self.alert = args.alert
 
         for arg, value in args.__dict__.items():
             if arg in self.functions and value is not None:
@@ -96,11 +98,11 @@ class BLT:
 
     def health_check_1(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        return sock.connect_ex(('127.0.0.1', int(self.port)))
+        return sock.connect_ex((self.host, int(self.port)))
 
     def health_check_2(self):
         try:
-            soup = BeautifulSoup(requests.get('http://127.0.0.1' + ':' + str(self.port)).content,
+            soup = BeautifulSoup(requests.get('http://' + self.host + ':' + str(self.port)).content,
                                  features="html.parser")
             return 0 if len(soup.select('#usernamegroup')) > 0 else 1
         except Exception:
