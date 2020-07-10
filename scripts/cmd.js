@@ -40,6 +40,7 @@ const waitForPid = (pid, exitfile,logfile) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         isPidStillRunning(pid).then(value => {
+            const timings = pid.toString().
             function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
                 while (!fs.existsSync(exitfile))
@@ -47,6 +48,7 @@ const waitForPid = (pid, exitfile,logfile) => {
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
                     value['err']=logfile
+                fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
                 return value
             }
             if(value) // if it is still running then wait for it
