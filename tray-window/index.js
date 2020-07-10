@@ -134,13 +134,17 @@ const updateView = (data) => {
     }
 
 }
-let isGettingHealthData = false, isGettingSFMData = false;
+let isGettingHealthData = false, isGettingSFMData = false, isGettingNexusConnectionData;
 let createdNotificationTime = Date.now()-1000;
 const updateData = () =>{
     if(!isGettingHealthData) {
         isGettingHealthData = true;
         getHealthData().then(value => {
-            value = JSON.parse(value['res']);
+            try {
+                value = JSON.parse(value['res']);
+            }catch (e) {
+                console.log(e)
+            }
             // console.log(value);
             updateView(value);
             if(!isWorking) {
@@ -162,11 +166,24 @@ const updateData = () =>{
                 console.log(e)
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
-            if (value && ((new Date) - createdNotificationTime > tenMinutes))
-                ipcRenderer.invoke('sfm-needed', value).then(value1 => createdNotificationTime=Date.now())
+            // if (value && ((new Date) - createdNotificationTime > tenMinutes))
+            //     ipcRenderer.invoke('sfm-needed', value).then(value1 => createdNotificationTime=Date.now())
             previousData['sfm'] = value;
             isGettingSFMData = false;
         })
+    }
+    if(!isGettingNexusConnectionData){
+        isGettingNexusConnectionData = true;
+        runBasicApiCommand({cmd:'check_nexus_connection'}).then(value => {
+            try {
+                value = JSON.parse(value['res']);
+            }catch (e) {
+                console.log(e)
+            }
+            if(value)
+                ;
+            isGettingNexusConnectionData = false;
+        });
     }
 };
 

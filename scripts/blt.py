@@ -103,9 +103,9 @@ class BLT:
     def check_connection(self,host):
         try:
             socket.gethostbyaddr(host)
-            return 0
+            return True
         except socket.error:
-            return 1
+            return False
 
     def check_nexus_connection(self):
         return self.check_connection('nexus.soma.salesforce.com')
