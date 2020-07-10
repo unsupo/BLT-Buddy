@@ -22,6 +22,7 @@ const replace_project = "[project]", working_dir_replace = '[working_dir]'
 // TODO ciab needs creation commands (with various configs like branch and modules
 // TODO ciab needs setup for nomachine and ssh setup for blt --build pre
 // TODO add smart bear review process and blt submit as well as setting appropriate changelist with description
+// TODO ability to open files in codesearch
 const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
