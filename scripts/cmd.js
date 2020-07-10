@@ -42,7 +42,8 @@ const waitForPid = (pid, exitfile,logfile) => {
         isPidStillRunning(pid).then(value => {
             function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
-                while (!fs.existsSync(exitfile)); // wait until exit file is created
+                while (!fs.existsSync(exitfile))
+                    ; // wait until exit file is created
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
                     value['err']=logfile
