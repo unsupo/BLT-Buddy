@@ -132,7 +132,7 @@ const updateView = (data) => {
     let openLink = document.getElementsByClassName('open-webpage')[0];
 
     if(data['app']['ui_check'] === 'UP') {
-        status = "RUNNING"
+        status = RUNNING
         openLink.style.visibility = "visible";
     }else
         openLink.style.visibility = "hidden";
