@@ -155,7 +155,7 @@ const updateData = () =>{
 
                 updateView(res);
                 if(!isWorking) {
-                    const s = value['app']['ui_check'] === 'UP' ? RUNNING : DOWN
+                    const s = res['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                     ipcRenderer.send('app-update', {
                         'icon':s, 'tool-tip':s
                     });
