@@ -56,9 +56,12 @@ pass in a state either true or false otherwise it will use the opposite of curre
 const disableEnableButtons = (buttonClasses,isDisabled) =>{
     if(typeof buttonClasses === 'string')
         buttonClasses = [buttonClasses];
-    buttonClasses.forEach(buttonClass=>
-        document.getElementsByClassName(buttonClass)[0].disabled =
-            isDisabled!==undefined?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
+    buttonClasses.forEach(buttonClass=>{
+        try {
+            document.getElementsByClassName(buttonClass)[0].disabled =
+                isDisabled !== undefined ? isDisabled : !document.getElementsByClassName(buttonClass)[0].disabled
+        }catch (e) { /*DO NOTHING, this is caused when class doesn't exist */ }
+    })
 }
 
 const disableEnableAllButtons = (isDisabled) => {
