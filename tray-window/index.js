@@ -155,18 +155,16 @@ const updateData = () =>{
         getHealthData().then(value => {
             try {
                 let res = JSON.parse(value['res']);
+
+                updateView(res);
+                if(!isWorking) {
+                    const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                    ipcRenderer.send('app-update', {
+                        'icon':s, 'tool-tip':s
+                    });
+                }
             }catch (e) {
                 console.log(e)
-                isGettingHealthData = false;
-                return;
-            }
-            // console.log(value);
-            updateView(res);
-            if(!isWorking) {
-                const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
-                ipcRenderer.send('app-update', {
-                    'icon':s, 'tool-tip':s
-                });
             }
             previousData['health'] = value;
             isGettingHealthData = false;
@@ -177,17 +175,15 @@ const updateData = () =>{
         getSFMData().then(value => {
             try {
                 let res = JSON.parse(value['res']);
+                if(res) {
+                    disableEnableAllButtons(true);
+                    setStatus(SFM_NEEDED)
+                }else if (STATUS === SFM_NEEDED){
+                    disableEnableButtons(false);
+                    setStatus(DOWN);
+                }
             }catch (e) {
                 console.log(e)
-                isGettingSFMData = false;
-                return;
-            }
-            if(res) {
-                disableEnableAllButtons(true);
-                setStatus(SFM_NEEDED)
-            }else if (STATUS === SFM_NEEDED){
-                disableEnableButtons(false);
-                setStatus(DOWN);
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
             // if (value && ((new Date) - createdNotificationTime > tenMinutes))
@@ -202,17 +198,15 @@ const updateData = () =>{
         runBasicApiCommand({cmd:'check_nexus_connection'}).then(value => {
             try {
                 let res = JSON.parse(value['res']);
+                if(!res) {
+                    disableEnableAllButtons(true);
+                    setStatus(CANT_CONNECT)
+                }else if (STATUS === CANT_CONNECT){
+                    disableEnableButtons(false);
+                    setStatus(DOWN);
+                }
             }catch (e) {
                 console.log(e)
-                isGettingNexusConnectionData = false;
-                return;
-            }
-            if(!res) {
-                disableEnableAllButtons(true);
-                setStatus(CANT_CONNECT)
-            }else if (STATUS === CANT_CONNECT){
-                disableEnableButtons(false);
-                setStatus(DOWN);
             }
             isGettingNexusConnectionData = false;
         });
