@@ -39,6 +39,7 @@ let uipage;
 
 // actions to do on application start up
 const startUp = () => {
+    // make configuration directories
     mkdirp(constants.basedir)
     mkdirp(constants.piddir)
     mkdirp(constants.logdir)
@@ -48,12 +49,14 @@ const startUp = () => {
     mkdirp(constants.cmdexitdir)
     mkdirp(constants.docdir)
     mkdirp(constants.timingslogdir)
+    // if a project was set in the app then it was saved to the projectfile, so read it and set it here
     if(fs.existsSync(constants.projectFile)) {
         const dir = fs.readFileSync(constants.projectFile).toString()
         blt.set_project(dir)
-    }else
+    }else // otherwise set app/main as the default project
         blt.set_project('app/main').then(dir=>console.log(dir))
     // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
+    
     if(!fs.existsSync(constants.bltdir))
         uipage = 'Installer'
     if(!fs.existsSync(constants.uidata))
