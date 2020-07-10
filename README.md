@@ -13,7 +13,7 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # if you make changes to the python requirements then run
-
+pip freeze > requirements.txt
 ```
 
 ## Build and install
