@@ -74,17 +74,20 @@ const _run_cmd = (cmd) => {
         const timings = path.join(constants.timingslogdir, hash + ".timings");
         // this will save timings data, averaging the difference between start and end times gives a good predicted time
         // for this command.  Other factors will affect this as well, mostly workspace-users.xml, also unhandled user inputs
-        fs.writeFileSync(timings,"s: "+new Date().getTime()) // script starting write out time it started
+        if(fs.existsSync(timings)) //if timings file doesn't exist make it and add start time
+            fs.appendFileSync(timings,"s: "+new Date().getTime()) // script starting write out time it started
+        else // append start time to file
+            fs.writeFileSync(timings,"s: "+new Date().getTime())
         const log =  path.join(constants.cmdlogdir, hash + ".log")
         const out = fs.openSync(log,'a')
         const err = fs.openSync(log,'a')
         const pid = path.join(constants.piddir, hash + ".pid")
         const script = path.join(constants.scriptsdir, hash + ".sh")
         const c = `#!/usr/bin/env bash\n${cmd}`
-        if(!fs.existsSync(script)) // if script file doesn't exist, make it
+        if(!fs.existsSync(script)) // if script file doesn't exist, make it (meaning this is the first time running this script)
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
-        if(!fs.existsSync(pid)) { // if pid file doesn't exist, script is done
-            fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
+        if(!fs.existsSync(pid)) { // if pid file doesn't exist then detach the process
+            // fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
             return resolve(detached(constants.scriptsdir, script, undefined, out, err, log))
         }
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
