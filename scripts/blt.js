@@ -23,6 +23,7 @@ const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
     sync_blt: `${blt} ${replace_project} --sync`,
+    ide_blt: `${blt} ${replace_project} --ide`,
     enable_blt: `${blt} ${replace_project} --enable`,
     disable_blt: `${blt} ${replace_project} --enable`,
     start_blt: `${blt} ${replace_project} --start-bg`,
@@ -49,9 +50,11 @@ exports.db_start = () => run_cmd(commands.db_start)
 exports.restartBlt = () => run_cmd(commands.restart_blt)
 exports.sync_blt = () => run_cmd(commands.sync_blt)
 exports.build_blt = () => run_cmd(commands.sync_blt)
+exports.ide_blt = () => run_cmd(commands.ide_blt)
 exports.enable_blt = () => run_cmd(commands.enable_blt)
 exports.disable_blt = () => run_cmd(commands.disable_blt)
 exports.start_blt = () => run_cmd(commands.start_blt)
+exports.stop_blt = () => run_cmd(commands.stop_blt)
 exports.adventure_build = () => run_cmd(commands.adventure_build)
 exports.enable_force = () => run_cmd(commands.enable_force)
 // fast running commands use _cmd
