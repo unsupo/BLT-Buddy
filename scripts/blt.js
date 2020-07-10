@@ -18,7 +18,8 @@ let working_dir_cmd; // = `cd ${working_dir} && `; // might not be needed becaus
 
 // TODO sync and others that have user prompt
 const replace_project = "[project]", working_dir_replace = '[working_dir]'
-// TODO add p4 and ciab commands and interface
+// TODO add p4 and ciab commands and interface as well as if you have a linux box
+// TODO add smart bear review process and blt submit as well as setting appropriate changelist with description
 const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
