@@ -33,6 +33,8 @@ headers = {
 
 
 class BLT:
+    alert = False
+    host = '127.0.0.1'
     port = 6109
     health_check_consts = {
         'UP': 'UP',
