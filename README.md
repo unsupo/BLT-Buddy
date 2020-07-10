@@ -3,8 +3,11 @@ Electron app to aid in running blt project
 
 ## Required tools
 ```bash
+# with pipenv (currently broken)
 brew install pipenv
 mkdir scripts/.venv
+# with virtualenv
+
 ```
 
 ## Build and install
