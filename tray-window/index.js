@@ -58,7 +58,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
         buttonClasses = [buttonClasses];
     buttonClasses.forEach(buttonClass=>
         document.getElementsByClassName(buttonClass)[0].disabled =
-            isDisabled?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
+            isDisabled!==undefined?isDisabled:!document.getElementsByClassName(buttonClass)[0].disabled)
 }
 
 const disableEnableAllButtons = (isDisabled) => {
