@@ -100,8 +100,8 @@ class BLT:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         return sock.connect_ex((host, int(port)))
 
-    def check_connection_to_sfm(self):
-        pass
+    def check_nexus_connection(self):
+        return self.check_host('nexus.soma.salesforce.com') == 0
 
     def health_check_1(self):
         return self.check_host(self.host,port=self.port)
