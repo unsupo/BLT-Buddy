@@ -154,12 +154,14 @@ const updateData = () =>{
         isGettingHealthData = true;
         getHealthData().then(value => {
             try {
-                value = JSON.parse(value['res']);
+                let res = JSON.parse(value['res']);
             }catch (e) {
                 console.log(e)
+                isGettingHealthData = false;
+                return;
             }
             // console.log(value);
-            updateView(value);
+            updateView(res);
             if(!isWorking) {
                 const s = value['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
                 ipcRenderer.send('app-update', {
@@ -174,11 +176,13 @@ const updateData = () =>{
         isGettingSFMData = true;
         getSFMData().then(value => {
             try {
-                value = JSON.parse(value['res']);
+                let res = JSON.parse(value['res']);
             }catch (e) {
                 console.log(e)
+                isGettingSFMData = false;
+                return;
             }
-            if(value) {
+            if(res) {
                 disableEnableAllButtons(true);
                 setStatus(SFM_NEEDED)
             }else if (STATUS === SFM_NEEDED){
@@ -197,11 +201,13 @@ const updateData = () =>{
         isGettingNexusConnectionData = true;
         runBasicApiCommand({cmd:'check_nexus_connection'}).then(value => {
             try {
-                value = JSON.parse(value['res']);
+                let res = JSON.parse(value['res']);
             }catch (e) {
                 console.log(e)
+                isGettingNexusConnectionData = false;
+                return;
             }
-            if(!value) {
+            if(!res) {
                 disableEnableAllButtons(true);
                 setStatus(CANT_CONNECT)
             }else if (STATUS === CANT_CONNECT){
