@@ -8,6 +8,7 @@ let status = 'STOPPED'
 
 /*
 All on click events handled here
+If it starts with js- and ends with -action it is a button
  */
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
