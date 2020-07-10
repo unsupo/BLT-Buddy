@@ -72,7 +72,7 @@ const _run_cmd = (cmd) => {
 
         const hash = md5(cmd)
         const timings = path.join(constants.timingslogdir, hash + ".timings");
-        fs.writeFileSync(timings,"s: "+new Date().getTime())
+        fs.writeFileSync(timings,"s: "+new Date().getTime()) // script starting write out time it started
         const log =  path.join(constants.cmdlogdir, hash + ".log")
         const out = fs.openSync(log,'a')
         const err = fs.openSync(log,'a')
@@ -81,11 +81,14 @@ const _run_cmd = (cmd) => {
         const c = `#!/usr/bin/env bash\n${cmd}`
         if(!fs.existsSync(script)) // if script file doesn't exist, make it
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
-        if(!fs.existsSync(pid)) // if pid file doesn't exist, script is done
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
+        if(!fs.existsSync(pid)) { // if pid file doesn't exist, script is done
+            fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err, log))
+        }
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
-            if(value) // return pid if it's still running
+            if(value) // YES, return pid if it's still running
                 return resolve(pid) // pid still running
+            fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
             return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
         })
     })
