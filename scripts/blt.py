@@ -101,7 +101,10 @@ class BLT:
         return sock.connect_ex((host, int(port)))
 
     def check_nexus_connection(self):
-        return self.check_host('nexus.soma.salesforce.com') == 0
+        try:
+            return self.check_host('nexus.soma.salesforce.com') == 0
+        except Exception:
+            return 1
 
     def health_check_1(self):
         return self.check_host(self.host,port=self.port)
