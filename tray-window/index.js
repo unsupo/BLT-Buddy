@@ -35,8 +35,6 @@ document.addEventListener('click', (event) => {
 })
 
 const setStatus = (status) => {
-    if(STATUS === status)
-        return;
     STATUS = status;
     document.querySelector('.js-summary').textContent = status
 }
