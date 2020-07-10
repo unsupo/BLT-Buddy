@@ -96,6 +96,9 @@ class BLT:
                     print(e)
                 exit(0)
 
+    def check_connection_to_sfm(self):
+        
+
     def health_check_1(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         return sock.connect_ex((self.host, int(self.port)))
