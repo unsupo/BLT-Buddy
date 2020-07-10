@@ -60,6 +60,8 @@ class BLT:
         my_parser.add_argument("-V", "--program-version", action='version',
                                version=v)
         my_parser.add_argument("-p", "--pretty", help="pretty print json", action="store_true")
+        my_parser.add_argument("url", help="supply this url if it's not localhost", nargs="?", default='127.0.0.1')
+        my_parser.add_argument("-a", "--alert", help="alert if values change", action="store_true")
         for function in self.functions:
             # inspect.signature(eval('self.execute_request')).parameters['method'].default == inspect._empty
             params = inspect.signature(eval('self.' + function)).parameters.values()
