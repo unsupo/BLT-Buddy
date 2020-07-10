@@ -146,14 +146,6 @@ const updateView = (data) => {
 
 }
 
-const addVPNButton = () => {
-    const button = document.createElement("input");
-    button.type = "button";
-    button.value = "Connect to VPN";
-    button.onclick = func;
-    context.appendChild(button);
-}
-
 let isGettingHealthData = false, isGettingSFMData = false, isGettingNexusConnectionData;
 let createdNotificationTime = Date.now()-1000;
 const updateData = () =>{
@@ -208,7 +200,6 @@ const updateData = () =>{
             if(!value) {
                 disableEnableAllButtons(true);
                 setStatus(CANT_CONNECT)
-                addVPNButton()
             }
             isGettingNexusConnectionData = false;
         });
