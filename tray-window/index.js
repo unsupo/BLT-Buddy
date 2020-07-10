@@ -147,7 +147,11 @@ const updateView = (data) => {
 }
 
 const addVPNButton = () => {
-    
+    const button = document.createElement("input");
+    button.type = "button";
+    button.value = "Connect to VPN";
+    button.onclick = func;
+    context.appendChild(button);
 }
 
 let isGettingHealthData = false, isGettingSFMData = false, isGettingNexusConnectionData;
