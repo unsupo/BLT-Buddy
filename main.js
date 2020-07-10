@@ -47,6 +47,7 @@ const startUp = () => {
     mkdirp(constants.cmddir)
     mkdirp(constants.cmdexitdir)
     mkdirp(constants.docdir)
+    mkdirp(constants.timingslogdir)
     if(fs.existsSync(constants.projectFile)) {
         const dir = fs.readFileSync(constants.projectFile).toString()
         blt.set_project(dir)
