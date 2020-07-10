@@ -330,6 +330,7 @@ ipcMain.handle('api', (event ,args)=> {
         case 'get_project': cmdlocal = blt.get_project(); break
         case 'get_project_dir_status': cmdlocal = blt.get_project_dir_status(); break
         case 'adventure_build': cmdlocal = blt.adventure_build(); break
+        case 'check_nexus_connection': cmdlocal = blt.check_nexus_connection(); break
         case 'quit': cmdlocal = app.quit(); break
         default:
             // console.log(args)

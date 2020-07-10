@@ -98,3 +98,4 @@ const run_python = (arg) => new Promise(resolve =>
 
 exports.checkHealth = () => run_python('--health_check') // needed for beautiful soup
 exports.isNeedSFM = () => run_python('--check_sfm') // needed for pexpect
+exports.check_nexus_connection = () => run_python('--check_nexus_connection') //
