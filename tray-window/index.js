@@ -35,6 +35,8 @@ document.addEventListener('click', (event) => {
 })
 
 const setStatus = (status) => {
+    if(STATUS === status)
+        return;
     STATUS = status;
     document.querySelector('.js-summary').textContent = status
 }
@@ -132,11 +134,12 @@ const updateView = (data) => {
     let openLink = document.getElementsByClassName('open-webpage')[0];
 
     if(data['app']['ui_check'] === 'UP') {
-        status = RUNNING
+        status = RUNNING;
         openLink.style.visibility = "visible";
-    }else
+    }else {
+        status = DOWN;
         openLink.style.visibility = "hidden";
-
+    }
     setStatus(status);
 
     if(document.querySelector('.js-health-check-port')) {
