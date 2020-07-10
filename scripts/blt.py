@@ -104,7 +104,7 @@ class BLT:
         try:
             socket.gethostbyaddr('nexus.soma.salesforce.com')
             return 0
-        except socket.herror:
+        except socket.error:
             return 1
 
     def health_check_1(self):
