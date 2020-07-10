@@ -61,7 +61,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 }
 
 const disableEnableAllButtons = (isDisabled) => {
-    
+
 }
 
 // use this for blt commands that require status change
