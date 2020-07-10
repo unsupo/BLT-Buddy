@@ -62,6 +62,8 @@ const startUp = () => {
     // if uidata is saved on this machine then load the ui using that data
     if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
+    //TODO get all running pids
+
 }
 
 app.whenReady()
