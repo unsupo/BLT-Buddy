@@ -32,7 +32,7 @@ const _command = (cmd) =>{
 }
 
 const isPidStillRunning = (pid) => {
-    return new Promise(resolve => _command("ps -a "+pid+"; echo $?")
+    return new Promise(resolve => _command("ps -a "+pid+" > /dev/null; echo $?")
         .then(value => resolve(value['stdout'] === '0')))
 }
 
