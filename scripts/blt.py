@@ -98,6 +98,7 @@ class BLT:
 
     def check_host(self,host,port=22):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
         return sock.connect_ex((host, int(port)))
 
     def check_nexus_connection(self):
