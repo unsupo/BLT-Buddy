@@ -5,7 +5,7 @@ let isWorking = false;
 let lastCommand = undefined;
 let isError = false;
 let STATUS = 'STOPPED'
-const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'DOWN';
+const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'STOPPED', RUNNING = 'running';
 
 /*
 All on click events handled here
@@ -109,7 +109,7 @@ const runApiCommand = (cmd) =>{
                 });
                 setStatus("SUCCESS");
             }else if(!isWorking) { // if it's not working and it's a health check then change status
-                const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? 'running' : 'stopped'
+                const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                 setStatus(s);
                 ipcRenderer.send('app-update', {
                     'icon':s, 'tool-tip':s
