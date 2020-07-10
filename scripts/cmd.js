@@ -40,7 +40,7 @@ const waitForPid = (pid, exitfile,logfile) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         isPidStillRunning(pid).then(value => {
-            const timings = pid.toString().slice(0,-'.pid'.length)+'.timings'
+            // const timings = pid.toString().slice(0,-'.pid'.length)+'.timings'
             function returnFile(value){
                 // if exit code not 0 return false because non zero exit code means it failed
                 while (!fs.existsSync(exitfile))
@@ -48,7 +48,7 @@ const waitForPid = (pid, exitfile,logfile) => {
                 const r = parseInt(fs.readFileSync(exitfile).toString())
                 if(r !== 0)
                     value['err']=logfile
-                fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
+                // fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
                 return value
             }
             if(value) // if it is still running then wait for it
@@ -149,7 +149,10 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    return _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2]))
+    const res = _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2]))
+    const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
+    fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
+    return res
 }
 exports.cmd = async (cmd) => _command(cmd)
 
