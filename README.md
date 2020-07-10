@@ -10,6 +10,9 @@ mkdir scripts/.venv
 cd scripts
 python3 -m pip install virtualenv
 python -m venv .venv
+pip install -r requirements.txt
+
+# if you make changes to the python requirements then run
 
 ```
 
