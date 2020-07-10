@@ -33,7 +33,7 @@ const _command = (cmd) =>{
 
 const isPidStillRunning = (pid) => {
     return new Promise(resolve => _command("ps -a "+pid+" > /dev/null; echo $?")
-        .then(value => resolve(value['stdout'] === '0')))
+        .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
 const waitForPid = (pid, exitfile,logfile) => {
@@ -94,7 +94,7 @@ const _run_cmd = (cmd) => {
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // YES, return pid if it's still running
                 return resolve(pid) // pid still running
-            fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
+            fs.appendFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
             return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
         })
     })
