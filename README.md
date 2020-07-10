@@ -7,7 +7,9 @@ Electron app to aid in running blt project
 brew install pipenv
 mkdir scripts/.venv
 # with virtualenv
+cd scripts
 python3 -m pip install virtualenv
+python -m venv .venv
 
 ```
 
