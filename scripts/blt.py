@@ -96,12 +96,15 @@ class BLT:
                     print(e)
                 exit(0)
 
-    def check_connection_to_sfm(self):
-        
-
-    def health_check_1(self):
+    def check_host(self,host,port=22):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         return sock.connect_ex((self.host, int(self.port)))
+
+    def check_connection_to_sfm(self):
+        pass
+
+    def health_check_1(self):
+        return self.check_host(self.host,port=self.port)
 
     def health_check_2(self):
         try:
