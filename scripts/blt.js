@@ -26,11 +26,12 @@ const commands = {
     enable_blt: `${blt} ${replace_project} --enable`,
     disable_blt: `${blt} ${replace_project} --enable`,
     start_blt: `${blt} ${replace_project} --start-bg`,
+    stop_blt: `timeout 30 ${blt} ${replace_project} --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9`,
     enable_force: `${blt} ${replace_project} --enable force`,
     adventure_build: `cd ${working_dir_replace} && yes '' | Adventure build`,
     get_project_dirs: `cd ${blt_dir} &&  find app ! -path . ! -path app -name 'enabled.blt' -maxdepth 3 | xargs -I{} dirname {} | sort`,
     get_project_dir_status: `dir=${working_dir_replace}; [[ -f $dir/enabled.blt &&  $(egrep '^enabled\\s+=\\s+true' $dir/enabled.blt) ]] && printf 0 || printf 1`,
-    restart_blt: `timeout 10 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
+    restart_blt: `timeout 30 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
 ${blt} ${replace_project} --db-stop
 ${blt} ${replace_project} --db-start
 ${blt} ${replace_project} --start-bg
