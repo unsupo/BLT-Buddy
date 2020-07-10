@@ -137,7 +137,7 @@ const updateView = (data) => {
     }else
         openLink.style.visibility = "hidden";
 
-    document.querySelector('.js-summary').textContent = status
+    setStatus(status);
 
     if(document.querySelector('.js-health-check-port')) {
         document.querySelector('.js-health-check-port').textContent = data['app']['port_check']
