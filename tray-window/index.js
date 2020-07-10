@@ -62,7 +62,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 }
 
 const disableEnableAllButtons = (isDisabled) => {
-
+    class_cmds.filter(a->a.)
 }
 
 // use this for blt commands that require status change
