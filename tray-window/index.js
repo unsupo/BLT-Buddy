@@ -5,7 +5,7 @@ let isWorking = false;
 let lastCommand = undefined;
 let isError = false;
 let STATUS = 'STOPPED'
-const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED';
+const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'DOWN';
 
 /*
 All on click events handled here
@@ -182,7 +182,7 @@ const updateData = () =>{
                 setStatus(SFM_NEEDED)
             }else if (STATUS === SFM_NEEDED){
                 disableEnableButtons(false);
-                setStatus("DOWN");
+                setStatus(DOWN);
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
             // if (value && ((new Date) - createdNotificationTime > tenMinutes))
@@ -205,7 +205,7 @@ const updateData = () =>{
                 setStatus(CANT_CONNECT)
             }else if (STATUS === CANT_CONNECT){
                 disableEnableButtons(false);
-                setStatus("DOWN");
+                setStatus(DOWN);
             }
             isGettingNexusConnectionData = false;
         });
