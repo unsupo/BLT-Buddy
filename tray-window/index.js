@@ -172,6 +172,7 @@ const updateData = () =>{
             }
             if(value) {
                 disableEnableAllButtons(true);
+                setStatus('SFM NEEDED')
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
             // if (value && ((new Date) - createdNotificationTime > tenMinutes))
@@ -188,8 +189,10 @@ const updateData = () =>{
             }catch (e) {
                 console.log(e)
             }
-            if(value)
-                ;
+            if(value) {
+                disableEnableAllButtons(true);
+                setStatus('CAN"T CONNECT')
+            }
             isGettingNexusConnectionData = false;
         });
     }
