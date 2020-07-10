@@ -164,7 +164,7 @@ const updateData = () =>{
                     });
                 }
             }catch (e) {
-                console.log(e)
+                console.error(e)
             }
             previousData['health'] = value;
             isGettingHealthData = false;
@@ -183,7 +183,7 @@ const updateData = () =>{
                     setStatus(DOWN);
                 }
             }catch (e) {
-                console.log(e)
+                console.error(e)
             }
             // don't spam notifications only do it every 10 minutes while sfm is needed
             // if (value && ((new Date) - createdNotificationTime > tenMinutes))
@@ -206,7 +206,7 @@ const updateData = () =>{
                     setStatus(DOWN);
                 }
             }catch (e) {
-                console.log(e)
+                console.error(e)
             }
             isGettingNexusConnectionData = false;
         });
