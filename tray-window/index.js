@@ -189,7 +189,7 @@ const updateData = () =>{
             }catch (e) {
                 console.log(e)
             }
-            if(value) {
+            if(!value) {
                 disableEnableAllButtons(true);
                 setStatus('CAN"T CONNECT')
             }
