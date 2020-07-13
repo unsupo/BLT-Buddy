@@ -2,7 +2,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const fixPath = require('fix-path')
 const cp = require('child_process')
-const { exec } = require('child_process')
+const { exec, spawn } = require('child_process')
 const { PythonShell } = require('python-shell');
 const crypto = require('crypto')
 const fs = require('fs');
@@ -26,6 +26,13 @@ const _runPython = (args, callback) =>{
 const _command = (cmd) =>{
     return new Promise(resolve => {
         exec(cmd,(err,stdout,stderr)=>{
+            resolve({'err':err,'stdout':stdout,'stderr':stderr})
+        })
+    })
+}
+const _command2 = (cmd) =>{
+    return new Promise(resolve => {
+        spawn(cmd,(err,stdout,stderr)=>{
             resolve({'err':err,'stdout':stdout,'stderr':stderr})
         })
     })
