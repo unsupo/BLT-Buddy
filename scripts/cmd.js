@@ -76,7 +76,7 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                 fs.appendFileSync(timings, "e: " + new Date().getTime() + "\n") // script is done write out time it ended
                 return getExitCode(); //else just return it
             }
-            if (value) // if it is still running then wait for it
+            if (values[0] || values[1]) // if it is still running then wait for it
                 _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value =>
                     resolve(returnFile(value)))
             else // otherwise just return the exit code
