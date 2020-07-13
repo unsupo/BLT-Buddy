@@ -166,9 +166,10 @@ const updateData = () =>{
             isGettingHealthData = false;
         })
     }
-    if(!isGettingSFMData && STATUS !== CANT_CONNECT) {
+    if(!isGettingSFMData && STATUS !== CANT_CONNECT && ((new Date) - createdNotificationTime > tenMinutes)) {
         isGettingSFMData = true;
         getSFMData().then(value => {
+            createdNotificationTime = Date.now();
             try {
                 let res = JSON.parse(value['res']);
                 if(res) {
