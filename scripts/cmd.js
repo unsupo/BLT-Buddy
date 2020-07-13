@@ -64,7 +64,7 @@ const waitForPid = (pid, exitfile,logfile) => {
             }
             if(value) { // if it is still running then wait for it
                 const lsof = spawn('lsof',['-p',pid,"+r",'1'])
-                
+                lsof.on('close',(code, signal) => resolve(returnFile({'err':'','stdout':'','stderr':''})))
                 // _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value =>
                 //     resolve(waitForPid(pid,exitfile,logfile)));
                 // resolve(returnFile(value)))
