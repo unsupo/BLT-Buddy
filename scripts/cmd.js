@@ -92,7 +92,6 @@ const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
             })
         else
             resolve(pidWaiter())
-
     });
 
 }
