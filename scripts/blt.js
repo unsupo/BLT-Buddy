@@ -71,8 +71,10 @@ exports.getAvgTime = (cmd_key) => {
         fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").toString().split('\n').forEach(value => {
             if(value.startsWith(s)) {
                 start = value.substr(s.length);
-                sum+=end;
-                count+=1;
+                if(end > 0) {
+                    sum += end;
+                    count += 1;
+                }
             }else if (value.startsWith(e))
                 end = value.substr(e.length);
         })
