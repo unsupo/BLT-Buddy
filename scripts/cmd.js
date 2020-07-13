@@ -86,7 +86,9 @@ const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
         if (cmd && checked)
             isCmdStillRunning(cmd).then(value => {
                 if(value)
-                    resolve(waitForPid(pid,exitfile,logfile,cmd,true));
+                    _command(`lsof -p ${value.toString()} +r 1 &>/dev/null`).then(value1 =>
+                        resolve(waitForPid(pid,exitfile,logfile,cmd))
+                    )
                 else
                     resolve(pidWaiter());
             })
