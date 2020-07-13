@@ -53,7 +53,7 @@ const isCmdStillRunning = (cmd) => {
 }
 
 const isPidAndCmdStillRunning = (cmd,pid) => {
-    
+
 }
 
 const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
