@@ -51,7 +51,9 @@ const isCmdStillRunning = (cmd) => {
 const waitForPid = (pid, exitfile,logfile, cmd) => {
     return new Promise(resolve => {
         if (cmd)
-            isCmdStillRunning(cmd).then(value => )
+            isCmdStillRunning(cmd).then(value => {
+                
+            })
         isPidStillRunning(pid).then(value => {
             function returnFile(value) {
                 function getExitCode() {
