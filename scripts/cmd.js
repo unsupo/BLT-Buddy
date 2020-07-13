@@ -41,14 +41,14 @@ const _command2 = (cmd) =>{
 }
 
 const isPidStillRunning = (pid) => {
-    return new Promise(resolve => _command(`ps -a ${pid} > /dev/null; echo $?`)
+    return new Promise(resolve => _command(`ps -a ${pid.toString()} > /dev/null; echo $?`)
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
 exports.isPidStillRunning = isPidStillRunning;
 
 const isCmdStillRunning = (cmd) => {
-    return new Promise(resolve => _command(`ps -ef | grep "${cmd}" | grep -v grep | awk '{print $2}'`)
+    return new Promise(resolve => _command(`ps -ef | grep "${cmd.toString()}" | grep -v grep | awk '{print $2}'`)
         .then(value => resolve(value['stdout'].trim().split('\n')[0])))
 }
 
