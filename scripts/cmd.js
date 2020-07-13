@@ -58,7 +58,7 @@ const isPidAndCmdStillRunning = (cmd,pid) => {
 
 const waitForPid = (pid, exitfile, logfile, cmd) => {
     return new Promise(resolve => {
-        isPidAndCmdStillRunning(pid,cmd).then(value => {
+        isPidAndCmdStillRunning(pid,cmd).then(values => {
             function returnFile(value) {
                 function getExitCode() {
                     const r = parseInt(fs.readFileSync(exitfile).toString())
