@@ -43,7 +43,12 @@ const isPidStillRunning = (pid) => {
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
-const waitForPid = (pid, exitfile,logfile) => {
+const isCmdStillRunning = (cmd) => {
+    return new Promise(resolve => _command("ps -a "+pid+" > /dev/null; echo $?")
+        .then(value => resolve(value['stdout'].trim() === '0')))
+}
+
+const waitForPid = (pid, exitfile,logfile, cmd) => {
     // return _command("wait "+pid)
     return new Promise(resolve =>
         isPidStillRunning(pid).then(value => {
@@ -63,12 +68,9 @@ const waitForPid = (pid, exitfile,logfile) => {
                 return getExitCode(); //else just return it
             }
             if(value) { // if it is still running then wait for it
-                // _command(`wait ${pid}`).then(value1 => resolve(returnFile(value1)))
-                // const lsof = spawn('lsof',['-p',pid,"+r",'1'])
-                // lsof.on('exit',(code, signal) => resolve(returnFile({'err':'','stdout':'','stderr':''})))
-                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value =>
-                    resolve(returnFile(value)))
-                    // resolve(waitForPid(pid,exitfile,logfile)));
+                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>{
+
+                })
             }else // otherwise just return the exit code
                 resolve(returnFile({'err':'','stdout':'','stderr':''}))
         })
@@ -79,13 +81,13 @@ const _run_cmd = (cmd) => {
     // hash is the key to the cmd so we can check if the cmd is currently running and get the pid
     return new Promise(resolve => {
 
-        function detached(cwd,scr,args,o,e,l) {
+        function detached(cwd,scr,args,o,e,l,cmd) {
             const c = _cmd_detached(cwd,scr,args,o,e)
             const p = c.pid
             const exitfile = path.join(constants.cmdexitdir,hash+".exit")
             fs.writeFileSync(pid,p)
             c.on('exit',(code, signal) => fs.writeFileSync(exitfile,code))
-            return [p,exitfile,l]
+            return [p,exitfile,l,cmd]
         }
 
         const hash = md5(cmd)
@@ -106,13 +108,13 @@ const _run_cmd = (cmd) => {
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
         if(!fs.existsSync(pid)) { // if pid file doesn't exist then detach the process
             // fs.writeFileSync(timings,"e: "+new Date().getTime()) // script is done write out time it ended
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err, log))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err, log,cmd))
         }
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // YES, return pid if it's still running
                 return resolve(pid) // pid still running
             fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
-            return resolve(detached(constants.scriptsdir, script, undefined, out, err,log))
+            return resolve(detached(constants.scriptsdir, script, undefined, out, err,log,cmd))
         })
     })
 }
@@ -164,7 +166,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    const res = _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2]))
+    const res = _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2],value[3]))
     const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
     fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
     return res
