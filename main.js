@@ -17,6 +17,7 @@ const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
 require('./scripts/constants')
+require('./scripts/blt')
 const {command} = require("./scripts/cmd");
 
 app.setLoginItemSettings({
