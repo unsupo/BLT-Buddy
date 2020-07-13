@@ -173,10 +173,10 @@ const updateData = () =>{
                 let res = JSON.parse(value['res']);
                 if(res) {
                     disableEnableAllButtons(true);
-                    setStatus(SFM_NEEDED,RUNNING.toLowerCase())
+                    setStatus(SFM_NEEDED,DEFAULT)
                 }else if (STATUS === SFM_NEEDED){
                     disableEnableButtons(false);
-                    setStatus(DOWN,RUNNING.toLowerCase());
+                    setStatus(DOWN,DEFAULT);
                 }
             }catch (e) {
                 console.error(e)
@@ -196,10 +196,10 @@ const updateData = () =>{
                 let res = JSON.parse(value['res']);
                 if(!res) {
                     disableEnableAllButtons(true);
-                    setStatus(CANT_CONNECT,RUNNING.toLowerCase())
+                    setStatus(CANT_CONNECT,DEFAULT)
                 }else if (STATUS === CANT_CONNECT){
                     disableEnableButtons(false);
-                    setStatus(DOWN,RUNNING.toLowerCase());
+                    setStatus(DOWN,DEFAULT);
                 }
             }catch (e) {
                 console.error(e)
