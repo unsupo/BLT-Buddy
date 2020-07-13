@@ -57,7 +57,8 @@ const waitForPid = (pid, exitfile,logfile) => {
             }
             if(value) // if it is still running then wait for it
                 _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value =>
-                    resolve(returnFile(value)))
+                    resolve(isPidStillRunning(pid)));
+                    // resolve(returnFile(value)))
             else // otherwise just return the exit code
                 resolve(returnFile({'err':'','stdout':'','stderr':''}))
         })
