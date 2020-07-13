@@ -68,7 +68,7 @@ exports.getAvgTime = (cmd_key) => {
         const hash = md5(cmd_replacer(cmd_key));
         const s = "s: ", e = "e: ";
         let sum = 0, start = 0, end = -1, count = 0;
-        fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").split('\n').forEach(value => {
+        fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").toString().split('\n').forEach(value => {
             if(value.startsWith(s)) {
                 start = value.substr(s.length);
                 sum+=end;
