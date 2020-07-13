@@ -41,14 +41,19 @@ const waitForPid = (pid, exitfile,logfile) => {
     return new Promise(resolve =>
         isPidStillRunning(pid).then(value => {
             function returnFile(value){
-                // if exit code not 0 return false because non zero exit code means it failed
-                while (!fs.existsSync(exitfile))
-                    fs.watch(exitfile)
-                    // setTimeout(null,1000); // wait until exit file is created
-                const r = parseInt(fs.readFileSync(exitfile).toString())
-                if(r !== 0)
-                    value['err']=logfile
-                return value
+                function getExitCode() {
+                    const r = parseInt(fs.readFileSync(exitfile).toString())
+                    if(r !== 0)
+                        value['err']=logfile
+                    return value
+                }
+                // if exit code file doesn't exist wait using a file watcher on the directory
+                if (!fs.existsSync(exitfile))
+                    fs.watch(constants.cmdexitdir).on("change", (eventType, filename) =>{
+                        if(filename === exitfile)
+                            return getExitCode();
+                    })
+                return getExitCode(); //else just return it
             }
             if(value) // if it is still running then wait for it
                 _command("lsof -p "+pid+" +r 1 &>/dev/null").then(value =>
