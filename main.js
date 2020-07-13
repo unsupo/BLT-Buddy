@@ -62,17 +62,14 @@ const startUp = () => {
     // if uidata is saved on this machine then load the ui using that data
     if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
-    // TODO get all running pids.  Look for files in pids dir, then check if they are running
-    // TODO if pid is running then set the status in blt UI, get script
+    // get all running pids.  Look for files in pids dir, then check if they are running
+    // TODO if pid is running then set the status in blt UI
     const c = fs.readdirSync(constants.piddir);
     for(let i = 0; i<c.length; i++)
-        cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+c[i]).toString()).then(value1 => console.log(value1))
-    // fs.readdirSync(constants.piddir).forEach(value =>
-    //     cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+value)).then(value1 => console.log(value1)))
-    // value.slice(0,-'.pid'.length)
-    // fs.readdirSync(constants.piddir).forEach(value => cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+value)))
-    // blt.getCmdKey(hash)
-    // blt.getCmdKey('ae323b9d974336c3016ca2df1754582e')
+        cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+c[i]).toString()).then(value1 => {
+            if(value1)
+                blt.getCmdKey(c[i].slice(0,-'.pid'.length))
+        })
 }
 
 app.whenReady()
