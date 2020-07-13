@@ -153,7 +153,7 @@ const updateData = () =>{
             try {
                 let res = JSON.parse(value['res']);
                 updateView(res);
-                if(!isWorking) {
+                if(!isWorking && STATUS !== SFM_NEEDED) {
                     const s = res['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                     ipcRenderer.send('app-update', {
                         'icon':s.toLowerCase(), 'tool-tip':s
