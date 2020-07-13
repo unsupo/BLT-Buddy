@@ -70,6 +70,7 @@ const startUp = () => {
     //         if(value1)
     //             blt.getCmdKey(c[i].slice(0,-'.pid'.length))
     //     })
+    blt.getAvgTime(commands.sync_blt)
 }
 
 app.whenReady()

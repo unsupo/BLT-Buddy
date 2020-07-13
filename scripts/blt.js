@@ -64,12 +64,17 @@ exports.getCmdKey = (hash) => {
 exports.getAvgTime = (cmd_key) => {
     return new Promise(resolve => {
         const hash = md5(cmd_replacer(cmd_key));
-        const s = "s: ";
-        let sum = 0, start = 0;
+        const s = "s: ", e = "e: ";
+        let sum = 0, start = 0, end = -1, count = 0;
         fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").split('\n').forEach(value => {
-            if(value.startsWith(s))
+            if(value.startsWith(s)) {
                 start = value.substr(s.length);
+                sum+=end;
+                count+=1;
+            }else if (value.startsWith(e))
+                end = value.substr(e.length);
         })
+        resolve(sum/count)
     });
 }
 
