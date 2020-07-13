@@ -80,6 +80,7 @@ const disableEnableAllButtons = (isDisabled) => {
 // use this for blt commands that require status change
 const runCommand = (cmd, args) =>{
     isWorking = true;
+    console.log(cmd)
     disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],true)
     const status = (cmd.replace("-blt",'')+"ing...").toUpperCase();
     setStatus(status,WORKING)
