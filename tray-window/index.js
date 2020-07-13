@@ -175,7 +175,7 @@ const updateData = () =>{
                     disableEnableAllButtons(true);
                     setStatus(SFM_NEEDED,DEFAULT)
                 }else if (STATUS === SFM_NEEDED){
-                    disableEnableButtons(false);
+                    disableEnableAllButtons(false);
                     setStatus(DOWN,DEFAULT);
                 }
             }catch (e) {
@@ -198,7 +198,7 @@ const updateData = () =>{
                     disableEnableAllButtons(true);
                     setStatus(CANT_CONNECT,DEFAULT)
                 }else if (STATUS === CANT_CONNECT){
-                    disableEnableButtons(false);
+                    disableEnableAllButtons(false);
                     setStatus(DOWN,DEFAULT);
                 }
             }catch (e) {
