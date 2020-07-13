@@ -80,7 +80,10 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                 Promise.allSettled([
                         _command(`lsof -p ${pid} +r 1 &>/dev/null`),
                         _command(`lsof -p ${values[1]} +r 1 &>/dev/null`)])
-                    .then(values => resolve(returnFile(values[0])))
+                    .then(values2 => {
+                        console.log(values+"\t"+values2);
+                        resolve(returnFile(values2[0]))
+                    })
             else // otherwise just return the exit code
                 resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
         });
