@@ -85,27 +85,6 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                 resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
         });
     });
-    //             if (value) { // if it is still running then wait for it
-    //                 return _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>
-    //                     waitForPid(pid,exitfile,logfile).then(value2 =>  )
-    //                 )
-    //             } else // otherwise just return the exit code
-    //                 return returnFile({'err': '', 'stdout': '', 'stderr': ''})
-    //         })
-    //     }
-    //     if (cmd && checked)
-    //         isCmdStillRunning(cmd).then(value => {
-    //             if(value)
-    //                 _command(`lsof -p ${value.toString()} +r 1 &>/dev/null`).then(value1 =>
-    //                     resolve(waitForPid(pid,exitfile,logfile,cmd,true))
-    //                 )
-    //             else
-    //                 resolve(pidWaiter());
-    //         })
-    //     else
-    //         resolve(pidWaiter())
-    // });
-
 }
 // returns the detached pid of the command after executing it
 const _run_cmd = (cmd) => {
