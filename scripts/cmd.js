@@ -39,12 +39,12 @@ const _command2 = (cmd) =>{
 }
 
 const isPidStillRunning = (pid) => {
-    return new Promise(resolve => _command("ps -a "+pid+" > /dev/null; echo $?")
+    return new Promise(resolve => _command(`ps -a ${pid} > /dev/null; echo $?`)
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
 const isCmdStillRunning = (cmd) => {
-    return new Promise(resolve => _command("ps -a "+pid+" > /dev/null; echo $?")
+    return new Promise(resolve => _command(`ps -ef ${cmd} > /dev/null; echo $?`)
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
