@@ -180,7 +180,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
 
 exports.command = async (cmd) => {
     // return _command(cmd)
-    const res = _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2],value[3]))
+    const res = _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2],value[3],true))
     const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
     fs.appendFileSync(timings,"e: "+new Date().getTime()+"\n") // script is done write out time it ended
     return res

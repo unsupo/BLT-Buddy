@@ -62,7 +62,8 @@ const startUp = () => {
     // if uidata is saved on this machine then load the ui using that data
     if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
-    //TODO get all running pids
+    // TODO get all running pids.  Look for files in pids dir, then check if they are running
+    // TODO if pid is running then set the status in blt UI
 
 }
 
