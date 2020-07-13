@@ -34,6 +34,7 @@ document.addEventListener('click', (event) => {
         }
     } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
         updateData()
+    window.event.cancelBubble = true
     class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1],e.length > 1 ? e[2] : undefined) : undefined)
     console.log(event);
     event.stopPropagation();
