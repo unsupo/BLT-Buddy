@@ -21,6 +21,9 @@ class_cmds = [
 // TODO stopping app still shows is running will it's trying to stop it
 
 document.addEventListener('click', (event) => {
+    window.event.cancelBubble = true
+    event.stopPropagation();
+    event.preventDefault();
     if (event.target.href) {
         // open window links
         const window_ref = 'window:'
@@ -34,11 +37,7 @@ document.addEventListener('click', (event) => {
         }
     } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
         updateData()
-    window.event.cancelBubble = true
     class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1],e.length > 1 ? e[2] : undefined) : undefined)
-    console.log(event);
-    event.stopPropagation();
-    event.preventDefault();
 })
 
 const setStatus = (status,icon) => {
