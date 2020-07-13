@@ -113,7 +113,7 @@ const runApiCommand = (cmd) =>{
                 setStatus("SUCCESS",DEFAULT);
             }else if(!isWorking) { // if it's not (working on something) and it's (a health check) then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
-                setStatus(s);
+                setStatus(s,s.toLowerCase());
             }
             updateFunc()
             resolve(value)
@@ -133,8 +133,8 @@ const updateView = (data) => {
 
     if(data['app']['ui_check'] === 'UP') {
         openLink.style.visibility = "visible";
-        setStatus(RUNNING);
-    }else
+        setStatus(RUNNING, RUNNING.toLowerCase());
+    }else // this means it's either down or working
         openLink.style.visibility = "hidden";
 
     if(document.querySelector('.js-health-check-port')) {
@@ -152,7 +152,6 @@ const updateData = () =>{
         getHealthData().then(value => {
             try {
                 let res = JSON.parse(value['res']);
-
                 updateView(res);
                 if(!isWorking) {
                     const s = res['app']['ui_check'] === 'UP' ? RUNNING : DOWN
@@ -174,10 +173,10 @@ const updateData = () =>{
                 let res = JSON.parse(value['res']);
                 if(res) {
                     disableEnableAllButtons(true);
-                    setStatus(SFM_NEEDED)
+                    setStatus(SFM_NEEDED,RUNNING.toLowerCase())
                 }else if (STATUS === SFM_NEEDED){
                     disableEnableButtons(false);
-                    setStatus(DOWN);
+                    setStatus(DOWN,RUNNING.toLowerCase());
                 }
             }catch (e) {
                 console.error(e)
@@ -197,10 +196,10 @@ const updateData = () =>{
                 let res = JSON.parse(value['res']);
                 if(!res) {
                     disableEnableAllButtons(true);
-                    setStatus(CANT_CONNECT)
+                    setStatus(CANT_CONNECT,RUNNING.toLowerCase())
                 }else if (STATUS === CANT_CONNECT){
                     disableEnableButtons(false);
-                    setStatus(DOWN);
+                    setStatus(DOWN,RUNNING.toLowerCase());
                 }
             }catch (e) {
                 console.error(e)
