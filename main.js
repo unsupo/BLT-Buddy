@@ -65,6 +65,7 @@ const startUp = () => {
     // TODO get all running pids.  Look for files in pids dir, then check if they are running
     // TODO if pid is running then set the status in blt UI, get script
     // blt.getCmdKey(hash)
+    blt.getCmdKey('ae323b9d974336c3016ca2df1754582e')
 }
 
 app.whenReady()
