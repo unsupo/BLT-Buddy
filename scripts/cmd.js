@@ -55,32 +55,31 @@ const waitForPid = (pid, exitfile,logfile, cmd) => {
                 if(value)
                     resolve(waitForPid(value,exitfile,logfile));
             })
-        else
-            isPidStillRunning(pid).then(value => {
-                function returnFile(value) {
-                    function getExitCode() {
-                        const r = parseInt(fs.readFileSync(exitfile).toString())
-                        if (r !== 0)
-                            value['err'] = logfile
-                        return value
-                    }
-
-                    // if exit code file doesn't exist wait using a file watcher on the directory
-                    if (!fs.existsSync(exitfile))
-                        fs.watch(constants.cmdexitdir).on("change", (eventType, filename) => {
-                            if (filename === exitfile)
-                                return getExitCode();
-                        })
-                    return getExitCode(); //else just return it
+        isPidStillRunning(pid).then(value => {
+            function returnFile(value) {
+                function getExitCode() {
+                    const r = parseInt(fs.readFileSync(exitfile).toString())
+                    if (r !== 0)
+                        value['err'] = logfile
+                    return value
                 }
 
-                if (value) { // if it is still running then wait for it
-                    _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>
-                        resolve(returnFile(value1))
-                    )
-                } else // otherwise just return the exit code
-                    resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
-            })
+                // if exit code file doesn't exist wait using a file watcher on the directory
+                if (!fs.existsSync(exitfile))
+                    fs.watch(constants.cmdexitdir).on("change", (eventType, filename) => {
+                        if (filename === exitfile)
+                            return getExitCode();
+                    })
+                return getExitCode(); //else just return it
+            }
+
+            if (value) { // if it is still running then wait for it
+                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>
+                    resolve(returnFile(value1))
+                )
+            } else // otherwise just return the exit code
+                resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
+        })
     });
 
 }
