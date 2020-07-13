@@ -53,12 +53,12 @@ const isCmdStillRunning = (cmd) => {
 }
 
 const isPidAndCmdStillRunning = (cmd,pid) => {
-    
+    return Promise.all([isPidStillRunning(pid), isCmdStillRunning(cmd)])
 }
 
-const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
+const waitForPid = (pid, exitfile, logfile, cmd) => {
     return new Promise(resolve => {
-        isPidStillRunning(pid).then(value => {
+        isPidAndCmdStillRunning(pid,cmd).then(value => {
             function returnFile(value) {
                 function getExitCode() {
                     const r = parseInt(fs.readFileSync(exitfile).toString())
@@ -190,7 +190,7 @@ exports.cmd_detached = (cwd,cmd,argv0) =>{
     return _cmd_detached(cwd,cmd,argv0)
 }
 
-exports.command = async (cmd) => _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2],value[3],true))
+exports.command = async (cmd) => _run_cmd(cmd).then(value => waitForPid(value[0],value[1],value[2],value[3]))
 exports.cmd = async (cmd) => _command(cmd)
 
 exports.resolveHome = (filepath) => {
