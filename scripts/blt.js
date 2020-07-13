@@ -54,12 +54,11 @@ const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 // use this for quick commands where output is critical
 const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
-exports.getCmdKey = (hash) => {\]
-    for(let i = 0; i<)
-    .forEach(value => {
-        if(md5(cmd_replacer(value[1]))===hash)
-            return value[0];
-    };
+exports.getCmdKey = (hash) => {
+    const c = Object.entries(commands);
+    for(let i = 0; i<c.length; i++)
+        if(md5(cmd_replacer(c[i][1]))===hash)
+            return c[i][0];
     return null;
 }
 
