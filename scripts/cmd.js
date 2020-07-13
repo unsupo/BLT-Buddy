@@ -49,7 +49,7 @@ exports.isPidStillRunning = isPidStillRunning;
 
 const isCmdStillRunning = (cmd) => {
     return new Promise(resolve => _command(`ps -ef | grep "${cmd.toString()}" | grep -v grep | awk '{print $2}'`)
-        .then(value => resolve(value['stdout'].trim().split('\n')[0])))
+        .then(value => resolve(value['stdout'].trim().split('\n'))))
 }
 
 const isPidAndCmdStillRunning = (cmd,pid) => {
@@ -76,15 +76,15 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                 fs.appendFileSync(timings, "e: " + new Date().getTime() + "\n") // script is done write out time it ended
                 return getExitCode(); //else just return it
             }
-            if (values[0] || values[1]) // if pid or cmd is still running then wait for it
-                Promise.allSettled([
-                        _command(`lsof -p ${pid} +r 1 &>/dev/null`),
-                        _command(`lsof -p ${values[1]} +r 1 &>/dev/null`)])
+            if (values[0] || values[1]) { // if pid or cmd is still running then wait for it
+                const promises = [_command(`lsof -p ${pid} +r 1 &>/dev/null`)]
+                values[1].forEach(v => promises.push(_command(`lsof -p ${v} +r 1 &>/dev/null`)))
+                Promise.allSettled(promises)
                     .then(values2 => {
-                        console.log(values+"\t"+values2);
+                        console.log(values + "\t" + values2);
                         resolve(returnFile(values2[0]))
                     })
-            else // otherwise just return the exit code
+            }else // otherwise just return the exit code
                 resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
         });
     });
