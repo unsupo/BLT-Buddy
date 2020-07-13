@@ -256,6 +256,7 @@ ipcMain.on('app-update', (event, appStatus) => {
             }
         sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
     }
+    tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
     if (icon_last && icon_last === iconv)
         return;
     if(lastStatus === 'stopped' && appStatus['icon'] === 'running' ||
@@ -267,7 +268,6 @@ ipcMain.on('app-update', (event, appStatus) => {
     lastUpdate = icon_last
     icon_last = iconv
     tray.setImage(getIcon(iconv,{'width': 16, 'height': 16}));
-    tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
 });
 let lastStatus;
 let browserWindow;
