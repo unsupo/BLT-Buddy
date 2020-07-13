@@ -1,9 +1,10 @@
-import {md5} from "./cmd";
+// import {md5} from "./cmd";
 
 const path = require('path');
 const fixPath = require('fix-path')
 const {runPython, command, resolveHome, cmd} = require("./cmd");
 const fs = require('fs')
+const {md5} = require("./cmd");
 
 fixPath();
 
