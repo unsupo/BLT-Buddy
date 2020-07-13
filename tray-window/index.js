@@ -114,9 +114,9 @@ const runApiCommand = (cmd) =>{
                 //     'icon': 'default', 'tool-tip': STATUS, //'notification': {'title': "BLT Buddy",'body': `Done ${status}`}
                 // });
                 setStatus("SUCCESS",DEFAULT);
-            }else if(!isWorking) { // if it's not working and it's a health check then change status
+            }else if(!isWorking) { // if it's not (working on something) and it's (a health check) then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
-                setStatus(s);
+                setStatus(s,RUNNING);
             }
             updateFunc()
             resolve(value)
