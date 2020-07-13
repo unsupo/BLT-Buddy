@@ -63,8 +63,8 @@ const startUp = () => {
     if(!fs.existsSync(constants.uidata))
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
     // TODO get all running pids.  Look for files in pids dir, then check if they are running
-    // TODO if pid is running then set the status in blt UI
-
+    // TODO if pid is running then set the status in blt UI, get script
+    // blt.getCommand(hash)
 }
 
 app.whenReady()

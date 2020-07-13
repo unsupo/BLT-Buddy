@@ -51,6 +51,10 @@ const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 // use this for quick commands where output is critical
 const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
+exports.getCmdKey = (hash) => {
+    
+}
+
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
 exports.db_start = () => run_cmd(commands.db_start)
