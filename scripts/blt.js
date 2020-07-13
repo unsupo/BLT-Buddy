@@ -48,6 +48,7 @@ ${blt} ${replace_project} --db-start
 ${blt} ${replace_project} --start-bg
 `,
 }
+exports.commands = commands;
 const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project).replace(working_dir_replace,working_dir)
 // use this for long running commands where you don't necessarily care about the output
 const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
