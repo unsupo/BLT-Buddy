@@ -72,7 +72,7 @@ exports.getAvgTime = (cmd_key) => {
             if(value.startsWith(s)) {
                 start = value.substr(s.length);
                 if(end > 0) {
-                    sum += end;
+                    sum += (end-start);
                     count += 1;
                 }
             }else if (value.startsWith(e))
