@@ -55,7 +55,7 @@ const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
 exports.getCmdKey = (hash) => {
-    Object.keys(constants).forEach(v => {
+    Object.keys(commands).forEach(v => {
         if(md5(cmd_replacer(v))===hash)
             return v;
     });
