@@ -66,7 +66,7 @@ const startUp = () => {
     // TODO if pid is running then set the status in blt UI, get script
     const c = fs.readdirSync(constants.piddir);
     for(let i = 0; i<c.length; i++)
-        cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+c[i])).then(value1 => console.log(value1))
+        cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+c[i]).toString()).then(value1 => console.log(value1))
     // fs.readdirSync(constants.piddir).forEach(value =>
     //     cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+value)).then(value1 => console.log(value1)))
     // value.slice(0,-'.pid'.length)
