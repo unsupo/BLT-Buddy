@@ -61,6 +61,16 @@ exports.getCmdKey = (hash) => {
             return c[i][0];
     return null;
 }
+exports.getAvgTime = (cmd_key) => {
+    return new Promise(resolve => {
+        const hash = md5(cmd_replacer(cmd_key));
+        let sum = 0, start = 0;
+        fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").split('\n').forEach(value => {
+            if(value.startsWith("s: "))
+                start = value.splice(0,);
+        })
+    });
+}
 
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
 exports.db_stop = () => run_cmd(commands.db_stop)
