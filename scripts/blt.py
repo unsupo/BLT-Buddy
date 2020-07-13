@@ -134,6 +134,15 @@ class BLT:
             'app': self.health_check_app()
         }
 
+    def check_sfm_1(self):
+        url='http://tmp-auth.slb.sfdc.net/saml_tmp'
+        try:
+            soup = BeautifulSoup(requests.get(url).content,
+                                 features="html.parser")
+            return 0 if len(soup.select('#usernamegroup')) > 0 else 1
+        except Exception:
+            return 1
+
     def check_sfm(self):
         try:
             child = pexpect.spawn('blt --sfm', timeout=30)
@@ -146,4 +155,5 @@ if __name__ == '__main__':
     # print('hi')
     # r = BLT().check_sfm()
     # print(r)
-    BLT().command_line()
+    # BLT().command_line()
+    BLT().check_sfm_1()
