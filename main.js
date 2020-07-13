@@ -329,6 +329,7 @@ ipcMain.handle('sfm-needed',(event, args) => {
 let runningCmd;
 ipcMain.handle('api', (event ,args)=> {
     let cmdlocal;
+    console.log(args['cmd'])
     switch (args['cmd']) {
         case 'restart-blt': cmdlocal = blt.restartBlt(); break
         case 'check-health': cmdlocal = blt.checkHealth(); break
