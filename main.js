@@ -17,7 +17,7 @@ const cmd = require('./scripts/cmd')
 
 const fixPath = require('fix-path')
 require('./scripts/constants')
-require('./scripts/blt')
+// require('./scripts/blt')
 const {command} = require("./scripts/cmd");
 
 app.setLoginItemSettings({
@@ -71,7 +71,7 @@ const startUp = () => {
     //         if(value1)
     //             blt.getCmdKey(c[i].slice(0,-'.pid'.length))
     //     })
-    blt.getAvgTime(commands.sync_blt)
+    blt.getAvgTime(blt.getCommands.sync_blt)
 }
 
 app.whenReady()
