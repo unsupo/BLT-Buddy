@@ -45,6 +45,8 @@ const isPidStillRunning = (pid) => {
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
+exports.isPidStillRunning = isPidStillRunning;
+
 const isCmdStillRunning = (cmd) => {
     return new Promise(resolve => _command(`ps -ef | grep "${cmd}" | grep -v grep | awk '{print $2}'`)
         .then(value => resolve(value['stdout'].trim().split('\n')[0])))

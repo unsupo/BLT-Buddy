@@ -64,8 +64,10 @@ const startUp = () => {
         fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
     // TODO get all running pids.  Look for files in pids dir, then check if they are running
     // TODO if pid is running then set the status in blt UI, get script
+    // value.slice(0,-'.pid'.length)
+    fs.readdirSync(constants.piddir).forEach(value => cmd.isPidStillRunning(fs.readFileSync(value)))
     // blt.getCmdKey(hash)
-    blt.getCmdKey('ae323b9d974336c3016ca2df1754582e')
+    // blt.getCmdKey('ae323b9d974336c3016ca2df1754582e')
 }
 
 app.whenReady()
