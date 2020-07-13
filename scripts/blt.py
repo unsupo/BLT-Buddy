@@ -134,7 +134,7 @@ class BLT:
             'app': self.health_check_app()
         }
 
-    # def check_sfm_1(self): # TODO faster way to check for smf 
+    # def check_sfm_1(self): # TODO faster way to check for smf
     #     url='http://tmp-auth.slb.sfdc.net/saml_tmp'
     #     try:
     #         soup = BeautifulSoup(requests.get(url).content,
