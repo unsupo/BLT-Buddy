@@ -44,7 +44,7 @@ const isPidStillRunning = (pid) => {
 }
 
 const isCmdStillRunning = (cmd) => {
-    return new Promise(resolve => _command(`ps -ef ${cmd} > /dev/null; echo $?`)
+    return new Promise(resolve => _command(`ps -ef | grep ${cmd} | grep -v grep > /dev/null; echo $?`)
         .then(value => resolve(value['stdout'].trim() === '0')))
 }
 
