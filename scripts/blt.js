@@ -8,7 +8,7 @@ fixPath();
 const blt_dir = resolveHome(path.join("~","blt"))
 const blt_app_dir = path.join(blt_dir,"app")
 const blt = path.join('/usr', 'local', 'bin', 'blt')
-const proj = ' --project '
+const proj = '--project '
 
 let working_dir; // = path.join(blt_app_dir, "main");
 let projectDir
