@@ -1,3 +1,5 @@
+import {md5} from "./cmd";
+
 const path = require('path');
 const fixPath = require('fix-path')
 const {runPython, command, resolveHome, cmd} = require("./cmd");
@@ -52,7 +54,11 @@ const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
 exports.getCmdKey = (hash) => {
-    
+    Object.keys(commands).forEach((value) => {
+        if(md5(cmd_replacer(value))===hash)
+            return value;
+    });
+    return null;
 }
 
 exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
