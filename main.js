@@ -73,7 +73,7 @@ const startUp = () => {
     //     })
     // blt.getAvgTime(blt.getCommands.sync_blt)
     console.log(new Date().getTime())
-    Promise.allSettled([new Promise(resolve => setTimeout(resolve,1)), new Promise(resolve => setTimeout(resolve,10000))]).then(value => console.log(new Date().getTime()))
+    Promise.allSettled([new Promise(resolve => setTimeout(resolve,20000)), new Promise(resolve => setTimeout(resolve,10))]).then(value => console.log(new Date().getTime()))
 }
 
 app.whenReady()
