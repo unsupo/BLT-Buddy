@@ -5,7 +5,8 @@ let isWorking = false;
 let lastCommand = undefined;
 let isError = false;
 let STATUS = 'STOPPED'
-const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'STOPPED', RUNNING = 'RUNNING';
+const CANT_CONNECT = 'CAN"T CONNECT', SFM_NEEDED = 'SFM NEEDED', DOWN = 'STOPPED', RUNNING = 'RUNNING',
+    WORKING='working', DEFAULT='default';
 
 /*
 All on click events handled here
@@ -35,8 +36,12 @@ document.addEventListener('click', (event) => {
     class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1],e.length > 1 ? e[2] : undefined) : undefined)
 })
 
-const setStatus = (status) => {
+const setStatus = (status,icon) => {
     STATUS = status;
+    if(icon)
+        ipcRenderer.send('app-update', {
+            'icon':icon, 'tool-tip':status
+        });
     document.querySelector('.js-summary').textContent = status
 }
 
@@ -77,11 +82,11 @@ const runCommand = (cmd, args) =>{
     isWorking = true;
     disableEnableButtons(['js-start-action','js-sync-action','js-build-action'],true)
     const status = (cmd.replace("-blt",'')+"ing...").toUpperCase();
-    setStatus(status)
+    setStatus(status,WORKING)
     stopUpdateFunc()
-    ipcRenderer.send('app-update', {
-        'icon': 'working', 'tool-tip': status
-    });
+    // ipcRenderer.send('app-update', {
+    //     'icon': 'working', 'tool-tip': status
+    // });
     return runApiCommand({cmd:cmd,args: args})
 }
 const runBasicApiCommand = (cmd) => ipcRenderer.invoke('api', cmd)
@@ -105,16 +110,13 @@ const runApiCommand = (cmd) =>{
             if(cmd['cmd'] !== 'check-health') { // check-health shouldn't change the working status or buttons
                 isWorking = false // main returned a result so we aren't working anymore
                 disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
-                ipcRenderer.send('app-update', {
-                    'icon': 'default', 'tool-tip': STATUS, //'notification': {'title': "BLT Buddy",'body': `Done ${status}`}
-                });
-                setStatus("SUCCESS");
+                // ipcRenderer.send('app-update', {
+                //     'icon': 'default', 'tool-tip': STATUS, //'notification': {'title': "BLT Buddy",'body': `Done ${status}`}
+                // });
+                setStatus("SUCCESS",DEFAULT);
             }else if(!isWorking) { // if it's not working and it's a health check then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                 setStatus(s);
-                ipcRenderer.send('app-update', {
-                    'icon':s.toLowerCase(), 'tool-tip':s
-                });
             }
             updateFunc()
             resolve(value)
