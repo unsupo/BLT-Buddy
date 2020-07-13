@@ -77,10 +77,10 @@ const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
 
                 if (value) { // if it is still running then wait for it
                     _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>
-                        resolve(waitForPid(pid,exitfile,logfile))
+                        waitForPid(pid,exitfile,logfile).then(value2 => )
                     )
                 } else // otherwise just return the exit code
-                    resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
+                    return returnFile({'err': '', 'stdout': '', 'stderr': ''})
             })
         }
         if (cmd && checked)
