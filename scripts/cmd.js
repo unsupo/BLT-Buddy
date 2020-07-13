@@ -52,6 +52,10 @@ const isCmdStillRunning = (cmd) => {
         .then(value => resolve(value['stdout'].trim().split('\n')[0])))
 }
 
+const isPidAndCmdStillRunning = (cmd,pid) => {
+    
+}
+
 const waitForPid = (pid, exitfile, logfile, cmd, checked) => {
     return new Promise(resolve => {
         isPidStillRunning(pid).then(value => {
