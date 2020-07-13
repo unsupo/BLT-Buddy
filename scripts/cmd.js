@@ -44,15 +44,15 @@ const isPidStillRunning = (pid) => {
 }
 
 const isCmdStillRunning = (cmd) => {
-    return new Promise(resolve => _command(`ps -ef | grep ${cmd} | grep -v grep > /dev/null; echo $?`)
-        .then(value => resolve(value['stdout'].trim() === '0')))
+    return new Promise(resolve => _command(`ps -ef | grep ${cmd} | grep -v grep | awk '{print $2}'`)
+        .then(value => resolve(value['stdout'].trim())))
 }
 
 const waitForPid = (pid, exitfile,logfile, cmd) => {
     return new Promise(resolve => {
         if (cmd)
             isCmdStillRunning(cmd).then(value => {
-                
+
             })
         else
             isPidStillRunning(pid).then(value => {
