@@ -116,7 +116,7 @@ const runApiCommand = (cmd) =>{
                 setStatus("SUCCESS",DEFAULT);
             }else if(!isWorking) { // if it's not (working on something) and it's (a health check) then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
-                setStatus(s,RUNNING);
+                setStatus(s);
             }
             updateFunc()
             resolve(value)
