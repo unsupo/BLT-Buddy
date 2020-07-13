@@ -49,31 +49,36 @@ const isCmdStillRunning = (cmd) => {
 }
 
 const waitForPid = (pid, exitfile,logfile, cmd) => {
-    return new Promise(resolve =>
+    return new Promise(resolve => {
+        if (cmd)
+            isCmdStillRunning(cmd).then(value => )
         isPidStillRunning(pid).then(value => {
-            function returnFile(value){
+            function returnFile(value) {
                 function getExitCode() {
                     const r = parseInt(fs.readFileSync(exitfile).toString())
-                    if(r !== 0)
-                        value['err']=logfile
+                    if (r !== 0)
+                        value['err'] = logfile
                     return value
                 }
+
                 // if exit code file doesn't exist wait using a file watcher on the directory
                 if (!fs.existsSync(exitfile))
-                    fs.watch(constants.cmdexitdir).on("change", (eventType, filename) =>{
-                        if(filename === exitfile)
+                    fs.watch(constants.cmdexitdir).on("change", (eventType, filename) => {
+                        if (filename === exitfile)
                             return getExitCode();
                     })
                 return getExitCode(); //else just return it
             }
-            if(value) { // if it is still running then wait for it
-                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 =>{
+
+            if (value) { // if it is still running then wait for it
+                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value1 => {
 
                 })
-            }else // otherwise just return the exit code
-                resolve(returnFile({'err':'','stdout':'','stderr':''}))
+            } else // otherwise just return the exit code
+                resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
         })
-    );
+    });
+
 }
 // returns the detached pid of the command after executing it
 const _run_cmd = (cmd) => {
