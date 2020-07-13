@@ -20,24 +20,27 @@ class_cmds = [
 ] // TODO should say stopping not killing
 // TODO stopping app still shows is running will it's trying to stop it
 
-document.addEventListener('click', (event) => {
-    if (event.target.href) {
-        // open window links
-        const window_ref = 'window:'
-        if(event.target.href.startsWith(window_ref)){
-            const w = event.target.href.slice(window_ref.length)
-            ipcRenderer.send('open-window', {'window': w});
-        }else {
-            // Open links in external browser
-            shell.openExternal(event.target.href).then(r => undefined);
-            event.preventDefault()
-        }
-    } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
-        updateData()
-    class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1],e.length > 1 ? e[2] : undefined) : undefined)
-    console.log(event);
-    event.stopPropagation();
-    event.preventDefault();
+// document.addEventListener('click', (event) => {
+$(document).ready(()=>{
+    $(document).on("click",(event)=> {
+        if (event.target.href) {
+            // open window links
+            const window_ref = 'window:'
+            if (event.target.href.startsWith(window_ref)) {
+                const w = event.target.href.slice(window_ref.length)
+                ipcRenderer.send('open-window', {'window': w});
+            } else {
+                // Open links in external browser
+                shell.openExternal(event.target.href).then(r => undefined);
+                event.preventDefault()
+            }
+        } else if (!isWorking && event.target.classList.contains('js-refresh-action'))
+            updateData()
+        class_cmds.forEach(e => event.target.classList.contains(e[0]) ? runCommand(e[1], e.length > 1 ? e[2] : undefined) : undefined)
+        console.log(event);
+        event.stopPropagation();
+        event.preventDefault();
+    });
 })
 
 const setStatus = (status,icon) => {
