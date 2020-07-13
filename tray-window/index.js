@@ -111,7 +111,7 @@ const runApiCommand = (cmd) =>{
                 isWorking = false // main returned a result so we aren't working anymore
                 disableEnableButtons(['js-start-action', 'js-sync-action', 'js-build-action'], false) //re-enable buttons
                 setStatus("SUCCESS",DEFAULT);
-            }else if(!isWorking) { // if it's not (working on something) and it's (a health check) then change status
+            }else if(!isWorking && STATUS!==SFM_NEEDED && STATUS!==CANT_CONNECT) { // if it's not (working on something and status is not SFM or CN"T CNT) and it's (a health check) then change status
                 const s = JSON.parse(value['res'])['app']['ui_check'] === 'UP' ? RUNNING : DOWN
                 setStatus(s,s.toLowerCase());
             }
