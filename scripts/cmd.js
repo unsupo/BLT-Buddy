@@ -82,7 +82,7 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                 Promise.allSettled(promises)
                     .then(values2 => {
                         console.log(values + "\t" + values2);
-                        resolve(returnFile(values2[0]))
+                        resolve(returnFile(values2[0].value))
                     })
             }else // otherwise just return the exit code
                 resolve(returnFile({'err': '', 'stdout': '', 'stderr': ''}))
