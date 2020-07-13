@@ -54,10 +54,10 @@ const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
 const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
 exports.getCmdKey = (hash) => {
-    constants.fo {
+    Object.keys(constants).forEach(v => {
         if(md5(cmd_replacer(v))===hash)
-            return k;
-    }
+            return v;
+    });
     return null;
 }
 
