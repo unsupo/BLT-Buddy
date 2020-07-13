@@ -19,6 +19,7 @@ class_cmds = [
     ['js-change-status-action']
 ] // TODO should say stopping not killing
 // TODO stopping app still shows is running will it's trying to stop it
+
 document.addEventListener('click', (event) => {
     if (event.target.href) {
         // open window links
