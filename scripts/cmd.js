@@ -66,9 +66,9 @@ const waitForPid = (pid, exitfile,logfile) => {
                 // _command(`wait ${pid}`).then(value1 => resolve(returnFile(value1)))
                 // const lsof = spawn('lsof',['-p',pid,"+r",'1'])
                 // lsof.on('exit',(code, signal) => resolve(returnFile({'err':'','stdout':'','stderr':''})))
-                // _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value =>
-                //     resolve(waitForPid(pid,exitfile,logfile)));
-                // resolve(returnFile(value)))
+                _command(`lsof -p ${pid} +r 1 &>/dev/null`).then(value =>
+                    resolve(returnFile(value)))
+                    // resolve(waitForPid(pid,exitfile,logfile)));
             }else // otherwise just return the exit code
                 resolve(returnFile({'err':'','stdout':'','stderr':''}))
         })
