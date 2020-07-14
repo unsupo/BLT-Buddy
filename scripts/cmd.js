@@ -119,11 +119,13 @@ const _run_cmd = (cmd) => {
         const c = `#!/usr/bin/env bash\n${cmd}`
         if(!fs.existsSync(script)) // if script file doesn't exist, make it (meaning this is the first time running this script)
             fs.writeFileSync(script,c,{mode: 0o755}) //c+"runCMD 2>&1 "+log+" & echo $! > "+pid
-        if(!fs.existsSync(pid)) // if pid file doesn't exist then detach the process
+        if(!fs.existsSync(pid)) // if pid file doesn't exist (probably first time running script) then start script and detach the process
             return resolve(detached(constants.scriptsdir, script, undefined, out, err, log,cmd))
+        // this should prevent more than one of the same command from running at the same time
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // YES, return pid if it's still running
                 return resolve(pid) // pid still running
+            // NO, run the script detached
             return resolve(detached(constants.scriptsdir, script, undefined, out, err,log,cmd))
         })
     })
