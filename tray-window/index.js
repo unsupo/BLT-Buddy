@@ -14,7 +14,7 @@ If it starts with js- and ends with -action it is a button
  */
 class_cmds = [
     ['js-start-action','start-blt'],['js-sync-action','sync-blt'],['js-restart-action','restart-blt'],
-    ['js-kill-action','kill-blt',{'timeout':0}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
+    ['js-stop-action','stop-blt',{'timeout':0}],['js-build-action','build-blt'],['js-sync-action','sync-blt'],
     ['js-enable-action','enable-blt'],['js-disable-action','disable-blt'],['quit','quit'],
     ['js-change-status-action']
 ] // TODO should say stopping not killing

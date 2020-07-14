@@ -30,8 +30,7 @@ const commands = {
     db_stop: `${blt} ${replace_project} --db-stop`,
     db_start: `${blt} ${replace_project} --db-start`,
     sdb_go: `${blt} ${replace_project} --sdb-go`,
-    // sync_blt: `${blt} ${replace_project} --sync`,
-    sync_blt: 'sleep 10',
+    sync_blt: `${blt} ${replace_project} --sync`,
     build_blt: `${blt} ${replace_project} --build`,
     build_pre_blt: `${blt} ${replace_project} --build pre`,
     ide_blt: `${blt} ${replace_project} --ide`,
@@ -114,7 +113,7 @@ exports.set_project = (dir) => new Promise(resolve => {
 
 exports.killblt = (timeout) => {
     if(timeout === undefined)
-        timeout = 20
+        timeout = 30
     return new Promise(resolve =>
         command("timeout "+timeout+" blt "+project+" --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9")
             .then(value => resolve(value))
