@@ -98,9 +98,9 @@ const _run_cmd = (cmd) => {
             const exitfile = path.join(constants.cmdexitdir,hash+".exit")
             fs.writeFileSync(pid,p)
             c.on('exit',(code, signal) => {
+                // script is now done, print out finished time
                 const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
                 fs.appendFileSync(timings, "e: " + new Date().getTime() + "\n"); // script is done write out time it ended
-
                 fs.writeFileSync(exitfile,code);
             })
             return [p,exitfile,l,cmd]
