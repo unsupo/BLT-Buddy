@@ -105,12 +105,6 @@ const _run_cmd = (cmd) => {
 
         const hash = md5(cmd)
         const timings = path.join(constants.timingslogdir, hash + ".timings");
-        // this will save timings data, averaging the difference between start and end times gives a good predicted time
-        // for this command.  Other factors will affect this as well, mostly workspace-users.xml, also unhandled user inputs
-        if(fs.existsSync(timings)) //if timings file doesn't exist make it and add start time
-            fs.appendFileSync(timings,"s: "+new Date().getTime()+"\n") // script is starting, write out time it started
-        else // append start time to file
-            fs.writeFileSync(timings,"s: "+new Date().getTime()+"\n")
         const log =  path.join(constants.cmdlogdir, hash + ".log")
         const out = fs.openSync(log,'a')
         const err = fs.openSync(log,'a')
@@ -125,7 +119,13 @@ const _run_cmd = (cmd) => {
         isPidStillRunning(fs.readFileSync(pid)).then(value => {
             if(value) // YES, return pid if it's still running
                 return resolve(pid) // pid still running
-            // NO, run the script detached
+            // NO, run the script detached and start the run timer
+            // this will save timings data, averaging the difference between start and end times gives a good predicted time
+            // for this command.  Other factors will affect this as well, mostly workspace-users.xml, also unhandled user inputs
+            if(fs.existsSync(timings)) //if timings file doesn't exist make it and add start time
+                fs.appendFileSync(timings,"s: "+new Date().getTime()+"\n") // script is starting, write out time it started
+            else // append start time to file
+                fs.writeFileSync(timings,"s: "+new Date().getTime()+"\n")
             return resolve(detached(constants.scriptsdir, script, undefined, out, err,log,cmd))
         })
     })
