@@ -72,8 +72,6 @@ const waitForPid = (pid, exitfile, logfile, cmd) => {
                         if (filename === exitfile)
                             return getExitCode();
                     })
-                const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
-                fs.appendFileSync(timings, "e: " + new Date().getTime() + "\n") // script is done write out time it ended
                 return getExitCode(); //else just return it
             }
             if (values[0].value || values[1].value) { // if pid or cmd is still running then wait for it
@@ -99,7 +97,12 @@ const _run_cmd = (cmd) => {
             const p = c.pid
             const exitfile = path.join(constants.cmdexitdir,hash+".exit")
             fs.writeFileSync(pid,p)
-            c.on('exit',(code, signal) => fs.writeFileSync(exitfile,code))
+            c.on('exit',(code, signal) => {
+                const timings = path.join(constants.timingslogdir, md5(cmd) + ".timings");
+                fs.appendFileSync(timings, "e: " + new Date().getTime() + "\n"); // script is done write out time it ended
+
+                fs.writeFileSync(exitfile,code);
+            })
             return [p,exitfile,l,cmd]
         }
 
