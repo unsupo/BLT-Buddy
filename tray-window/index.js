@@ -78,7 +78,7 @@ const disableEnableButtons = (buttonClasses,isDisabled) =>{
 
 const disableEnableAllButtons = (isDisabled) => {
     class_cmds.filter(a=>a[0].toString().startsWith('js-') && a[0].toString().endsWith('-action'))
-        .forEach(buttonArr=>disableEnableButtons(buttonArr[0],true));
+        .forEach(buttonArr=>disableEnableButtons(buttonArr[0],isDisabled));
 }
 
 // use this for blt commands that require status change
