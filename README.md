@@ -1,4 +1,4 @@
-# TMP-Spring-20-Hackathon
+# BLT-Buddy
 Electron app to aid in running blt project
 
 ## Required tools
