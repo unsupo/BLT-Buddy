@@ -3,8 +3,14 @@ Electron app to aid in running blt project
 
 ## Required tools
 ```bash
-brew install pipenv
-mkdir scripts/.venv
+# with virtualenv
+cd scripts
+python3 -m pip install virtualenv
+python -m venv .venv
+pip install -r requirements.txt
+
+# if you make changes to the python requirements then run
+pip freeze > requirements.txt
 ```
 
 ## Build and install

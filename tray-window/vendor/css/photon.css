@@ -19,7 +19,12 @@ video {
 audio:not([controls]) {
   display: none;
 }
-
+.btn:disabled{
+  background-color: #cccccc;
+  color: #666666;
+  background-image: none;
+  border: none;
+}
 a:active,
 a:hover {
   outline: 0;

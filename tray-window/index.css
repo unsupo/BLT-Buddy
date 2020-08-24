@@ -36,6 +36,18 @@
     background-color: var(--background-color);
 }
 
+select {
+    width: 150px !important;
+    text-alight: center;
+    text-align-last: center;
+    width: 70% !important;
+    margin-left: 15% !important;
+}
+
+.invisible {
+   visibility: hidden;
+}
+
 .column {
     width: 50%;
     float: left;

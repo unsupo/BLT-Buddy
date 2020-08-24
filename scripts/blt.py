@@ -33,6 +33,8 @@ headers = {
 
 
 class BLT:
+    # alert = False # maybe use this send a notification if app changes from up or down
+    host = '127.0.0.1'
     port = 6109
     health_check_consts = {
         'UP': 'UP',
@@ -58,6 +60,8 @@ class BLT:
         my_parser.add_argument("-V", "--program-version", action='version',
                                version=v)
         my_parser.add_argument("-p", "--pretty", help="pretty print json", action="store_true")
+        my_parser.add_argument("url", help="supply this url if it's not localhost", nargs="?", default='127.0.0.1')
+        # my_parser.add_argument("-a", "--alert", help="alert if values change", action="store_true")
         for function in self.functions:
             # inspect.signature(eval('self.execute_request')).parameters['method'].default == inspect._empty
             params = inspect.signature(eval('self.' + function)).parameters.values()
@@ -76,6 +80,8 @@ class BLT:
                 my_parser.add_argument("--" + function, nargs='*')
         args = my_parser.parse_args()
         self.pretty = args.pretty
+        self.host = args.url
+        # self.alert = args.alert
 
         for arg, value in args.__dict__.items():
             if arg in self.functions and value is not None:
@@ -90,13 +96,26 @@ class BLT:
                     print(e)
                 exit(0)
 
-    def health_check_1(self):
+    def check_host(self,host,port=22):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        return sock.connect_ex(('127.0.0.1', int(self.port)))
+        return sock.connect_ex((host, int(port)))
+
+    def check_connection(self,host):
+        try:
+            socket.gethostbyaddr(host)
+            return True
+        except socket.error:
+            return False
+
+    def check_nexus_connection(self):
+        return self.check_connection('nexus.soma.salesforce.com')
+
+    def health_check_1(self):
+        return self.check_host(self.host,port=self.port)
 
     def health_check_2(self):
         try:
-            soup = BeautifulSoup(requests.get('http://127.0.0.1' + ':' + str(self.port)).content,
+            soup = BeautifulSoup(requests.get('http://' + self.host + ':' + str(self.port)).content,
                                  features="html.parser")
             return 0 if len(soup.select('#usernamegroup')) > 0 else 1
         except Exception:
@@ -115,8 +134,14 @@ class BLT:
             'app': self.health_check_app()
         }
 
-    def start_blt(self):
-        pass
+    # def check_sfm_1(self): # TODO faster way to check for smf
+    #     url='http://tmp-auth.slb.sfdc.net/saml_tmp'
+    #     try:
+    #         soup = BeautifulSoup(requests.get(url).content,
+    #                              features="html.parser")
+    #         return 0 if len(soup.select('#usernamegroup')) > 0 else 1
+    #     except Exception:
+    #         return 1
 
     def check_sfm(self):
         try:
@@ -131,3 +156,4 @@ if __name__ == '__main__':
     # r = BLT().check_sfm()
     # print(r)
     BLT().command_line()
+    # BLT().check_sfm_1()

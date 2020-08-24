@@ -1,136 +1,132 @@
-const util = require('util');
-const cp = require('child_process')
-const { exec } = require('child_process')
-const {PythonShell} = require('python-shell');
+// import {md5} from "./cmd";
+
 const path = require('path');
-const cmd = require('./cmd')
 const fixPath = require('fix-path')
+const {runPython, command, resolveHome, cmd} = require("./cmd");
+const fs = require('fs')
+const {md5} = require("./cmd");
 
 fixPath();
 
-const working_dir = cmd.resolveHome(path.join("~", "blt", "app", "main"));
-
+const blt_dir = resolveHome(path.join("~","blt"))
+const blt_app_dir = path.join(blt_dir,"app")
 const blt = path.join('/usr', 'local', 'bin', 'blt')
-const working_dir_cmd = "cd " + working_dir + " && ";
-const func_killer = "\n" +
-    "function killer(){\n" +
-    "    ps -ef|grep $1|awk '{print $2}'|xargs kill -9\n" +
-    "}"
+const proj = '--project '
 
-const proj = ' --project '
-let project = proj+"/app/main"
+let working_dir; // = path.join(blt_app_dir, "main");
+let projectDir
+let project;
 
-const python_options = {
-    pythonPath: path.join(__dirname, '.venv', 'bin', 'python3.7')
+let working_dir_cmd; // = `cd ${working_dir} && `; // might not be needed because of project flag
+
+// TODO sync and others that have user prompt
+const replace_project = "[project]", working_dir_replace = '[working_dir]'
+// TODO add p4 and ciab commands and interface as well as if you have a linux box
+// TODO ciab needs creation commands (with various configs like branch and modules
+// TODO ciab needs setup for nomachine and ssh setup for blt --build pre
+// TODO add smart bear review process and blt submit as well as setting appropriate changelist with description
+// TODO ability to open files in https://codesearch.data.sfdc.net/
+const commands = {
+    db_stop: `${blt} ${replace_project} --db-stop`,
+    db_start: `${blt} ${replace_project} --db-start`,
+    sdb_go: `${blt} ${replace_project} --sdb-go`,
+    sync_blt: `${blt} ${replace_project} --sync`,
+    build_blt: `${blt} ${replace_project} --build`,
+    build_pre_blt: `${blt} ${replace_project} --build pre`,
+    ide_blt: `${blt} ${replace_project} --ide`,
+    enable_blt: `${blt} ${replace_project} --enable`,
+    disable_blt: `${blt} ${replace_project} --enable`,
+    start_blt: `${blt} ${replace_project} --start-bg`,
+    stop_blt: `timeout 30 ${blt} ${replace_project} --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9`,
+    enable_force: `${blt} ${replace_project} --enable force`,
+    adventure_build: `cd ${working_dir_replace} && yes '' | Adventure build`,
+    get_project_dirs: `cd ${blt_dir} &&  find app ! -path . ! -path app -name 'enabled.blt' -maxdepth 3 | xargs -I{} dirname {} | sort`,
+    get_project_dir_status: `dir=${working_dir_replace}; [[ -f $dir/enabled.blt &&  $(egrep '^enabled\\s+=\\s+true' $dir/enabled.blt) ]] && printf 0 || printf 1`,
+    restart_blt: `timeout 30 ${blt} ${replace_project} || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9
+${blt} ${replace_project} --db-stop
+${blt} ${replace_project} --db-start
+${blt} ${replace_project} --start-bg
+`,
 }
-// const exe = util.promisify(exec);
+exports.getCommands = commands;
+// gl.commands = commands;
+const cmd_replacer = (cmd_key) => cmd_key.replace(replace_project,project).replace(working_dir_replace,working_dir)
+// use this for long running commands where you don't necessarily care about the output
+const run_cmd = (cmd_key) => command(cmd_replacer(cmd_key))
+// use this for quick commands where output is critical
+const _cmd = (cmd_key) => cmd(cmd_replacer(cmd_key))
 
-
-const _runPython = (args, callback) =>{
-    let options = {
-        args: args
-    }
-    options = Object.assign({}, options, python_options);
-    PythonShell.run(path.join(__dirname,'blt.py'), options, callback);
+exports.getCmdKey = (hash) => {
+    const c = Object.entries(commands);
+    for(let i = 0; i<c.length; i++)
+        if(md5(cmd_replacer(c[i][1]))===hash)
+            return c[i][0];
+    return null;
 }
-
-exports.runPython = (args, callback) =>{
-    _runPython(args,callback)
-}
-const _command = async (cmd) => {
+exports.getAvgTime = (cmd_key) => {
     return new Promise(resolve => {
-        exec(cmd,(err,stdout,stderr)=>{
-            resolve({'err':err,'stdout':stdout,'stderr':stderr})
+        const hash = md5(cmd_replacer(cmd_key));
+        const s = "s: ", e = "e: ";
+        let sum = 0, start = 0, end = -1, count = 0;
+        fs.readFileSync(constants.timingslogdir+"/"+hash+".timings").toString().split('\n').forEach(value => {
+            if(value.startsWith(s)) {
+                if(end > 0) {
+                    sum += (end-start);
+                    count += 1;
+                }
+                start = value.substr(s.length);
+            }else if (value.startsWith(e))
+                end = value.substr(e.length);
         })
-    })
-}
-exports.command = (cmd) => {
-    return _command(cmd)
+        resolve(sum/count)
+    });
 }
 
-const _cmd_detached = (cwd, cmd, argv0) => {
-    // const fs = require('fs');
-    // const out = fs.openSync('./out.log', 'a');
-    // const err = fs.openSync('./out.log', 'a');
+exports.getCommand = (cmd_key) => cmd_replacer(cmd_key)
+exports.db_stop = () => run_cmd(commands.db_stop)
+exports.db_start = () => run_cmd(commands.db_start)
+exports.sdb_go = () => run_cmd(commands.sdb_go)
+exports.restartBlt = () => run_cmd(commands.restart_blt)
+exports.sync_blt = () => run_cmd(commands.sync_blt)
+exports.build_blt = () => run_cmd(commands.build_blt)
+exports.build_pre_blt = () => run_cmd(commands.build_pre_blt)
+exports.ide_blt = () => run_cmd(commands.ide_blt)
+exports.enable_blt = () => run_cmd(commands.enable_blt)
+exports.disable_blt = () => run_cmd(commands.disable_blt)
+exports.start_blt = () => run_cmd(commands.start_blt)
+exports.stop_blt = () => run_cmd(commands.stop_blt)
+exports.adventure_build = () => run_cmd(commands.adventure_build)
+exports.enable_force = () => run_cmd(commands.enable_force)
+// fast running commands use _cmd
+exports.get_project_dirs = () => _cmd(commands.get_project_dirs)
+exports.get_project_dir_status = () => _cmd(commands.get_project_dir_status)
+exports.get_project = () => new Promise(resolve => resolve(projectDir))
 
-    const child = cp.spawn(cmd, argv0, {cwd: cwd, detached: true, stdio: ['ignore', 'ignore', 'ignore']});
-    child.unref();
-    return child
-}
-exports.cmd_detached = (cwd, cmd, argv0) => {
-    return _cmd_detached(cwd,cmd,argv0)
-}
+exports.set_project = (dir) => new Promise(resolve => {
+    working_dir = resolveHome(path.join("~", "blt", dir));
+    projectDir = dir
+    project = proj+projectDir
+    working_dir_cmd = "cd " + working_dir + " && ";
+    fs.writeFileSync(constants.projectFile,dir)
+    resolve(working_dir)
+})
 
-exports.restartBlt = () => {
+exports.killblt = (timeout) => {
+    if(timeout === undefined)
+        timeout = 30
     return new Promise(resolve =>
-        sfm().then(() => killblt().then(res3 => {
-            _command(blt+project+" --db-stop").then(res2 => {
-                _command(blt+project+" --db-start").then(res1 => {
-                    resolve(start_blt())
-                })
-            })
-        }))
-    );
-}
-exports.checkHealth = () =>{
-    return new Promise(resolve =>
-        _runPython(['--health_check'],(err, ress) => {
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        })
-    )
-}
-
-exports.isNeedSFM = () => {
-    return new Promise(resolve =>
-        _runPython(['--check_sfm'],(err, ress) =>
-            resolve({'err': err ? err : '', 'res': (ress?ress:'').toString()})
-        )
-    );
-}
-
-exports.kill = (name) => {
-    return new Promise(resolve =>
-        _command(func_killer + "\n" + "killer " + name).then(value => resolve(value))
-    )
-}
-exports.killblt = () => {
-    return new Promise(resolve =>
-        _command(func_killer + "\n" + "(timeout 20 blt "+project+" --stop || killer bl[t])")
+        command("timeout "+timeout+" blt "+project+" --stop || ps -ef|grep bl[t] |awk '{print $2}'|xargs kill -9")
             .then(value => resolve(value))
     )
 }
-exports.sfm = () => {
-    return new Promise(resolve =>
-        _command(working_dir_cmd + " blt --sfm").then(value => resolve(value))
+
+// Python script stuff
+const run_python = (arg) => new Promise(resolve =>
+        runPython([arg], (err, ress) => {
+            resolve({'err': (err ? err : '').toString(), 'res': (ress ? ress : '').toString()})
+        })
     )
-}
-exports.sync_blt = () => {
-    return new Promise(resolve =>
-        _command(blt+project+" --sync").then(value => resolve(value))
-    )
-}
-exports.build_blt = () => {
-    return new Promise(resolve =>
-        _command(blt+project+" --build").then(value =>resolve(value))
-    )
-}
-exports.enable_blt = () => {
-    return new Promise(resolve =>
-        _command(blt+project+" --enable").then(value => resolve(value))
-    )
-}
-exports.disable_blt = () => {
-    return new Promise(resolve =>
-        _command(blt+project+" --disable").then(value => resolve(value))
-    )
-}
-exports.set_project = (dir) => {
-    project = dir;
-}
-exports.start_blt = () => {
-    return new Promise(resolve => {
-        const child = _cmd_detached(working_dir, blt, ["--start-bg"]);
-        child.on('error', (err) => console.log(err))
-        resolve({'pid': child.pid})
-    })
-}
+
+exports.checkHealth = () => run_python('--health_check') // needed for beautiful soup
+exports.isNeedSFM = () => run_python('--check_sfm') // needed for pexpect
+exports.check_nexus_connection = () => run_python('--check_nexus_connection') //

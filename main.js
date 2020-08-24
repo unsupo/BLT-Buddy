@@ -1,5 +1,8 @@
 'use strict';
 
+const {mkdirp} = require("fs-extra");
+const fs = require('fs')
+
 const {ipcRenderer, ipcMain, app, BrowserWindow, Tray, nativeImage, Notification} = require('electron');
 const path = require('path');
 const blt = require('./scripts/blt')
@@ -11,7 +14,11 @@ const updateExe = path.resolve(appFolder, '..', 'Update.exe')
 const exeName = path.basename(process.execPath)
 const cmd = require('./scripts/cmd')
 
+
 const fixPath = require('fix-path')
+require('./scripts/constants')
+// require('./scripts/blt')
+const {command} = require("./scripts/cmd");
 
 app.setLoginItemSettings({
     openAtLogin: true,
@@ -29,8 +36,46 @@ fixPath();
 let tray = undefined;
 let tray_window = undefined;
 let win = undefined;
+let uipage;
+
+// actions to do on application start up
+const startUp = () => {
+    // make configuration directories
+    mkdirp(constants.basedir)
+    mkdirp(constants.piddir)
+    mkdirp(constants.logdir)
+    mkdirp(constants.scriptsdir)
+    mkdirp(constants.cmdlogdir)
+    mkdirp(constants.cmddir)
+    mkdirp(constants.cmdexitdir)
+    mkdirp(constants.docdir)
+    mkdirp(constants.timingslogdir)
+    // if a project was set in the app then it was saved to the projectfile, so read it and set it here
+    if(fs.existsSync(constants.projectFile)) {
+        const dir = fs.readFileSync(constants.projectFile).toString()
+        blt.set_project(dir)
+    }else // otherwise set app/main as the default project
+        blt.set_project('app/main').then(dir=>console.log(dir))
+    // command(`ln -sf ${constants.bltdocsdir} ${constants.docdir}`)
+    // if blt isn't installed on this computer then set the page to the installer page
+    if(!fs.existsSync(constants.bltdir))
+        uipage = 'Installer'
+    // if uidata is saved on this machine then load the ui using that data
+    if(!fs.existsSync(constants.uidata))
+        fs.writeFileSync(constants.uidata, JSON.stringify({app: 'Monitoring'}))
+    // TODO get all running pids.  Look for files in pids dir, then check if they are running
+    // TODO if pid is running then set the status in blt UI
+    // const c = fs.readdirSync(constants.piddir);
+    // for(let i = 0; i<c.length; i++)
+    //     cmd.isPidStillRunning(fs.readFileSync(constants.piddir+"/"+c[i]).toString()).then(value1 => {
+    //         if(value1)
+    //             blt.getCmdKey(c[i].slice(0,-'.pid'.length))
+    //     })
+    // blt.getAvgTime(blt.getCommands.sync_blt)
+}
 
 app.whenReady()
+    .then(startUp)
     .then(createWindow)
     .then(createTray)
     .then(createTrayWindow)
@@ -51,23 +96,41 @@ function createWindow() {
             nodeIntegration: true,
             // Prevents renderer process code from not running when window is
             // hidden
-            backgroundThrottling: false
+            backgroundThrottling: false,
+            preload: __dirname + '/preload.js'
         },
         icon: getIcon('apple-icon.png',{'width': 512, 'height': 512})
     })
-    win.loadFile(__dirname + "/build/index.html");
-
-    win.on('closed',()=>{
-        // console.log('closing')
-        win = undefined;
+    // win.loadFile(__dirname + "/build/index.html");
+    win.loadURL('http://localhost:3000')
+    let isQuitting = false;
+    app.on('before-quit',event => win.removeAllListeners())
+    win.addListener('close',(event)=>{
+        if(!isQuitting) {
+            event.preventDefault()
+            win.hide()
+            event.returnValue = false
+        }
     })
+    win.on('closed', () => {
+        win = null
+    })
+    // win.on('closed',()=>win=null)
     return win
 }
 
+const getTrayWindow = () =>{
+    if(tray_window)
+        return tray_window
+    return createTrayWindow()
+}
+
 function createTrayWindow() {
+    // tray height is based on number of elements in tray-display.json
+    // tray width is based on max number elements in elements in tray-display.json
     tray_window = new BrowserWindow({
         width: 220,
-        height: 400,
+        height: 350,
         show: false,
         frame: false,
         fullscreenable: false,
@@ -88,6 +151,7 @@ function createTrayWindow() {
             tray_window.hide()
         }
     })
+    return tray_window
 }
 
 const sendNotification = (title,body,onclick) => {
@@ -95,7 +159,8 @@ const sendNotification = (title,body,onclick) => {
         title: title,
         body: body
     })
-    notification.on('click', onclick)
+    if(onclick)
+        notification.on('click', onclick)
     return notification
     // notification.show()
 }
@@ -145,6 +210,18 @@ const getWindowPosition = () => {
     return {x: x, y: y}
 }
 
+ipcMain.handle('ui',(event,args)=>{
+    // pass in the ui page to remember page you were on
+    // if blt isn't installed start on the installer page
+    return new Promise(resolve => {
+        switch (args['key']) {
+            case 'constructor':
+                return resolve(uipage ? {app: uipage, details: 'not installed'} : JSON.parse(fs.readFileSync(constants.uidata).toString()))
+            case 'changepage': fs.writeFileSync(constants.uidata,JSON.stringify(args)); return resolve(true);
+            default: return resolve(false)
+        }
+    })
+})
 
 ipcMain.on('show-window', () => {
     showTrayWindow()
@@ -165,45 +242,42 @@ ipcMain.on('open-webpage',(event, data) => {
 
 ipcMain.on('app-update', (event, appStatus) => {
     let iconv;
-    let isUpdate = false;
     switch (appStatus['icon']) {
-        case 'running':
-            iconv = 'tray-icon-running.png';
-            isUpdate=true;
-            break
-        case 'working':
-            iconv = 'tray-icon-working.png';
-            break
-        case 'error':
-            isUpdate=true;
-            iconv = 'tray-icon.png';
-            blt.command('echo "'+appStatus['error']+'" > ~/error.txt').then(value =>
-                sendNotification('BLT Issue Occurred',appStatus['error'],()=>{
-                    require('electron').shell.openItem(cmd.resolveHome('~/error.txt'))
-                }).show()
-            );
-            break
+        case 'running': iconv = 'tray-icon-running.png'; break
+        case 'working': iconv = 'tray-icon-working.png'; break
+        case 'error': iconv = 'tray-icon.png'; break
         case 'stopped':
-            isUpdate=true;
         default:
             iconv = 'tray-icon-stopped.png';
     }
-    // console.log(iconv+","+appStatus['icon'])
+    if (appStatus['notification']) {
+        let click;
+        if(appStatus['notification']['onclick'] && appStatus['notification']['onclick']['key'])
+            try {
+                switch (appStatus['notification']['onclick']['key']) {
+                    case 'open-file':
+                        click = () => require('electron').shell.openItem(appStatus['notification']['onclick']['value'])
+                }
+            }catch(err){
+                console.log(appStatus)
+                console.log(err)
+            }
+        sendNotification(appStatus['notification']['title'], appStatus['notification']['body'], click).show()
+    }
+    tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
     if (icon_last && icon_last === iconv)
         return;
-    // console.log(iconv+" "+icon_last)
-    // TODO fix notication when status changes from OFF to ON and vice versa
-    // if(lastUpdate && icon_last && isUpdate && icon_last !== lastUpdate) {
-    //     sendNotification('BLT Status Update', 'BLT Status Changed to ' + appStatus['icon'], () => {
-    //         ipcRenderer.send('open-window', {'window': 'tray'}) // show window if notifaction is clicked
-    //     })
-    //     lastUpdate = icon_last
-    // }
+    if(lastStatus === 'stopped' && appStatus['icon'] === 'running' ||
+        lastStatus === 'running' && appStatus['icon'] === 'stopped')
+        sendNotification('BLT Status Update', 'BLT Status Changed to ' + appStatus['icon'], () => {
+            ipcRenderer.send('open-window',
+                appStatus['icon'] === 'stopped' ? {'window': 'tray'} : openPage('http://localhost:6109'))
+        }).show()
     lastUpdate = icon_last
     icon_last = iconv
     tray.setImage(getIcon(iconv,{'width': 16, 'height': 16}));
-    tray.setToolTip(appStatus['tool-tip']?appStatus['tool-tip']:appStatus['icon']);
 });
+let lastStatus;
 let browserWindow;
 ipcMain.on('open-webpage-in-app',(event, data)=>{
      browserWindow = new BrowserWindow({
@@ -252,25 +326,33 @@ ipcMain.handle('sfm-needed',(event, args) => {
         })
     return new Promise(resolve => resolve('false'))
 })
-
+let runningCmd;
 ipcMain.handle('api', (event ,args)=> {
-    let cmd;
+    let cmdlocal;
     switch (args['cmd']) {
-        case 'restart-blt': cmd = blt.restartBlt(); break
-        case 'check-health': cmd = blt.checkHealth(); break
-        case 'is-need-sfm': cmd = blt.isNeedSFM(); break
-        case 'kill-blt': cmd = blt.killblt(); break
-        case 'start-blt': cmd = blt.start_blt(); break
-        case 'build-blt': cmd = blt.build_blt(); break
-        case 'sync-blt': cmd = blt.sync_blt(); break
-        case 'enable-blt': cmd = blt.enable_blt(); break
-        case 'disable-blt': cmd = blt.disable_blt(); break
-        case 'set-project': cmd = blt.set_project(args['args']['dir']); break
+        case 'restart-blt': cmdlocal = blt.restartBlt(); break
+        case 'check-health': cmdlocal = blt.checkHealth(); break
+        case 'is-need-sfm': cmdlocal = blt.isNeedSFM(); break
+        case 'kill-blt': cmdlocal = blt.killblt(args['args']['timeout']); break
+        case 'start-blt': cmdlocal = blt.start_blt(); break
+        case 'build-blt': cmdlocal = blt.adventure_build(); break
+        case 'sync-blt': cmdlocal = blt.sync_blt(); break
+        case 'enable-blt': cmdlocal = blt.enable_blt(); break
+        case 'disable-blt': cmdlocal = blt.disable_blt(); break
+        case 'set-project': cmdlocal = blt.set_project(args['args']['dir']); break
+        case 'kill-command': cmdlocal = cmd.killcmd(blt.getCommand(args['args']['cmd'])); break
+        case 'get_project_dirs': cmdlocal = blt.get_project_dirs(); break
+        case 'get_project': cmdlocal = blt.get_project(); break
+        case 'get_project_dir_status': cmdlocal = blt.get_project_dir_status(); break
+        case 'adventure_build': cmdlocal = blt.adventure_build(); break
+        case 'check_nexus_connection': cmdlocal = blt.check_nexus_connection(); break
+        case 'quit': cmdlocal = app.quit(); break
         default:
             // console.log(args)
             return
     }
-    return cmd
+    runningCmd = args['cmd']
+    return cmdlocal
 })
 
 // Quit when all windows are closed.
