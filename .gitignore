@@ -1,11 +1,13 @@
+# Intellij
 .idea
 *.iml
+.DS_Store
+# build
 venv
 build
-scripts/.venv/*
 node_modules
 release-builds
-.DS_Store
-pids
-test.*
+# Test data
 data
+scripts/.venv
+scripts/data
