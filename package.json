@@ -15,7 +15,7 @@
     "fs-jetpack": "^2.2.3",
     "html-loader": "^1.1.0",
     "is-electron": "^2.2.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.2.10",
     "python-shell": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
